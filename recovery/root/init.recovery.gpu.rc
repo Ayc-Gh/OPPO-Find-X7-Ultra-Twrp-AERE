@@ -1,0 +1,10 @@
+# PHY110 stock KGSL driver for isolated browser rendering.
+on property:post.decrypt.modules=true && property:ro.recovery.phy110.supported=1
+    start aera-phy110-gpu
+
+service aera-phy110-gpu /system/bin/sh /vendor/bin/phy110-gpu-ready.sh
+    disabled
+    oneshot
+    user root
+    group root
+    seclabel u:r:recovery:s0

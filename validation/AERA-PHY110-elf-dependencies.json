@@ -1,0 +1,6821 @@
+{
+  "scope": "DT_NEEDED name presence only; linker namespaces, dlopen and symbol ABI require further validation",
+  "elf_objects": 479,
+  "missing_direct_dependencies": {},
+  "objects": {
+    "AERA/Files/ps": {
+      "needed": [
+        "libcutils.so",
+        "libselinux.so",
+        "libc++.so",
+        "libdl.so",
+        "libc.so",
+        "libm.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "sbin/bash": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "sbin/busybox": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "sbin/dmsetup": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "sbin/fsck.erofs": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "sbin/gnudate": {
+      "needed": [
+        "libc.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "sbin/gnused": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "sbin/gnutar": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "sbin/ksud": {
+      "needed": [
+        "liblog.so",
+        "libdl.so",
+        "libc.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "sbin/lz4": {
+      "needed": [
+        "libdl.so",
+        "libc.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "sbin/magiskboot": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "sbin/patchelf": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "sbin/zip": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "sbin/zstd": {
+      "needed": [
+        "libz.so",
+        "libdl.so",
+        "libc.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/7za": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/adbd": {
+      "needed": [
+        "libadbd_fs.so",
+        "liblog.so",
+        "libselinux.so",
+        "libbase.so",
+        "libprocessgroup.so",
+        "libadbd_auth.so",
+        "libcrypto.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/aera": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/aera-audio-null-bridge": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/aera-browser-jail": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/android.hardware.boot@1.0-service": {
+      "needed": [
+        "liblog.so",
+        "libhardware.so",
+        "libhidlbase.so",
+        "libutils.so",
+        "android.hardware.boot@1.0.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/android.hardware.boot@1.1-service": {
+      "needed": [
+        "liblog.so",
+        "libhardware.so",
+        "libhidlbase.so",
+        "libutils.so",
+        "android.hardware.boot@1.0.so",
+        "android.hardware.boot@1.1.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/android.hardware.boot@1.2-service": {
+      "needed": [
+        "liblog.so",
+        "libhardware.so",
+        "libhidlbase.so",
+        "libutils.so",
+        "android.hardware.boot@1.0.so",
+        "android.hardware.boot@1.1.so",
+        "android.hardware.boot@1.2.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/android.hardware.health@2.1-service": {
+      "needed": [
+        "libbase.so",
+        "libcutils.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "android.hardware.health@2.1.so",
+        "android.hardware.health@2.0.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/avbctl": {
+      "needed": [
+        "libbase.so",
+        "libcrypto.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/awk": {
+      "needed": [
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/bc": {
+      "needed": [
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/bootctl": {
+      "needed": [
+        "android.hardware.boot@1.0.so",
+        "android.hardware.boot@1.1.so",
+        "android.hardware.boot@1.2.so",
+        "android.hardware.boot-V1-ndk.so",
+        "libboot_control_client.so",
+        "libhidlbase.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/bu": {
+      "needed": [
+        "libstdc++.so",
+        "libz.so",
+        "libtwadbbu.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/busybox": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/charger": {
+      "needed": [
+        "libbase.so",
+        "libcutils.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "android.hardware.health@2.0.so",
+        "android.hardware.health@2.1.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/debuggerd": {
+      "needed": [
+        "libbase.so",
+        "libdebuggerd_client.so",
+        "liblog.so",
+        "libprocessgroup.so",
+        "libprocinfo.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/dhcpcd": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/dhcptool": {
+      "needed": [
+        "libnetutils.so",
+        "libcutils.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/dump_image": {
+      "needed": [
+        "libmtdutils.so",
+        "libflashutils.so",
+        "libmmcutils.so",
+        "libbmlutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/e2fsck": {
+      "needed": [
+        "libext2fs.so",
+        "libext2_blkid.so",
+        "libext2_com_err.so",
+        "libext2_uuid.so",
+        "libext2_quota.so",
+        "libext2_e2p.so",
+        "libc++.so",
+        "libc.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/e2fsdroid": {
+      "needed": [
+        "libext2fs.so",
+        "libext2_com_err.so",
+        "libext2_misc.so",
+        "libcutils.so",
+        "liblog.so",
+        "libselinux.so",
+        "libcrypto.so",
+        "libc++.so",
+        "libc.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/erase_image": {
+      "needed": [
+        "libmtdutils.so",
+        "libflashutils.so",
+        "libmmcutils.so",
+        "libbmlutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/fastbootd": {
+      "needed": [
+        "android.hardware.boot@1.0.so",
+        "android.hardware.boot@1.1.so",
+        "android.hardware.boot-V1-ndk.so",
+        "libboot_control_client.so",
+        "android.hardware.fastboot@1.1.so",
+        "android.hardware.fastboot-V1-ndk.so",
+        "android.hardware.health@2.0.so",
+        "android.hardware.health-V4-ndk.so",
+        "libasyncio.so",
+        "libbase.so",
+        "libbinder_ndk.so",
+        "libbootloader_message.so",
+        "libcutils.so",
+        "libext2_uuid.so",
+        "libext4_utils.so",
+        "libfs_mgr.so",
+        "libgsi.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "liblp.so",
+        "libprotobuf-cpp-lite.so",
+        "libsparse.so",
+        "libutils.so",
+        "libselinux.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/fatlabel": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/flash_image": {
+      "needed": [
+        "libmtdutils.so",
+        "libflashutils.so",
+        "libmmcutils.so",
+        "libbmlutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/fsck.exfat": {
+      "needed": [
+        "libexfat_twrp.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/fsck.f2fs": {
+      "needed": [
+        "libbase.so",
+        "libext2_uuid.so",
+        "libsparse.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/fsck.fat": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/fsck.ntfs": {
+      "needed": [
+        "libfuse-lite.so",
+        "libntfs-3g.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/fscryptpolicyget": {
+      "needed": [
+        "android.hardware.boot@1.0.so",
+        "android.hardware.boot-V1-ndk.so",
+        "libboot_control_client.so",
+        "libbase.so",
+        "libbinder.so",
+        "libcrypto.so",
+        "libcrypto_utils.so",
+        "libcutils.so",
+        "libext4_utils.so",
+        "libf2fs_sparseblock.so",
+        "libgsi.so",
+        "libhardware.so",
+        "libhardware_legacy.so",
+        "libincfs.so",
+        "libhidlbase.so",
+        "liblogwrap.so",
+        "libselinux.so",
+        "libsysutils.so",
+        "libutils.so",
+        "android.hardware.health.storage@1.0.so",
+        "android.hardware.health.storage-V1-ndk.so",
+        "android.system.keystore2-V5-ndk.so",
+        "android.security.maintenance-ndk.so",
+        "libbinder_ndk.so",
+        "libkeymint_support.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/fusermount3": {
+      "needed": [
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/grep": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/hwservicemanager": {
+      "needed": [
+        "android.hidl.token@1.0.so",
+        "libcrypto.so",
+        "libbase.so",
+        "libhidl-gen-utils.so",
+        "libselinux.so",
+        "libutils.so",
+        "libvintf.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/init": {
+      "needed": [
+        "libbase.so",
+        "libcutils.so",
+        "libext4_utils.so",
+        "libfs_mgr.so",
+        "libgsi.so",
+        "liblog.so",
+        "liblogwrap.so",
+        "liblp.so",
+        "libprocessgroup.so",
+        "libprocessgroup_setup.so",
+        "libselinux.so",
+        "libunwindstack.so",
+        "libvendorsupport.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/keystore2": {
+      "needed": [
+        "liblog.so",
+        "libbinder_ndk.so",
+        "libc.so",
+        "libm.so",
+        "libc++.so",
+        "libcrypto.so",
+        "libkeystore2_aaid.so",
+        "libkeystore2_apc_compat.so",
+        "libkeystore2_crypto.so",
+        "libhidlbase.so",
+        "libkm_compat_service.so",
+        "libselinux.so",
+        "libsqlite.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/keystore_cli_v2": {
+      "needed": [
+        "android.system.keystore2-V5-ndk.so",
+        "android.security.apc-ndk.so",
+        "libbinder.so",
+        "libbinder_ndk.so",
+        "libchrome.so",
+        "libcrypto.so",
+        "libkeymint_support.so",
+        "libprotobuf-cpp-lite.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/linker64": {
+      "needed": [],
+      "soname": "ld-android.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/logcat": {
+      "needed": [
+        "libbase.so",
+        "libutils.so",
+        "libprocessgroup.so",
+        "libprotobuf-cpp-lite.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/logd": {
+      "needed": [
+        "libbase.so",
+        "libz.so",
+        "libbinder.so",
+        "libsysutils.so",
+        "libcutils.so",
+        "libpackagelistparser.so",
+        "libprocessgroup.so",
+        "libcap.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/lpdump": {
+      "needed": [
+        "libbase.so",
+        "liblog.so",
+        "liblp.so",
+        "liblpdump_interface-cpp.so",
+        "libbinder.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/lpdumpd": {
+      "needed": [
+        "android.hardware.boot@1.0.so",
+        "android.hardware.boot@1.1.so",
+        "android.hardware.boot-V1-ndk.so",
+        "libboot_control_client.so",
+        "libbase.so",
+        "libbinder.so",
+        "libfs_mgr_binder.so",
+        "liblog.so",
+        "liblp.so",
+        "liblpdump.so",
+        "liblpdump_interface-cpp.so",
+        "libprotobuf-cpp-lite.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/lptools": {
+      "needed": [
+        "libbase.so",
+        "liblog.so",
+        "liblp.so",
+        "libsparse.so",
+        "libfs_mgr.so",
+        "libutils.so",
+        "libcutils.so",
+        "android.hardware.boot@1.1.so",
+        "libhidlbase.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/lzma": {
+      "needed": [
+        "libdl.so",
+        "libc.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/make_f2fs": {
+      "needed": [
+        "libbase.so",
+        "libext2_uuid.so",
+        "libsparse.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/minadbd": {
+      "needed": [
+        "android.hardware.health@2.0.so",
+        "libbinder_ndk.so",
+        "libext4_utils.so",
+        "libfs_mgr.so",
+        "libhidlbase.so",
+        "libutils.so",
+        "libadbd_auth.so",
+        "libadbd_fs.so",
+        "liblog.so",
+        "libselinux.so",
+        "android.hardware.health-V4-ndk.so",
+        "libbase.so",
+        "libcrypto.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/mke2fs": {
+      "needed": [
+        "libext2fs.so",
+        "libext2_blkid.so",
+        "libext2_misc.so",
+        "libext2_uuid.so",
+        "libext2_quota.so",
+        "libext2_com_err.so",
+        "libext2_e2p.so",
+        "libc.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/mkexfatfs": {
+      "needed": [
+        "libexfat_twrp.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/mkfs.fat": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/mkfs.ntfs": {
+      "needed": [
+        "libfuse-lite.so",
+        "libntfs-3g.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/mount.ntfs": {
+      "needed": [
+        "libfuse-lite.so",
+        "libntfs-3g.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/nano": {
+      "needed": [
+        "libncurses.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/ozip_decrypt": {
+      "needed": [
+        "libcrypto.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/pigz": {
+      "needed": [
+        "libz.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/rclone": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/reboot": {
+      "needed": [
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/recovery": {
+      "needed": [
+        "libssl.so",
+        "android.hardware.boot@1.0.so",
+        "android.hardware.boot@1.1.so",
+        "android.hardware.boot@1.2.so",
+        "android.hardware.health@2.0.so",
+        "android.hardware.health@2.1.so",
+        "android.hardware.health-V3-ndk.so",
+        "android.hardware.health-translate-ndk.so",
+        "libbinder.so",
+        "libbinder_ndk.so",
+        "libboot_control_client.so",
+        "libfs_mgr.so",
+        "libhardware.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "liblp.so",
+        "liblz4.so",
+        "libprotobuf-cpp-lite.so",
+        "libutils.so",
+        "libz.so",
+        "libcutils.so",
+        "libstdc++.so",
+        "libtar.so",
+        "libblkid.so",
+        "libminuitwrp.so",
+        "libmtdutils.so",
+        "libtwadbbu.so",
+        "libjpeg.so",
+        "libpng.so",
+        "libbootloader_message.so",
+        "libcrecovery.so",
+        "libtwrpdigest.so",
+        "libc++.so",
+        "libaosprecovery.so",
+        "libcrypto.so",
+        "libbase.so",
+        "libandroidfw.so",
+        "libziparchive.so",
+        "libselinux.so",
+        "libdl_android.so",
+        "libft2.so",
+        "libtwrpmtp-ffs.so",
+        "libgpt_twrp.so",
+        "android.frameworks.stats@1.0.so",
+        "android.hardware.authsecret@1.0.so",
+        "android.security.authorization-ndk.so",
+        "android.hardware.oemlock@1.0.so",
+        "libf2fs_sparseblock.so",
+        "libandroidicu.so",
+        "lib_android_keymaster_keymint_utils.so",
+        "android.hardware.gatekeeper-V1-ndk.so",
+        "android.hardware.gatekeeper@1.0.so",
+        "android.hardware.weaver@1.0.so",
+        "android.hardware.weaver-V2-ndk.so",
+        "android.security.maintenance-ndk.so",
+        "android.system.keystore2-V4-ndk.so",
+        "libkeyutils.so",
+        "libsqlite.so",
+        "libsysutils.so",
+        "libkeystoreinfo.so",
+        "libgatekeeper_aidl.so",
+        "libresetprop.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/resetprop": {
+      "needed": [
+        "libresetprop.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/resize2fs": {
+      "needed": [
+        "libext2fs.so",
+        "libext2_com_err.so",
+        "libext2_e2p.so",
+        "libext2_uuid.so",
+        "libext2_blkid.so",
+        "libc++.so",
+        "libc.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/servicemanager": {
+      "needed": [
+        "libbase.so",
+        "libvintf.so",
+        "libcutils.so",
+        "liblog.so",
+        "libselinux.so",
+        "libperfetto_c.so",
+        "libbinder.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/sgdisk": {
+      "needed": [
+        "libext2_uuid.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/sh": {
+      "needed": [
+        "libc.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/simg2img": {
+      "needed": [
+        "libsparse.so",
+        "libz.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/sload_f2fs": {
+      "needed": [
+        "libbase.so",
+        "libcrypto.so",
+        "libcutils.so",
+        "libext2_uuid.so",
+        "liblog.so",
+        "liblz4.so",
+        "libselinux.so",
+        "libsparse.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/snapuserd": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/strace": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/toolbox": {
+      "needed": [
+        "libbase.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/toybox": {
+      "needed": [
+        "libcrypto.so",
+        "liblog.so",
+        "libselinux.so",
+        "libz.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/tune2fs": {
+      "needed": [
+        "libext2_blkid.so",
+        "libext2_com_err.so",
+        "libext2_quota.so",
+        "libext2_uuid.so",
+        "libext2_e2p.so",
+        "libext2fs.so",
+        "libc++.so",
+        "libc.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/twrp": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/update_engine_sideload": {
+      "needed": [
+        "libcrypto.so",
+        "libfec.so",
+        "libziparchive.so",
+        "libbootloader_message.so",
+        "libhidlbase.so",
+        "liblp.so",
+        "libutils.so",
+        "android.hardware.boot@1.0.so",
+        "android.hardware.boot@1.1.so",
+        "android.hardware.boot@1.2.so",
+        "android.hardware.boot-V1-ndk.so",
+        "libboot_control_client.so",
+        "liblog.so",
+        "liblz4.so",
+        "libprotobuf-cpp-lite.so",
+        "libbase.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/vndservicemanager": {
+      "needed": [
+        "libbase.so",
+        "libcutils.so",
+        "liblog.so",
+        "libselinux.so",
+        "libbinder.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/vold_prepare_subdirs": {
+      "needed": [
+        "libbase.so",
+        "libcutils.so",
+        "liblogwrap.so",
+        "libselinux.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/watchdogd": {
+      "needed": [
+        "libbase.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/wpa_cli": {
+      "needed": [
+        "libcutils.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/wpa_supplicant": {
+      "needed": [
+        "libc.so",
+        "libcrypto.so",
+        "libcutils.so",
+        "libkeystore-engine-wifi-hidl.so",
+        "liblog.so",
+        "libnl.so",
+        "libssl.so",
+        "android.hardware.wifi.supplicant-V4-ndk.so",
+        "android.system.keystore2-V1-ndk.so",
+        "libbase.so",
+        "libbinder_ndk.so",
+        "libutils.so",
+        "libc++.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/ziptool": {
+      "needed": [
+        "libbase.so",
+        "libziparchive.so",
+        "libz.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/bin/zstd": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/etc/aera/root-providers/kernelsu/lkm-aarch64-android14-6.1_kernelsu.ko": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/etc/aera/root-providers/kernelsu/lkm-aarch64-android15-6.6_kernelsu.ko": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/etc/aera/root-providers/kernelsu/lkm-aarch64-android16-6.12_kernelsu.ko": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/etc/aera/root-providers/kernelsu-next/aarch64-android14-6.1_kernelsu.ko": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/etc/aera/root-providers/kernelsu-next/aarch64-android15-6.6_kernelsu.ko": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/etc/aera/root-providers/kernelsu-next/aarch64-android16-6.12_kernelsu.ko": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.frameworks.stats-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.frameworks.stats-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.frameworks.stats@1.0.so": {
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.frameworks.stats@1.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.authsecret@1.0.so": {
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.authsecret@1.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.boot-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.boot-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.boot@1.0.so": {
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.boot@1.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.boot@1.1.so": {
+      "needed": [
+        "android.hardware.boot@1.0.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.boot@1.1.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.boot@1.2.so": {
+      "needed": [
+        "android.hardware.boot@1.0.so",
+        "android.hardware.boot@1.1.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.boot@1.2.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.confirmationui-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.security.keymint-V4-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.confirmationui-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.confirmationui@1.0.so": {
+      "needed": [
+        "android.hardware.keymaster@4.0.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.confirmationui@1.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.fastboot-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.fastboot-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.fastboot@1.0.so": {
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.fastboot@1.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.fastboot@1.1.so": {
+      "needed": [
+        "android.hardware.fastboot@1.0.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.fastboot@1.1.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.gatekeeper-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.security.keymint-V4-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.gatekeeper-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.gatekeeper@1.0.so": {
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.gatekeeper@1.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.health-V3-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.health-V3-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.health-V4-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.health-V4-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.health-translate-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libhidlbase.so",
+        "android.hardware.health@2.0.so",
+        "android.hardware.health@2.1.so",
+        "android.hardware.health-V4-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.health-translate-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.health.storage-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.health.storage-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.health.storage@1.0.so": {
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.health.storage@1.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.health@1.0.so": {
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.health@1.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.health@2.0.so": {
+      "needed": [
+        "android.hardware.health@1.0.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.health@2.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.health@2.1.so": {
+      "needed": [
+        "android.hardware.health@1.0.so",
+        "android.hardware.health@2.0.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.health@2.1.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.keymaster@3.0.so": {
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.keymaster@3.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.keymaster@4.0.so": {
+      "needed": [
+        "android.hardware.keymaster@3.0.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.keymaster@4.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.keymaster@4.1.so": {
+      "needed": [
+        "android.hardware.keymaster@3.0.so",
+        "android.hardware.keymaster@4.0.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.keymaster@4.1.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.oemlock@1.0.so": {
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.oemlock@1.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.security.keymint-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.security.secureclock-V1-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.security.keymint-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.security.keymint-V3-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.security.secureclock-V1-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.security.keymint-V3-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.security.keymint-V4-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.security.secureclock-V1-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.security.keymint-V4-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.security.rkp-V3-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.security.rkp-V3-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.security.secureclock-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.security.secureclock-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.security.sharedsecret-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.security.sharedsecret-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.vibrator-V1-cpp.so": {
+      "needed": [
+        "libbinder.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.vibrator-V1-cpp.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.vibrator-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.vibrator-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.vibrator-V2-cpp.so": {
+      "needed": [
+        "libbinder.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.vibrator-V2-cpp.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.vibrator-V2-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.vibrator-V2-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.vibrator@1.0.so": {
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.vibrator@1.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.vibrator@1.1.so": {
+      "needed": [
+        "android.hardware.vibrator@1.0.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.vibrator@1.1.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.vibrator@1.2.so": {
+      "needed": [
+        "android.hardware.vibrator@1.0.so",
+        "android.hardware.vibrator@1.1.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.vibrator@1.2.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.weaver-V2-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.weaver-V2-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.weaver@1.0.so": {
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.weaver@1.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.wifi.common-V2-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.wifi.common-V2-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hardware.wifi.supplicant-V4-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.wifi.common-V2-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.wifi.supplicant-V4-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.hidl.token@1.0.so": {
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hidl.token@1.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.security.aaid_aidl-cpp.so": {
+      "needed": [
+        "libbinder.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.security.aaid_aidl-cpp.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.security.apc-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.security.apc-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.security.authorization-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.security.keymint-V4-ndk.so",
+        "android.hardware.security.secureclock-V1-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.security.authorization-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.security.compat-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.security.keymint-V4-ndk.so",
+        "android.hardware.security.secureclock-V1-ndk.so",
+        "android.hardware.security.sharedsecret-V1-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.security.compat-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.security.maintenance-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.system.keystore2-V5-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.security.maintenance-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.system.keystore2-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.security.keymint-V1-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.system.keystore2-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.system.keystore2-V3-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.security.keymint-V3-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.system.keystore2-V3-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.system.keystore2-V4-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.security.keymint-V3-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.system.keystore2-V4-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.system.keystore2-V5-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.security.keymint-V4-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.system.keystore2-V5-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.system.suspend-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.system.suspend-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.system.suspend@1.0.so": {
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.system.suspend@1.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/android.system.wifi.keystore@1.0.so": {
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.system.wifi.keystore@1.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/hw/android.hardware.health@2.0-impl-2.1.so": {
+      "needed": [
+        "libbase.so",
+        "libcutils.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "android.hardware.health@2.1.so",
+        "android.hardware.health@2.0.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.health@2.0-impl-2.1.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/ld-android.so": {
+      "needed": [],
+      "soname": "ld-android.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/lib_android_keymaster_keymint_utils.so": {
+      "needed": [
+        "android.hardware.security.keymint-V4-ndk.so",
+        "libbase.so",
+        "libhardware.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "lib_android_keymaster_keymint_utils.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libaconfig_storage_read_api_cc.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libaconfig_storage_read_api_cc.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libadb_crypto.so": {
+      "needed": [
+        "libadb_protos.so",
+        "libadb_sysdeps.so",
+        "libbase.so",
+        "liblog.so",
+        "libcrypto.so",
+        "libcrypto_utils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libadb_crypto.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libadb_protos.so": {
+      "needed": [
+        "libprotobuf-cpp-lite.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libadb_protos.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libadb_sysdeps.so": {
+      "needed": [
+        "libbase.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libadb_sysdeps.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libadb_tls_connection.so": {
+      "needed": [
+        "libbase.so",
+        "libcrypto.so",
+        "liblog.so",
+        "libssl.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libadb_tls_connection.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libadbconnection_server.so": {
+      "needed": [
+        "libprocessgroup.so",
+        "liblog.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libadbconnection_server.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libadbd.so": {
+      "needed": [
+        "libprocessgroup.so",
+        "libadbconnection_server.so",
+        "libapp_processes_protos_lite.so",
+        "libadb_crypto.so",
+        "libadb_tls_connection.so",
+        "libasyncio.so",
+        "libbase.so",
+        "libcrypto.so",
+        "libcrypto_utils.so",
+        "liblog.so",
+        "libselinux.so",
+        "libadbd_auth.so",
+        "libadbd_fs.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libadbd.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libadbd_auth.so": {
+      "needed": [
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libadbd_auth.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libadbd_fs.so": {
+      "needed": [
+        "libprocessgroup.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libadbd_fs.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libadbd_services.so": {
+      "needed": [
+        "libprocessgroup.so",
+        "libadb_crypto.so",
+        "libadb_protos.so",
+        "libadb_tls_connection.so",
+        "libapp_processes_protos_lite.so",
+        "libasyncio.so",
+        "libbase.so",
+        "libcrypto_utils.so",
+        "libcutils_sockets.so",
+        "libadbd_auth.so",
+        "libadbd_fs.so",
+        "libcrypto.so",
+        "liblog.so",
+        "libmdnssd.so",
+        "libselinux.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libadbd_services.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libandroid_runtime_lazy.so": {
+      "needed": [
+        "liblog.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libandroid_runtime_lazy.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libandroidfw.so": {
+      "needed": [
+        "libbase.so",
+        "libbinder.so",
+        "liblog.so",
+        "libcutils.so",
+        "libincfs.so",
+        "libutils.so",
+        "libz.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libandroidfw.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libandroidicu.so": {
+      "needed": [
+        "libbase.so",
+        "libicuuc.so",
+        "libicui18n.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libandroidicu.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libaosprecovery.so": {
+      "needed": [
+        "libbase.so",
+        "libbootloader_message.so",
+        "libcrypto.so",
+        "libext4_utils.so",
+        "libfs_mgr.so",
+        "libfusesideload.so",
+        "libhidl-gen-utils.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libselinux.so",
+        "libtinyxml2.so",
+        "libutils.so",
+        "libz.so",
+        "libziparchive.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libaosprecovery.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libapexsupport.so": {
+      "needed": [
+        "libdl_android.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libapexsupport.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libapp_processes_protos_lite.so": {
+      "needed": [
+        "libprotobuf-cpp-lite.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libapp_processes_protos_lite.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libasyncio.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libasyncio.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libbase.so": {
+      "needed": [
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libbase.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libbinder.so": {
+      "needed": [
+        "libcutils.so",
+        "liblog.so",
+        "libutils.so",
+        "libapexsupport.so",
+        "libvndksupport.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libbinder.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libbinder_ndk.so": {
+      "needed": [
+        "libbinder.so",
+        "liblog.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libbinder_ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libblkid.so": {
+      "needed": [
+        "libutil-linux.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libblkid.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libbmlutils.so": {
+      "needed": [
+        "libcrecovery.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libbmlutils.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libboot_control_client.so": {
+      "needed": [
+        "android.hardware.boot-V1-ndk.so",
+        "android.hardware.boot@1.0.so",
+        "android.hardware.boot@1.1.so",
+        "android.hardware.boot@1.2.so",
+        "libhidlbase.so",
+        "libbinder_ndk.so",
+        "libbase.so",
+        "libcutils.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libboot_control_client.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libbootloader_message.so": {
+      "needed": [
+        "libbase.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libbootloader_message.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libc++.so": {
+      "needed": [
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libc++.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libc.so": {
+      "needed": [
+        "ld-android.so",
+        "libdl.so"
+      ],
+      "soname": "libc.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libcap.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libcap.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libcert_parse.so": {
+      "needed": [
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libcert_parse.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libchrome.so": {
+      "needed": [
+        "libbase.so",
+        "libevent.so",
+        "libcutils.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libchrome.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libcppbor.so": {
+      "needed": [
+        "libbase.so",
+        "libcrypto.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libcppbor.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libcppbor_external.so": {
+      "needed": [
+        "libbase.so",
+        "libcrypto.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libcppbor_external.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libcppcose_rkp.so": {
+      "needed": [
+        "libcppbor.so",
+        "libcrypto.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libcppcose_rkp.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libcrecovery.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libcrecovery.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libcrypto-v33.so": {
+      "needed": [
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libcrypto.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libcrypto.so": {
+      "needed": [
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libcrypto.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libcrypto_utils.so": {
+      "needed": [
+        "libcrypto.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libcrypto_utils.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libcutils.so": {
+      "needed": [
+        "liblog.so",
+        "libbase.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libcutils.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libcutils_sockets.so": {
+      "needed": [
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libcutils_sockets.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libdebuggerd_client.so": {
+      "needed": [
+        "libbase.so",
+        "libcutils.so",
+        "libprocinfo.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libdebuggerd_client.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libdl.so": {
+      "needed": [
+        "ld-android.so"
+      ],
+      "soname": "libdl.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libdl_android.so": {
+      "needed": [
+        "ld-android.so"
+      ],
+      "soname": "libdl_android.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libdmabufheap.so": {
+      "needed": [
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libdmabufheap.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libevent.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libevent.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libexfat_twrp.so": {
+      "needed": [
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libexfat_twrp.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libexpat.so": {
+      "needed": [
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libexpat.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libext2_blkid.so": {
+      "needed": [
+        "libext2_uuid.so",
+        "libc++.so",
+        "libc.so",
+        "libdl.so"
+      ],
+      "soname": "libext2_blkid.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libext2_com_err.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libdl.so"
+      ],
+      "soname": "libext2_com_err.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libext2_e2p.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libdl.so"
+      ],
+      "soname": "libext2_e2p.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libext2_misc.so": {
+      "needed": [
+        "libext2fs.so",
+        "libext2_com_err.so",
+        "libext2_quota.so",
+        "libc++.so",
+        "libc.so",
+        "libdl.so"
+      ],
+      "soname": "libext2_misc.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libext2_profile.so": {
+      "needed": [
+        "libext2_com_err.so",
+        "libc++.so",
+        "libc.so",
+        "libdl.so"
+      ],
+      "soname": "libext2_profile.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libext2_quota.so": {
+      "needed": [
+        "libext2fs.so",
+        "libext2_blkid.so",
+        "libext2_com_err.so",
+        "libc++.so",
+        "libc.so",
+        "libdl.so"
+      ],
+      "soname": "libext2_quota.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libext2_uuid.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libdl.so"
+      ],
+      "soname": "libext2_uuid.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libext2fs.so": {
+      "needed": [
+        "libext2_com_err.so",
+        "libsparse.so",
+        "libz.so",
+        "libext2_uuid.so",
+        "libc++.so",
+        "libc.so",
+        "libdl.so"
+      ],
+      "soname": "libext2fs.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libext4_utils.so": {
+      "needed": [
+        "libz.so",
+        "libbase.so",
+        "libcutils.so",
+        "libext2_uuid.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libext4_utils.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libf2fs_sparseblock.so": {
+      "needed": [
+        "liblog.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libf2fs_sparseblock.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libfec.so": {
+      "needed": [
+        "libbase.so",
+        "libcrypto.so",
+        "libcrypto_utils.so",
+        "libcutils.so",
+        "libext4_utils.so",
+        "libsquashfs_utils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libfec.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libflashutils.so": {
+      "needed": [
+        "libmtdutils.so",
+        "libmmcutils.so",
+        "libbmlutils.so",
+        "libcrecovery.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libflashutils.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libfs_mgr.so": {
+      "needed": [
+        "libbase.so",
+        "libcrypto.so",
+        "libcrypto_utils.so",
+        "libcutils.so",
+        "libext4_utils.so",
+        "libfec.so",
+        "liblog.so",
+        "liblp.so",
+        "libselinux.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libfs_mgr.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libfs_mgr_binder.so": {
+      "needed": [
+        "libbinder.so",
+        "libutils.so",
+        "libbase.so",
+        "libcrypto.so",
+        "libcrypto_utils.so",
+        "libcutils.so",
+        "libext4_utils.so",
+        "libfec.so",
+        "liblog.so",
+        "liblp.so",
+        "libselinux.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libfs_mgr_binder.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libfscrypt.so": {
+      "needed": [
+        "libbase.so",
+        "libcutils.so",
+        "liblogwrap.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libfscrypt.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libft2.so": {
+      "needed": [
+        "libpng.so",
+        "libz.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libft2.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libfuse-lite.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libfuse-lite.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libfusesideload.so": {
+      "needed": [
+        "libbase.so",
+        "libcrypto.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libfusesideload.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libgatekeeper.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libgatekeeper.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libgatekeeper_aidl.so": {
+      "needed": [
+        "libbase.so",
+        "libbinder.so",
+        "libcutils.so",
+        "liblog.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libgatekeeper_aidl.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libgpt_twrp.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libgpt_twrp.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libgsi.so": {
+      "needed": [
+        "libbase.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libgsi.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libhardware.so": {
+      "needed": [
+        "libcutils.so",
+        "liblog.so",
+        "libvndksupport.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libhardware.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libhardware_legacy.so": {
+      "needed": [
+        "libaconfig_storage_read_api_cc.so",
+        "libbase.so",
+        "libbinder_ndk.so",
+        "libcutils.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "server_configurable_flags.so",
+        "android.system.suspend-V1-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libhardware_legacy.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libhidl-gen-utils.so": {
+      "needed": [
+        "libbase.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libhidl-gen-utils.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libhidlbase.so": {
+      "needed": [
+        "libbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libvndksupport.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libhidlbase.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libhidltransport.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libhidltransport.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libhwbinder.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libhwbinder.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libicui18n.so": {
+      "needed": [
+        "libicuuc.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libicui18n.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libicuuc.so": {
+      "needed": [
+        "libbase.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libicuuc.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libincfs.so": {
+      "needed": [
+        "libcrypto.so",
+        "liblog.so",
+        "libselinux.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libincfs.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libjpeg.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libjpeg.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libjsoncpp.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libjsoncpp.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libkeymaster4_1support.so": {
+      "needed": [
+        "android.hardware.keymaster@3.0.so",
+        "android.hardware.keymaster@4.0.so",
+        "android.hardware.keymaster@4.1.so",
+        "libbase.so",
+        "libcrypto.so",
+        "libhidlbase.so",
+        "libkeymaster4support.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libkeymaster4_1support.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libkeymaster4support.so": {
+      "needed": [
+        "android.hardware.keymaster@3.0.so",
+        "android.hardware.keymaster@4.0.so",
+        "libbase.so",
+        "libcrypto.so",
+        "libhardware.so",
+        "libhidlbase.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libkeymaster4support.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libkeymaster_messages.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libkeymaster_messages.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libkeymaster_portable.so": {
+      "needed": [
+        "libcrypto.so",
+        "libcppbor.so",
+        "libcppcose_rkp.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libkeymaster_portable.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libkeymint.so": {
+      "needed": [
+        "android.hardware.security.keymint-V4-ndk.so",
+        "libhidlbase.so",
+        "android.hardware.security.rkp-V3-ndk.so",
+        "android.hardware.security.secureclock-V1-ndk.so",
+        "android.hardware.security.sharedsecret-V1-ndk.so",
+        "lib_android_keymaster_keymint_utils.so",
+        "libbase.so",
+        "libbinder_ndk.so",
+        "libcppbor.so",
+        "libcrypto.so",
+        "libcutils.so",
+        "libkeymaster_messages.so",
+        "libkeymaster_portable.so",
+        "liblog.so",
+        "libpuresoftkeymasterdevice.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libkeymint.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libkeymint_support.so": {
+      "needed": [
+        "android.hardware.security.keymint-V4-ndk.so",
+        "libbase.so",
+        "libcrypto.so",
+        "libutils.so",
+        "libhardware.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libkeymint_support.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libkeystore-attestation-application-id.so": {
+      "needed": [
+        "android.system.keystore2-V5-ndk.so",
+        "android.security.aaid_aidl-cpp.so",
+        "libbase.so",
+        "libbinder.so",
+        "libcrypto.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libkeystore-attestation-application-id.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libkeystore-engine-wifi-hidl.so": {
+      "needed": [
+        "android.system.keystore2-V1-ndk.so",
+        "libbase.so",
+        "libbinder_ndk.so",
+        "libcrypto.so",
+        "liblog.so",
+        "libcutils.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libkeystore-engine-wifi-hidl.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libkeystore2_aaid.so": {
+      "needed": [
+        "libkeystore-attestation-application-id.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libkeystore2_aaid.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libkeystore2_apc_compat.so": {
+      "needed": [
+        "android.hardware.confirmationui-V1-ndk.so",
+        "android.hardware.confirmationui@1.0.so",
+        "libbase.so",
+        "libbinder_ndk.so",
+        "libhidlbase.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libkeystore2_apc_compat.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libkeystore2_crypto.so": {
+      "needed": [
+        "libcrypto.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libkeystore2_crypto.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libkeystoreinfo.so": {
+      "needed": [
+        "libsqlite.so",
+        "libc++.so",
+        "libc.so",
+        "libdl.so"
+      ],
+      "soname": "libkeystoreinfo.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libkeyutils.so": {
+      "needed": [
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libkeyutils.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libkm_compat.so": {
+      "needed": [
+        "android.system.keystore2-V5-ndk.so",
+        "android.hardware.security.keymint-V4-ndk.so",
+        "android.hardware.keymaster@3.0.so",
+        "android.hardware.keymaster@4.0.so",
+        "android.hardware.keymaster@4.1.so",
+        "android.hardware.security.secureclock-V1-ndk.so",
+        "android.hardware.security.sharedsecret-V1-ndk.so",
+        "android.security.compat-ndk.so",
+        "libbase.so",
+        "libbinder_ndk.so",
+        "libcrypto.so",
+        "libhidlbase.so",
+        "libkeymaster4_1support.so",
+        "libkeymint.so",
+        "libkeymint_support.so",
+        "libkeystore2_crypto.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libkm_compat.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libkm_compat_service.so": {
+      "needed": [
+        "android.hardware.security.keymint-V4-ndk.so",
+        "android.hardware.security.secureclock-V1-ndk.so",
+        "android.hardware.security.sharedsecret-V1-ndk.so",
+        "android.security.compat-ndk.so",
+        "libbinder_ndk.so",
+        "libcrypto.so",
+        "libkeymaster4_1support.so",
+        "libkeystore2_crypto.so",
+        "libkm_compat.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libkm_compat_service.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/liblog.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "liblog.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/liblogwrap.so": {
+      "needed": [
+        "libcutils.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "liblogwrap.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/liblp.so": {
+      "needed": [
+        "libcrypto.so",
+        "libbase.so",
+        "liblog.so",
+        "libcrypto_utils.so",
+        "libsparse.so",
+        "libext4_utils.so",
+        "libz.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "liblp.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/liblpdump.so": {
+      "needed": [
+        "libbase.so",
+        "liblog.so",
+        "liblp.so",
+        "libprotobuf-cpp-full.so",
+        "libcutils.so",
+        "libfs_mgr.so",
+        "libsnapshot.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "liblpdump.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/liblpdump_interface-cpp.so": {
+      "needed": [
+        "libbinder.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "liblpdump_interface-cpp.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/liblz4.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "liblz4.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/liblzma.so": {
+      "needed": [
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "liblzma.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libm.so": {
+      "needed": [
+        "libc.so"
+      ],
+      "soname": "libm.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libmdnssd.so": {
+      "needed": [
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libmdnssd.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libminuitwrp.so": {
+      "needed": [
+        "android.hardware.vibrator-V2-ndk.so",
+        "android.hardware.vibrator-V2-cpp.so",
+        "libjpeg.so",
+        "libft2.so",
+        "libz.so",
+        "libc.so",
+        "libpng.so",
+        "libutils.so",
+        "libcutils.so",
+        "liblog.so",
+        "libbase.so",
+        "libsync.so",
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libminuitwrp.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libmmcutils.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libmmcutils.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libmtdutils.so": {
+      "needed": [
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libmtdutils.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libncurses.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libncurses.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libnetd_client.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libnetd_client.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libnetutils.so": {
+      "needed": [
+        "libcutils.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libnetutils.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libnl.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libnl.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libnos_datagram.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libnos_datagram.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libnos_transport.so": {
+      "needed": [
+        "libbase.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libnos_transport.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libntfs-3g.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libntfs-3g.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libpackagelistparser.so": {
+      "needed": [
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libpackagelistparser.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libpcre2.so": {
+      "needed": [
+        "libc.so"
+      ],
+      "soname": "libpcre2.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libperfetto_c.so": {
+      "needed": [
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libperfetto_c.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libpng.so": {
+      "needed": [
+        "libz.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libpng.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libprocessgroup.so": {
+      "needed": [
+        "libbase.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libprocessgroup.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libprocessgroup_setup.so": {
+      "needed": [
+        "libbase.so",
+        "libjsoncpp.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libprocessgroup_setup.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libprocinfo.so": {
+      "needed": [
+        "libbase.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libprocinfo.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libprotobuf-cpp-full.so": {
+      "needed": [
+        "libz.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libprotobuf-cpp-full.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libprotobuf-cpp-lite.so": {
+      "needed": [
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libprotobuf-cpp-lite.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libpuresoftkeymasterdevice.so": {
+      "needed": [
+        "libkeymaster_messages.so",
+        "libkeymaster_portable.so",
+        "libsoft_attestation_cert.so",
+        "liblog.so",
+        "libcppbor.so",
+        "libcppcose_rkp.so",
+        "libcrypto.so",
+        "libcutils.so",
+        "libbase.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libpuresoftkeymasterdevice.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libresetprop.so": {
+      "needed": [
+        "liblog.so",
+        "libselinux.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libresetprop.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libselinux.so": {
+      "needed": [
+        "libpcre2.so",
+        "liblog.so",
+        "libpackagelistparser.so",
+        "libc.so"
+      ],
+      "soname": "libselinux.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libservices.so": {
+      "needed": [
+        "libbinder.so",
+        "libcutils.so",
+        "liblog.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libservices.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libsnapshot.so": {
+      "needed": [
+        "android.hardware.boot@1.0.so",
+        "android.hardware.boot@1.1.so",
+        "android.hardware.boot-V1-ndk.so",
+        "libboot_control_client.so",
+        "libbase.so",
+        "libchrome.so",
+        "libcutils.so",
+        "liblog.so",
+        "libfs_mgr_binder.so",
+        "liblp.so",
+        "libprotobuf-cpp-lite.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libsnapshot.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libsoft_attestation_cert.so": {
+      "needed": [
+        "libkeymaster_portable.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libsoft_attestation_cert.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libsoftkeymasterdevice.so": {
+      "needed": [
+        "libkeymaster_messages.so",
+        "libkeymaster_portable.so",
+        "libsoft_attestation_cert.so",
+        "liblog.so",
+        "libbase.so",
+        "libcppbor.so",
+        "libcppcose_rkp.so",
+        "libcrypto.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libsoftkeymasterdevice.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libsparse.so": {
+      "needed": [
+        "libz.so",
+        "libbase.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libsparse.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libsqlite.so": {
+      "needed": [
+        "liblog.so",
+        "libandroidicu.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libsqlite.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libsquashfs_utils.so": {
+      "needed": [
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libsquashfs_utils.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libssl-v33.so": {
+      "needed": [
+        "libcrypto.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libssl.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libssl.so": {
+      "needed": [
+        "libcrypto.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libssl.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libstdc++.so": {
+      "needed": [
+        "libc.so"
+      ],
+      "soname": "libstdc++.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libsync.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libsync.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libsysutils.so": {
+      "needed": [
+        "libbase.so",
+        "libcutils.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libsysutils.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libtar.so": {
+      "needed": [
+        "libz.so",
+        "libselinux.so",
+        "android.hardware.boot@1.0.so",
+        "android.hardware.boot-V1-ndk.so",
+        "android.hardware.confirmationui@1.0.so",
+        "lib_android_keymaster_keymint_utils.so",
+        "android.hardware.gatekeeper-V1-ndk.so",
+        "android.hardware.gatekeeper@1.0.so",
+        "android.hardware.keymaster@3.0.so",
+        "android.hardware.keymaster@4.0.so",
+        "android.hardware.keymaster@4.1.so",
+        "android.hardware.weaver@1.0.so",
+        "android.hardware.weaver-V2-ndk.so",
+        "android.security.apc-ndk.so",
+        "android.system.keystore2-V4-ndk.so",
+        "android.security.authorization-ndk.so",
+        "android.security.maintenance-ndk.so",
+        "libbinder_ndk.so",
+        "libboot_control_client.so",
+        "libext4_utils.so",
+        "libbase.so",
+        "libcrypto.so",
+        "libcutils.so",
+        "libf2fs_sparseblock.so",
+        "libkeymaster_messages.so",
+        "libkeymint_support.so",
+        "libkeystoreinfo.so",
+        "libkeystore-attestation-application-id.so",
+        "libhardware.so",
+        "libprotobuf-cpp-lite.so",
+        "libfscrypt.so",
+        "libhidlbase.so",
+        "libutils.so",
+        "libbinder.so",
+        "libfs_mgr.so",
+        "libkeymaster4support.so",
+        "libkeymaster4_1support.so",
+        "libkeyutils.so",
+        "liblog.so",
+        "libhwbinder.so",
+        "libchrome.so",
+        "libbootloader_message.so",
+        "libgatekeeper_aidl.so",
+        "libsysutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libtar.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libtinyxml2.so": {
+      "needed": [
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libtinyxml2.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libtwadbbu.so": {
+      "needed": [
+        "libz.so",
+        "libstdc++.so",
+        "libtwrpdigest.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libtwadbbu.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libtwrpdigest.so": {
+      "needed": [
+        "libstdc++.so",
+        "libc++.so",
+        "libcrypto.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libtwrpdigest.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libtwrpmtp-ffs.so": {
+      "needed": [
+        "libc++.so",
+        "libasyncio.so",
+        "libz.so",
+        "libusbhost.so",
+        "libstdc++.so",
+        "libcutils.so",
+        "libutils.so",
+        "libselinux.so",
+        "libbase.so",
+        "liblog.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libtwrpmtp-ffs.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libunwindstack.so": {
+      "needed": [
+        "libbase.so",
+        "liblog.so",
+        "liblzma.so",
+        "libz.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libunwindstack.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libusbhost.so": {
+      "needed": [
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libusbhost.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libutil-linux.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libutil-linux.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libutils.so": {
+      "needed": [
+        "libcutils.so",
+        "liblog.so",
+        "libvndksupport.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libutils.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libutilscallstack.so": {
+      "needed": [
+        "libcutils.so",
+        "liblog.so",
+        "libutils.so",
+        "libunwindstack.so",
+        "libvndksupport.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libutilscallstack.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libvendorsupport.so": {
+      "needed": [
+        "liblog.so",
+        "libbase.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libvendorsupport.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libvintf.so": {
+      "needed": [
+        "libbase.so",
+        "liblog.so",
+        "libselinux.so",
+        "libtinyxml2.so",
+        "libz.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libvintf.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libvndksupport.so": {
+      "needed": [
+        "libdl_android.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libvndksupport.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libxml2.so": {
+      "needed": [
+        "libandroidicu.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libxml2.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libz.so": {
+      "needed": [
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libz.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/libziparchive.so": {
+      "needed": [
+        "liblog.so",
+        "libbase.so",
+        "libz.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libziparchive.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "system/lib64/server_configurable_flags.so": {
+      "needed": [
+        "libbase.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "server_configurable_flags.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/bin/cnss-daemon": {
+      "needed": [
+        "libcutils.so",
+        "liblog.so",
+        "libqmi_cci.so",
+        "libqmi_common_so.so",
+        "libnl.so",
+        "libcld80211.so",
+        "libperipheral_client.so",
+        "libmdmdetect.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/bin/hw/android.hardware.boot-service.qti": {
+      "needed": [
+        "android.hardware.boot@1.1.so",
+        "liblog.so",
+        "libboot_control_qti.so",
+        "libbase.so",
+        "libbinder_ndk.so",
+        "android.hardware.boot-V1-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/bin/hw/android.hardware.gatekeeper-service-qti": {
+      "needed": [
+        "libqtigatekeeper.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/bin/hw/android.hardware.health-service.qti": {
+      "needed": [
+        "libpng.so",
+        "libbase.so",
+        "libbinder_ndk.so",
+        "libcutils.so",
+        "liblog.so",
+        "libutils.so",
+        "android.hardware.health-V2-ndk.so",
+        "libhidlbase.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/bin/hw/android.hardware.secure_element-service.qti": {
+      "needed": [
+        "libQSEEComAPI.so",
+        "libEseUtils.so",
+        "libGPQeSE.so",
+        "libbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libbinder_ndk.so",
+        "android.hardware.secure_element-V1-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/bin/hw/android.hardware.security.keymint-service-qti": {
+      "needed": [
+        "liblog.so",
+        "libcutils.so",
+        "libbase.so",
+        "libutils.so",
+        "libhardware.so",
+        "libbinder_ndk.so",
+        "libhidlbase.so",
+        "android.hardware.keymaster@4.0.so",
+        "libqtikeymint.so",
+        "libcrypto.so",
+        "android.hardware.security.keymint-V3-ndk.so",
+        "android.hardware.security.rkp-V3-ndk.so",
+        "android.hardware.security.secureclock-V1-ndk.so",
+        "android.hardware.security.sharedsecret-V1-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/bin/hw/android.hardware.weaver-service.nxp": {
+      "needed": [
+        "android.hardware.weaver-V2-ndk.so",
+        "libbase.so",
+        "libbinder_ndk.so",
+        "liblog.so",
+        "ese_weaver.so",
+        "vendor.oplus.hardware.weaver-V1-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/bin/hw/vendor.oplus.hardware.vibrator-service": {
+      "needed": [
+        "android.hardware.vibrator-V2-ndk.so",
+        "vendor.aac.hardware.richtap.vibrator-V2-ndk.so",
+        "vendor.oplus.hardware.vibrator-V1-ndk.so",
+        "vendor.oplus.hardware.oplusvibrator-V1-ndk.so",
+        "libsoc_helper.so",
+        "libcutils.so",
+        "libutils.so",
+        "libbase.so",
+        "liboplusvibratoreffect.so",
+        "libbinder_ndk.so",
+        "libaacvibrator.so",
+        "libsivibrator.so",
+        "libtfavib.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/bin/hw/wpa_supplicant": {
+      "needed": [
+        "libcutils.so",
+        "liblog.so",
+        "libcrypto-v33.so",
+        "libssl-v33.so",
+        "libkeystore-engine-wifi-hidl.so",
+        "libkeystore-wifi-hidl.so",
+        "libnl.so",
+        "libcert_parse.wpa_s.so",
+        "android.hardware.wifi.supplicant-V2-ndk.so",
+        "android.system.keystore2-V1-ndk.so",
+        "libutils.so",
+        "libbase.so",
+        "libbinder_ndk.so",
+        "vendor.qti.hardware.wifi.supplicant-V1-ndk.so",
+        "vendor.oplus.hardware.wifi.supplicant-V5-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/bin/qrtr-ns": {
+      "needed": [
+        "libqrtr.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/bin/qseecomd": {
+      "needed": [
+        "libcutils.so",
+        "libutils.so",
+        "liblog.so",
+        "libQSEEComAPI.so",
+        "libdrmfs.so",
+        "libminkdescriptor.so",
+        "libdmabufheap.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/bin/qwesd": {
+      "needed": [
+        "libqcbor.so",
+        "libminksocket_vendor.so",
+        "libminkdescriptor.so",
+        "libcrypto.so",
+        "libQSEEComAPI.so",
+        "libcurl.so",
+        "libqmi_csi.so",
+        "liblog.so",
+        "libutils.so",
+        "libavservices_minijail.so",
+        "libdsi_netctrl.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/bin/rmt_storage": {
+      "needed": [
+        "libqmi_csi.so",
+        "libqmi_common_so.so",
+        "libcutils.so",
+        "liblog.so",
+        "libmdmdetect.so",
+        "libcrypto.so",
+        "libssl.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/bin/se_omapi": {
+      "needed": [
+        "libbase.so",
+        "libbinder_ndk.so",
+        "libutils.so",
+        "android.hardware.secure_element-V1-ndk.so",
+        "android.se.omapi-V1-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/bin/ssgtzd": {
+      "needed": [
+        "libqcbor.so",
+        "libminksocket_vendor.so",
+        "libminkdescriptor.so",
+        "liblog.so",
+        "libutils.so",
+        "libjsoncpp.so",
+        "libcutils.so",
+        "libqrtr.so",
+        "libdsi_netctrl.so",
+        "libqmi_common_so.so",
+        "libqmi_csi.so",
+        "libqmi_cci.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/etc/wifi/kiwi/bdwlan.b0c": {
+      "needed": [],
+      "soname": null,
+      "class": 32,
+      "machine": "EM_ARM"
+    },
+    "vendor/etc/wifi/kiwi/bdwlan.elf": {
+      "needed": [],
+      "soname": null,
+      "class": 32,
+      "machine": "EM_ARM"
+    },
+    "vendor/lib64/android.frameworks.sensorservice-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.sensors-V3-ndk.so",
+        "android.hardware.common-V2-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.frameworks.sensorservice-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.frameworks.sensorservice@1.0.so": {
+      "needed": [
+        "android.hardware.sensors@1.0.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.frameworks.sensorservice@1.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.common-V2-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.common-V2-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.common.fmq-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.common-V2-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.common.fmq-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.gatekeeper-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.security.keymint-V4-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.gatekeeper-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.graphics.common-V4-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.common-V2-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.graphics.common-V4-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.graphics.common@1.0.so": {
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.graphics.common@1.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.graphics.common@1.1.so": {
+      "needed": [
+        "android.hardware.graphics.common@1.0.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.graphics.common@1.1.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.graphics.common@1.2.so": {
+      "needed": [
+        "android.hardware.graphics.common@1.0.so",
+        "android.hardware.graphics.common@1.1.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.graphics.common@1.2.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.graphics.mapper@4.0.so": {
+      "needed": [
+        "android.hardware.graphics.common@1.0.so",
+        "android.hardware.graphics.common@1.1.so",
+        "android.hardware.graphics.common@1.2.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.graphics.mapper@4.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.health-V2-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.health-V2-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.nfc-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.nfc-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.secure_element-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.secure_element-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.secure_element-V1-ndk_odm.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.secure_element-V1-ndk_odm.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.secure_element@1.0.so": {
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.secure_element@1.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.secure_element@1.1.so": {
+      "needed": [
+        "android.hardware.secure_element@1.0.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.secure_element@1.1.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.secure_element@1.2.so": {
+      "needed": [
+        "android.hardware.secure_element@1.0.so",
+        "android.hardware.secure_element@1.1.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.secure_element@1.2.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.security.keymint-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.security.secureclock-V1-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.security.keymint-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.security.keymint-V2-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.security.secureclock-V1-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.security.keymint-V2-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.security.keymint-V3-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.security.secureclock-V1-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.security.keymint-V3-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.security.keymint-V4-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.security.secureclock-V1-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.security.keymint-V4-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.security.rkp-V3-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.security.rkp-V3-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.security.secureclock-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.security.secureclock-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.security.sharedsecret-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.security.sharedsecret-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.sensors-V3-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.common-V2-ndk.so",
+        "android.hardware.common.fmq-V1-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.sensors-V3-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.sensors@1.0.so": {
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.sensors@1.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.sensors@2.0-ScopedWakelock.so": {
+      "needed": [
+        "android.hardware.sensors@1.0.so",
+        "android.hardware.sensors@2.0.so",
+        "android.hardware.sensors@2.1.so",
+        "libbase.so",
+        "libcutils.so",
+        "libfmq.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libpower.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.sensors@2.0-ScopedWakelock.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.sensors@2.0.so": {
+      "needed": [
+        "android.hardware.sensors@1.0.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.sensors@2.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.sensors@2.1.so": {
+      "needed": [
+        "android.hardware.sensors@1.0.so",
+        "android.hardware.sensors@2.0.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.sensors@2.1.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.vibrator-V2-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.vibrator-V2-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.weaver-V2-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.weaver-V2-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hardware.wifi.supplicant-V2-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hardware.wifi.supplicant-V2-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hidl.allocator@1.0.so": {
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hidl.allocator@1.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hidl.memory.token@1.0.so": {
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hidl.memory.token@1.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.hidl.memory@1.0.so": {
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.hidl.memory@1.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.se.omapi-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.se.omapi-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/android.system.keystore2-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.security.keymint-V1-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "android.system.keystore2-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/ese_weaver.so": {
+      "needed": [
+        "android.se.omapi-V1-ndk.so",
+        "libcutils.so",
+        "libjc_keymint_transport_nxp.so",
+        "libhardware.so",
+        "libhidlbase.so",
+        "libutils.so",
+        "liblog.so",
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "ese_weaver.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/hw/libEseUtils.so": {
+      "needed": [
+        "liblog.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libEseUtils.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/hw/libqtigatekeeper.so": {
+      "needed": [
+        "android.hardware.gatekeeper-V1-ndk.so",
+        "libhardware.so",
+        "libbinder_ndk.so",
+        "libbase.so",
+        "libutils.so",
+        "liblog.so",
+        "libcutils.so",
+        "libgatekeeper.so",
+        "libkeymasterdeviceutils.so",
+        "libqcbor.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libqtigatekeeper.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libGPMTEEC_vendor.so": {
+      "needed": [
+        "libc.so",
+        "libcutils.so",
+        "libutils.so",
+        "liblog.so",
+        "libGPTEE_vendor.so",
+        "libminkdescriptor.so",
+        "libminksocket_vendor.so",
+        "libdmabufheap.so",
+        "libc++.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libGPMTEEC_vendor.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libGPQeSE.so": {
+      "needed": [
+        "libhidlbase.so",
+        "libutils.so",
+        "liblog.so",
+        "libhardware.so",
+        "libbase.so",
+        "libcutils.so",
+        "android.hardware.secure_element@1.0.so",
+        "libGPTEE_vendor.so",
+        "libQSEEComAPI.so",
+        "libEseUtils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libGPQeSE.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libGPTEE_vendor.so": {
+      "needed": [
+        "libc.so",
+        "libcutils.so",
+        "libutils.so",
+        "liblog.so",
+        "libbase.so",
+        "libc++.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libGPTEE_vendor.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libGPreqcancel.so": {
+      "needed": [
+        "libutils.so",
+        "libcutils.so",
+        "libdiag.so",
+        "liblog.so",
+        "libQSEEComAPI.so",
+        "libGPreqcancel_svc.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libGPreqcancel.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libGPreqcancel_svc.so": {
+      "needed": [
+        "libutils.so",
+        "libcutils.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libGPreqcancel_svc.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libQSEEComAPI.so": {
+      "needed": [
+        "libdmabufheap.so",
+        "liblog.so",
+        "libutils.so",
+        "libqcbor.so",
+        "libminkdescriptor.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libQSEEComAPI.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/lib_android_keymaster_keymint_utils.so": {
+      "needed": [
+        "android.hardware.security.keymint-V3-ndk.so",
+        "libbase.so",
+        "libhardware.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "lib_android_keymaster_keymint_utils.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libaacvibrator.so": {
+      "needed": [
+        "liblog.so",
+        "libcutils.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libaacvibrator.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libagmmixer.so": {
+      "needed": [
+        "libtinyalsa.so",
+        "libexpat.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libagmmixer.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libapexsupport.so": {
+      "needed": [
+        "libdl_android.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libapexsupport.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libavservices_minijail.so": {
+      "needed": [
+        "libbase.so",
+        "libminijail.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libavservices_minijail.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libboot_control_qti.so": {
+      "needed": [
+        "android.hardware.boot@1.1.so",
+        "librecovery_updater.so",
+        "libbase.so",
+        "libcutils.so",
+        "liblog.so",
+        "libz.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libboot_control_qti.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libc++_v35.so": {
+      "needed": [
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libc++.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libcert_parse.wpa_s.so": {
+      "needed": [
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libcert_parse.wpa_s.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libclang_rt.ubsan_standalone-aarch64-android.so": {
+      "needed": [
+        "libc.so",
+        "libdl.so",
+        "liblog.so"
+      ],
+      "soname": "libclang_rt.ubsan_standalone-aarch64-android.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libcld80211.so": {
+      "needed": [
+        "libcutils.so",
+        "libnl.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libcld80211.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libconfigdb.so": {
+      "needed": [
+        "libxml.so",
+        "libdiag.so",
+        "libdsutils.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libconfigdb.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libcppbor.so": {
+      "needed": [
+        "libbase.so",
+        "libcrypto.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libcppbor.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libcppbor_external.so": {
+      "needed": [
+        "libbase.so",
+        "libcrypto.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libcppbor_external.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libcppcose_rkp.so": {
+      "needed": [
+        "libcppbor_external.so",
+        "libcrypto.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libcppcose_rkp.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libcurl.so": {
+      "needed": [
+        "libcrypto.so",
+        "libssl.so",
+        "libz.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libcurl.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libdiag.so": {
+      "needed": [
+        "liblog.so",
+        "libc.so",
+        "libcutils.so",
+        "libc++.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libdiag.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libdisplayconfig.qti.so": {
+      "needed": [
+        "liblog.so",
+        "libhidlbase.so",
+        "libutils.so",
+        "vendor.display.config@2.0.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libdisplayconfig.qti.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libdmabufheap.so": {
+      "needed": [
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libdmabufheap.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libdrm.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libdrm.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libdrmfs.so": {
+      "needed": [
+        "libutils.so",
+        "libcutils.so",
+        "libdiag.so",
+        "liblog.so",
+        "libQSEEComAPI.so",
+        "libxml2.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libdrmfs.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libdrmtime.so": {
+      "needed": [
+        "libutils.so",
+        "libcutils.so",
+        "libdiag.so",
+        "liblog.so",
+        "libQSEEComAPI.so",
+        "libtime_genoff.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libdrmtime.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libdsi_netctrl.so": {
+      "needed": [
+        "libqdi.so",
+        "libdiag.so",
+        "libcutils.so",
+        "liblog.so",
+        "libdsutils.so",
+        "libconfigdb.so",
+        "libqmiservices.so",
+        "libqmi_cci.so",
+        "libqmi_common_so.so",
+        "libqmi_client_qmux.so",
+        "libqmi_client_helper.so",
+        "libqmi.so",
+        "libnicm.so",
+        "libnicm_dsi.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libdsi_netctrl.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libdsutils.so": {
+      "needed": [
+        "liblog.so",
+        "libdiag.so",
+        "libcutils.so",
+        "libmdmdetect.so",
+        "libnetutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libdsutils.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libesesbprovision.so": {
+      "needed": [
+        "libhidlbase.so",
+        "libQSEEComAPI.so",
+        "libqcbor.so",
+        "libcutils.so",
+        "libutils.so",
+        "liblog.so",
+        "libqmi_cci.so",
+        "libqmiservices.so",
+        "libEseUtils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libesesbprovision.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libfmq.so": {
+      "needed": [
+        "libbase.so",
+        "liblog.so",
+        "libcutils.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libfmq.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libgatekeeper.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libgatekeeper.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libgpt.so": {
+      "needed": [
+        "libutils.so",
+        "libQSEEComAPI.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libgpt.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libgralloctypes.so": {
+      "needed": [
+        "android.hardware.graphics.common-V4-ndk.so",
+        "android.hardware.graphics.mapper@4.0.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libgralloctypes.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libhidlmemory.so": {
+      "needed": [
+        "libbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libhidlbase.so",
+        "android.hidl.memory@1.0.so",
+        "android.hidl.memory.token@1.0.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libhidlmemory.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libidl.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libidl.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libion.so": {
+      "needed": [
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libion.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libjc_keymint_nxp.so": {
+      "needed": [
+        "android.hardware.security.rkp-V3-ndk.so",
+        "android.hardware.security.secureclock-V1-ndk.so",
+        "android.hardware.security.sharedsecret-V1-ndk.so",
+        "lib_android_keymaster_keymint_utils.so",
+        "libbase.so",
+        "libbinder.so",
+        "libcppbor_external.so",
+        "libesesbprovision.so",
+        "libkeymaster_portable.so",
+        "libkeymaster_messages.so",
+        "libsoft_attestation_cert.so",
+        "liblog.so",
+        "libcrypto.so",
+        "libcutils.so",
+        "libjc_keymint_transport_nxp.so",
+        "libbinder_ndk.so",
+        "libmemunreachable.so",
+        "android.hardware.security.keymint-V3-ndk.so",
+        "vendor.oplus.hardware.keymint-V1-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libjc_keymint_nxp.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libjc_keymint_transport_nxp.so": {
+      "needed": [
+        "android.hardware.secure_element@1.0.so",
+        "android.hardware.secure_element@1.1.so",
+        "android.hardware.secure_element@1.2.so",
+        "android.se.omapi-V1-ndk.so",
+        "libbase.so",
+        "liblog.so",
+        "libcutils.so",
+        "libutils.so",
+        "libhardware.so",
+        "libhidlbase.so",
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libjc_keymint_transport_nxp.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libkeymaster_messages.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libkeymaster_messages.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libkeymaster_portable.so": {
+      "needed": [
+        "libcrypto.so",
+        "libcppbor_external.so",
+        "libcppcose_rkp.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libkeymaster_portable.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libkeymasterdeviceutils.so": {
+      "needed": [
+        "libion.so",
+        "libcutils.so",
+        "liblog.so",
+        "libcrypto.so",
+        "libdmabufheap.so",
+        "libminkdescriptor.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libkeymasterdeviceutils.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libkeymasterprovision.so": {
+      "needed": [
+        "liblog.so",
+        "libcrypto.so",
+        "libkeymasterdeviceutils.so",
+        "libkeymasterutils.so",
+        "libqcbor.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libkeymasterprovision.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libkeymasterutils.so": {
+      "needed": [
+        "libcutils.so",
+        "libQSEEComAPI.so",
+        "liblog.so",
+        "libcrypto.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libkeymasterutils.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libkeystore-engine-wifi-hidl.so": {
+      "needed": [
+        "android.system.keystore2-V1-ndk.so",
+        "libbase.so",
+        "libbinder_ndk.so",
+        "libcrypto.so",
+        "liblog.so",
+        "libcutils.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libkeystore-engine-wifi-hidl.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libkeystore-wifi-hidl.so": {
+      "needed": [
+        "android.system.wifi.keystore@1.0.so",
+        "libbase.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libkeystore-wifi-hidl.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libmdmdetect.so": {
+      "needed": [
+        "libcutils.so",
+        "libutils.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libmdmdetect.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libmemunreachable.so": {
+      "needed": [
+        "libbase.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libmemunreachable.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libminijail.so": {
+      "needed": [
+        "libcap.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libminijail.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libminkdescriptor.so": {
+      "needed": [
+        "liblog.so",
+        "libutils.so",
+        "libqcbor.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libminkdescriptor.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libminksocket_vendor.so": {
+      "needed": [
+        "libcutils.so",
+        "liblog.so",
+        "libqrtr.so",
+        "libvmmem.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libminksocket_vendor.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libnetutils.so": {
+      "needed": [
+        "libcutils.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libnetutils.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libnicm.so": {
+      "needed": [
+        "libnicm_utils.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libnicm.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libnicm_dsi.so": {
+      "needed": [
+        "libnicm.so",
+        "libdsutils.so",
+        "libdiag.so",
+        "libqmi_cci.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libnicm_dsi.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libnicm_utils.so": {
+      "needed": [
+        "libdiag.so",
+        "liblog.so",
+        "libdsutils.so",
+        "libcutils.so",
+        "libssl.so",
+        "libcrypto.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libnicm_utils.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/liboplusvibratoreffect.so": {
+      "needed": [
+        "libcutils.so",
+        "libutils.so",
+        "libjsoncpp.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "liboplusvibratoreffect.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libops.so": {
+      "needed": [
+        "libutils.so",
+        "libcutils.so",
+        "libQSEEComAPI.so",
+        "liblog.so",
+        "libdrm.so",
+        "vendor.qti.hardware.display.config-V7-ndk.so",
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libops.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libpalclient.so": {
+      "needed": [
+        "libhidlbase.so",
+        "libhidltransport.so",
+        "libutils.so",
+        "liblog.so",
+        "libcutils.so",
+        "libfmq.so",
+        "libhardware.so",
+        "libbase.so",
+        "vendor.qti.hardware.pal@1.0.so",
+        "android.hidl.allocator@1.0.so",
+        "android.hidl.memory@1.0.so",
+        "libhidlmemory.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libpalclient.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libperipheral_client.so": {
+      "needed": [
+        "libcutils.so",
+        "libutils.so",
+        "liblog.so",
+        "libbinder.so",
+        "libmdmdetect.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libperipheral_client.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libpower.so": {
+      "needed": [
+        "libbase.so",
+        "libbinder_ndk.so",
+        "libcutils.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "android.system.suspend-V1-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libpower.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libqcbor.so": {
+      "needed": [
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libqcbor.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libqcci_legacy.so": {
+      "needed": [
+        "libcutils.so",
+        "libdiag.so",
+        "libidl.so",
+        "libqmi_client_qmux.so",
+        "libqmi_legacy.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libqcci_legacy.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libqdi.so": {
+      "needed": [
+        "libdiag.so",
+        "libdsutils.so",
+        "libqmiservices.so",
+        "libqmi_cci.so",
+        "libqmi_common_so.so",
+        "libqmi_client_qmux.so",
+        "libqmi_client_helper.so",
+        "libqmi.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libqdi.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libqdutils.so": {
+      "needed": [
+        "liblog.so",
+        "libcutils.so",
+        "libutils.so",
+        "libbinder.so",
+        "libqservice.so",
+        "libgralloctypes.so",
+        "android.hardware.graphics.common@1.2.so",
+        "android.hardware.graphics.mapper@4.0.so",
+        "libhidlbase.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libqdutils.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libqisl.so": {
+      "needed": [
+        "libcutils.so",
+        "liblog.so",
+        "libQSEEComAPI.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libqisl.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libqmi.so": {
+      "needed": [
+        "libcutils.so",
+        "libqmi_client_qmux.so",
+        "libdiag.so",
+        "libdsutils.so",
+        "libqmiservices.so",
+        "libidl.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libqmi.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libqmi_cci.so": {
+      "needed": [
+        "libcutils.so",
+        "libutils.so",
+        "libqmi_encdec.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libqmi_cci.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libqmi_client_helper.so": {
+      "needed": [
+        "libcutils.so",
+        "libdiag.so",
+        "libdsutils.so",
+        "libqmiservices.so",
+        "libqmi_client_qmux.so",
+        "libqmi_cci.so",
+        "libidl.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libqmi_client_helper.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libqmi_client_qmux.so": {
+      "needed": [
+        "libdiag.so",
+        "libdsutils.so",
+        "libqmiservices.so",
+        "libidl.so",
+        "liblog.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libqmi_client_qmux.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libqmi_common_so.so": {
+      "needed": [
+        "libcutils.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libqmi_common_so.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libqmi_csi.so": {
+      "needed": [
+        "libcutils.so",
+        "libutils.so",
+        "libqmi_encdec.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libqmi_csi.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libqmi_csvt_srvc.so": {
+      "needed": [
+        "libcutils.so",
+        "libdiag.so",
+        "libqmi_legacy.so",
+        "libqmiservices.so",
+        "libqcci_legacy.so",
+        "libqmi_client_qmux.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libqmi_csvt_srvc.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libqmi_encdec.so": {
+      "needed": [
+        "libcutils.so",
+        "libutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libqmi_encdec.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libqmi_legacy.so": {
+      "needed": [
+        "libcutils.so",
+        "libqmi_client_qmux.so",
+        "libdiag.so",
+        "libdsutils.so",
+        "libqmiservices.so",
+        "libidl.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libqmi_legacy.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libqmiextservices.so": {
+      "needed": [
+        "libidl.so",
+        "libqmiservices.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libqmiextservices.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libqmiservices.so": {
+      "needed": [
+        "libidl.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libqmiservices.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libqrtr.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libqrtr.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libqservice.so": {
+      "needed": [
+        "liblog.so",
+        "libcutils.so",
+        "libutils.so",
+        "libbinder.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libqservice.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libqtikeymaster4.so": {
+      "needed": [
+        "liblog.so",
+        "libcrypto.so",
+        "libhidlbase.so",
+        "libutils.so",
+        "libcutils.so",
+        "libkeymasterdeviceutils.so",
+        "libkeymasterutils.so",
+        "libbase.so",
+        "libqcbor.so",
+        "android.hardware.keymaster@4.0.so",
+        "android.hardware.keymaster@4.1.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libqtikeymaster4.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libqtikeymint.so": {
+      "needed": [
+        "liblog.so",
+        "libcrypto.so",
+        "libhidlbase.so",
+        "libutils.so",
+        "libcutils.so",
+        "libkeymasterdeviceutils.so",
+        "libbase.so",
+        "libqcbor.so",
+        "libkeymaster_messages.so",
+        "android.hardware.keymaster@4.0.so",
+        "android.hardware.keymaster@4.1.so",
+        "android.hardware.security.keymint-V3-ndk.so",
+        "android.hardware.security.rkp-V3-ndk.so",
+        "android.hardware.security.secureclock-V1-ndk.so",
+        "android.hardware.security.sharedsecret-V1-ndk.so",
+        "libbinder_ndk.so",
+        "libkeymasterutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libqtikeymint.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/librecovery_updater.so": {
+      "needed": [
+        "libcutils.so",
+        "libion.so",
+        "liblog.so",
+        "libz.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "librecovery_updater.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/librecovery_updater_msm.so": {
+      "needed": [
+        "liblog.so",
+        "libcutils.so",
+        "libz.so",
+        "libion.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "librecovery_updater_msm.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/librpmb.so": {
+      "needed": [
+        "libutils.so",
+        "libQSEEComAPI.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "librpmb.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libsecurity_event_dcs_vnd.so": {
+      "needed": [
+        "vendor.oplus.hardware.commondcs-V1-ndk.so",
+        "libbinder.so",
+        "liblog.so",
+        "libbase.so",
+        "libutils.so",
+        "libcrypto.so",
+        "libhardware.so",
+        "libhidlbase.so",
+        "libbinder_ndk.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libsecurity_event_dcs_vnd.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libsivibrator.so": {
+      "needed": [
+        "libcutils.so",
+        "libutils.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libsivibrator.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libsoc_helper.so": {
+      "needed": [
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libsoc_helper.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libspcom.so": {
+      "needed": [
+        "libion.so",
+        "libdmabufheap.so",
+        "libvmmem.so",
+        "libutils.so",
+        "libcutils.so",
+        "liblog.so",
+        "libcrypto.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libspcom.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libspl.so": {
+      "needed": [
+        "libcutils.so",
+        "liblog.so",
+        "libQSEEComAPI.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libspl.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libssd.so": {
+      "needed": [
+        "libutils.so",
+        "libcutils.so",
+        "libdiag.so",
+        "liblog.so",
+        "libQSEEComAPI.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libssd.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libtaautoload.so": {
+      "needed": [
+        "liblog.so",
+        "libminkdescriptor.so",
+        "libjsoncpp.so",
+        "libdmabufheap.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libtaautoload.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libtfavib.so": {
+      "needed": [
+        "liblog.so",
+        "libdl.so",
+        "libc.so",
+        "libm.so"
+      ],
+      "soname": "libtfavib.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libtime_genoff.so": {
+      "needed": [
+        "libc.so",
+        "libcutils.so",
+        "liblog.so",
+        "libc++.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libtime_genoff.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libtinyalsa.so": {
+      "needed": [
+        "libc++.so",
+        "libc.so",
+        "libdl.so"
+      ],
+      "soname": "libtinyalsa.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libtinyalsav2.so": {
+      "needed": [
+        "libclang_rt.ubsan_standalone-aarch64-android.so",
+        "libc++.so",
+        "libc.so",
+        "libdl.so"
+      ],
+      "soname": "libtinyalsav2.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libvmmem.so": {
+      "needed": [
+        "liblog.so",
+        "libbase.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libvmmem.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libxml.so": {
+      "needed": [
+        "liblog.so",
+        "libdiag.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libxml.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/libxml2.so": {
+      "needed": [
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "libxml2.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/vendor.aac.hardware.richtap.vibrator-V2-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "vendor.aac.hardware.richtap.vibrator-V2-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/vendor.display.config@1.0.so": {
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "vendor.display.config@1.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/vendor.display.config@2.0.so": {
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "vendor.display.config@2.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/vendor.oplus.hardware.commondcs-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "vendor.oplus.hardware.commondcs-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/vendor.oplus.hardware.keymint-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "vendor.oplus.hardware.keymint-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/vendor.oplus.hardware.oplusvibrator-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "vendor.aac.hardware.richtap.vibrator-V2-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "vendor.oplus.hardware.oplusvibrator-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/vendor.oplus.hardware.vibrator-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "vendor.oplus.hardware.vibrator-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/vendor.oplus.hardware.weaver-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "vendor.oplus.hardware.weaver-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/vendor.oplus.hardware.wifi.supplicant-V5-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "vendor.oplus.hardware.wifi.supplicant-V5-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/vendor.qti.hardware.display.config-V7-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.common-V2-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "vendor.qti.hardware.display.config-V7-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/vendor.qti.hardware.pal@1.0.so": {
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "vendor.qti.hardware.pal@1.0.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/lib64/vendor.qti.hardware.wifi.supplicant-V1-ndk.so": {
+      "needed": [
+        "libbinder_ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ],
+      "soname": "vendor.qti.hardware.wifi.supplicant-V1-ndk.so",
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "lib/modules/msm_kgsl.ko": {
+      "needed": [],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64"
+    },
+    "vendor/firmware/gen70900_zap.mbn": {
+      "needed": [],
+      "soname": null,
+      "class": 32,
+      "machine": "EM_QDSP6"
+    },
+    "system/etc/aera-browser/phy110-worker": {
+      "needed": [
+        "libWPEWebKit-2.0.so.1",
+        "libgio-2.0.so.0",
+        "libgobject-2.0.so.0",
+        "libglib-2.0.so.0",
+        "libepoxy.so.0",
+        "libstdc++.so.6",
+        "libgcc_s.so.1",
+        "libc.musl-aarch64.so.1"
+      ],
+      "soname": null,
+      "class": 64,
+      "machine": "EM_AARCH64",
+      "dependency_scope": "Validated pinned isolated browser runtime; not recovery linker namespace"
+    }
+  }
+}

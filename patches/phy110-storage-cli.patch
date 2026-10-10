@@ -1,0 +1,221 @@
+diff --git a/aera_rpc/aera_engine.cpp b/aera_rpc/aera_engine.cpp
+index 905c7c58..254d75dd 100644
+--- a/aera_rpc/aera_engine.cpp
++++ b/aera_rpc/aera_engine.cpp
+@@ -4,6 +4,7 @@
+ #include "aera_engine.hpp"
+ 
+ #include <algorithm>
++#include <cctype>
+ #include <fstream>
+ #include <string>
+ #include <unistd.h>
+@@ -329,6 +330,22 @@ int Mirror(const Request &request, EventSink &events) {
+ int Execute(const Request &request, EventSink &events) {
+   const std::string &op = request.operation;
+   if (op == "status") return Status(events);
++  if (op == "getvar" || op == "setvar") {
++    const std::string name = Text(request.arguments, "name");
++    if (name.empty() || name.size() > 200 ||
++        !std::all_of(name.begin(), name.end(), [](unsigned char c) {
++          return std::isalnum(c) || c == '_' || c == '.';
++        })) return Fail(events, "invalid_variable", "Invalid variable name", 2);
++    if (op == "setvar" &&
++        DataManager::SetValue(name, Text(request.arguments, "value")) != 0)
++      return Fail(events, "set_failed", "Variable is read-only or unavailable");
++    std::string value;
++    if (DataManager::GetValue(name, value) != 0)
++      return Fail(events, "unknown_variable", "Variable is unavailable", 2);
++    events.Log(Flag(request.arguments, "raw") ? value + "\n"
++                                            : name + " = " + value + "\n");
++    return 0;
++  }
+   if (op == "storages") {
+     events.Data("storages", Volumes(aeraui::RecoveryVolumes("storage"), false));
+     return 0;
+diff --git a/aeraui/platform/aera_backend.cpp b/aeraui/platform/aera_backend.cpp
+index 5e2d8df3..2291b108 100644
+--- a/aeraui/platform/aera_backend.cpp
++++ b/aeraui/platform/aera_backend.cpp
+@@ -20,6 +20,7 @@
+ #include <vector>
+ #include <sys/mount.h>
+ #include <sys/stat.h>
++#include <sys/statvfs.h>
+ #include <unistd.h>
+ 
+ #include <cutils/properties.h>
+@@ -321,7 +322,14 @@ std::vector<Volume> RecoveryVolumes(const std::string &kind) {
+     if (part.Mount_Point == "DALVIK") name = "Dalvik / ART cache";
+     if (part.Mount_Point == "INTERNAL") name = "Internal storage";
+     if (name.empty() || name.find('{') != std::string::npos) name = part.Mount_Point;
+-    result.push_back({name, part.Mount_Point, part.PartitionSize, part.selected != 0});
++    uint64_t bytes = part.PartitionSize;
++    if (kind == "storage") {
++      struct statvfs space{};
++      if (PartitionManager.Is_Mounted_By_Path(part.Mount_Point) > 0 &&
++          statvfs(part.Mount_Point.c_str(), &space) == 0)
++        bytes = static_cast<uint64_t>(space.f_blocks) * space.f_frsize;
++    }
++    result.push_back({name, part.Mount_Point, bytes, part.selected != 0});
+   }
+   return result;
+ }
+diff --git a/orscmd/orscmd.cpp b/orscmd/orscmd.cpp
+index 87d82b08..832cedf4 100644
+--- a/orscmd/orscmd.cpp
++++ b/orscmd/orscmd.cpp
+@@ -24,6 +24,8 @@
+ #include <string.h>
+ #include <fcntl.h>
+ #include <errno.h>
++#include <string>
++#include <vector>
+ #include <inttypes.h>
+ 
+ // for setcap and getcap
+@@ -40,28 +42,10 @@ void print_version(void) {
+ 
+ void print_usage(void) {
+ 	print_version();
+-	printf("Allows command line usage of AERA via openrecoveryscript commands.\n");
+-	printf("Some common commands include:\n");
+-	printf("  install /path/to/update.zip\n");
+-	printf("  backup <SDCRBAEM> [backupname]\n");
+-	printf("  restore <SDCRBAEM> [backupname]\n");
+-	printf("  wipe <partition name>\n");
+-	printf("  format data\n");	
+-	printf("  sideload\n");
+-	printf("  get <variable>\n");
+-	printf("  set <variable> [value]\n");
+-	printf("  decrypt <password> [USER ID]\n");
+-	printf("  remountrw\n");
+-	printf("  fixperms\n");
+-	printf("  set_active [slot]\n");
+-	printf("  mount <path>\n");
+-	printf("  unmount <path>\n");
+-	printf("  listmounts\n");
+-	printf("  print <value>\n");
+-	printf("  mkdir <directory>\n");
+-	printf("  reboot [recovery|poweroff|bootloader|download|fastboot|edl]\n");
+-	printf("  console_message | console_warning | console_error <message to be displayed>\n");
+-	printf("\nSee more documentation at https://twrp.me/faq/openrecoveryscript.html\n");
++	printf("Native AERA compatibility client: get/getval VAR, set VAR VALUE,\n");
++	printf("mount/unmount PATH, listmounts, install ZIP, decrypt PASSWORD [USER],\n");
++	printf("wipe PATH, reboot TARGET, sideload, setcap/getcap.\n");
++	printf("For backup, restore, format and all native operations use aera --help.\n");
+ }
+ 
+ int do_setcap(const char* filename, const char* capabilities)
+@@ -104,8 +88,7 @@ int do_getcap(const char* filename)
+ }
+ 
+ int main(int argc, char **argv) {
+-	int read_fd, write_fd, index;
+-	char command[1024], result[512];
++	
+ 
+ 	if (argc < 2 || strcmp(argv[1], "help") == 0 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "?") == 0 || strcmp(argv[1], "-h") == 0) {
+ 		print_usage();
+@@ -135,36 +118,35 @@ int main(int argc, char **argv) {
+ 		return do_getcap(argv[2]);
+ 	}
+ 
+-	sprintf(command, "%s", argv[1]);
+-	for (index = 2; index < argc; index++) {
+-		sprintf(command, "%s %s", command, argv[index]);
+-	}
+-
+-	write_fd = open(ORS_INPUT_FILE, O_WRONLY);
+-	if (write_fd < 0) {
+-		printf("AERA does not appear to be running. Waiting for AERA to start . . .\n");
+-		printf("Press CTRL + C to quit.\n");
+-		while (write_fd < 0)
+-			write_fd = open(ORS_INPUT_FILE, O_WRONLY);
+-	}
+-	if (write(write_fd, command, sizeof(command)) != sizeof(command)) {
+-		printf("Error sending command.\n");
+-		close(write_fd);
+-		return -1;
++	// Native AERA owns a different command channel; never wait on the legacy FIFO.
++	std::vector<std::string> args{"/system/bin/aera", "--timeout", "30"};
++	const std::string op = argv[1];
++	if ((op == "get" || op == "getval") && argc == 3) {
++		args.insert(args.end(), {"call", "getvar", "--string", "name", argv[2]});
++		if (op == "getval") args.insert(args.end(), {"--bool", "raw", "true"});
++	} else if (op == "set" && argc == 4) {
++		args.insert(args.end(), {"call", "setvar", "--string", "name", argv[2],
++		                         "--string", "value", argv[3]});
++	} else if (op == "listmounts" && argc == 2) {
++		args.push_back("mount");
++	} else if (op == "install" && argc >= 3) {
++		args.push_back("flash");
++		for (int i = 2; i < argc; ++i) args.push_back(argv[i]);
++	} else if ((op == "mount" || op == "unmount" || op == "wipe" ||
++		        op == "reboot" || op == "sideload") && argc >= 2) {
++		args.push_back(op);
++		for (int i = 2; i < argc; ++i) args.push_back(argv[i]);
++	} else if (op == "decrypt" && (argc == 3 || argc == 4)) {
++		args.insert(args.end(), {"decrypt", argv[2]});
++		if (argc == 4) args.insert(args.end(), {"--user", argv[3]});
++	} else {
++		fprintf(stderr, "Unsupported legacy command or arguments. Use 'aera --help'.\n");
++		return 2;
+ 	}
+-	read_fd = open(ORS_OUTPUT_FILE, O_RDONLY);
+-	if (read_fd < 0) {
+-		printf("Unable to open %s for read.\n", ORS_OUTPUT_FILE);
+-		return -1;
+-	}
+-	memset(&result, 0, sizeof(result));
+-	while (read(read_fd, &result, sizeof(result)) > 0) {
+-		result[510] = '\n';
+-		result[511] = '\0';
+-		printf("%s", result);
+-		memset(&result, 0, sizeof(result));
+-	}
+-	close(write_fd);
+-	close(read_fd);
+-	return 0;
++	std::vector<char *> exec_args;
++	for (auto &arg : args) exec_args.push_back(&arg[0]);
++	exec_args.push_back(nullptr);
++	execv(exec_args[0], exec_args.data());
++	fprintf(stderr, "Could not start AERA client: %s\n", strerror(errno));
++	return 1;
+ }
+diff --git a/partition.cpp b/partition.cpp
+index 1247ccb0..89706855 100644
+--- a/partition.cpp
++++ b/partition.cpp
+@@ -1381,11 +1381,7 @@ void TWPartition::Setup_Data_Media() {
+ 		}
+ 	}
+ 	ExcludeAll(Mount_Point + "/media");
+-#ifdef OF_MISCELLANEOUS_ROOT_DIRECTORY
+-	if (TWFunc::Get_Root_Path(Aera_Home) == Mount_Point) {
+-		Storage_Path = OF_MISCELLANEOUS_ROOT_DIRECTORY;
+-	}
+-#endif
++// Recovery's private settings root is independent of emulated media storage.
+ }
+ 
+ void TWPartition::Find_Real_Block_Device(string& Block, bool Display_Error) {
+diff --git a/partitionmanager.cpp b/partitionmanager.cpp
+index debe9b54..496523a1 100755
+--- a/partitionmanager.cpp
++++ b/partitionmanager.cpp
+@@ -2532,10 +2532,9 @@ void TWPartitionManager::Post_Decrypt(const string& Block_Device) {
+ 		else
+ 			bind_path = "/data/media";
+ 
+-		if (TWFunc::Get_Root_Path(Aera_Home) != dat->Mount_Point) {
+-			dat->Storage_Path = bind_path;
+-			dat->Symlink_Path = dat->Storage_Path;
+-		} else dat->Symlink_Path = bind_path;
++		// Keep internal storage at the decrypted media root; Aera_Home stores settings.
++		dat->Storage_Path = bind_path;
++		dat->Symlink_Path = bind_path;
+ 
+ 		DataManager::SetValue("tw_storage_path", dat->Storage_Path);
+ 		//DataManager::SetValue("tw_settings_path", dat->Symlink_Path);

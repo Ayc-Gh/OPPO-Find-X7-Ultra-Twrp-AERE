@@ -35,4 +35,3 @@ e2b4183e2912677cf75c6cdc7a0316a9166ca1e3dfc75d7d3207e96ce051493a
 仓库作为 AERA 源码根目录中的 `device/oppo/phy110`；产品为 `twrp_phy110-bp2a-eng`。锁定来源见 `source-lock.json` 与 `build-record/resolved-manifest.xml`，适配补丁在 `patches/`，构建说明见 [BUILD.md](BUILD.md)。音频原型及限制见 [experimental/audio/README.md](experimental/audio/README.md)。
 
 各文件原有版权与许可证保留。厂商二进制及固件不因发布而改授开源许可，参见 [NOTICE.md](NOTICE.md)。公开资料不含用户备份、原始手机日志、锁屏密码或网络凭据。
-

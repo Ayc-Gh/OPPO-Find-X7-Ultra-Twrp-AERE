@@ -1,0 +1,25 @@
+diff --git a/aeraui/platform/aera_ui_host.cpp b/aeraui/platform/aera_ui_host.cpp
+index 1ee7e545..8e19fd34 100644
+--- a/aeraui/platform/aera_ui_host.cpp
++++ b/aeraui/platform/aera_ui_host.cpp
+@@ -53,6 +53,11 @@ extern "C" int aeraui_is_active() { return 1; }
+ 
+ extern "C" int gui_init() {
+   gr_init();
++  // Reset the bootloader display handoff before starting PHY110 scanout.
++  if (android::base::GetProperty("ro.recovery.phy110.supported", "0") == "1") {
++    gr_fb_blank(true);
++    gr_fb_blank(false);
++  }
+   TWFunc::Set_Brightness(DataManager::GetStrValue("tw_brightness"));
+ #ifdef TW_SCREEN_BLANK_ON_BOOT
+   aeraScreenTimer.Blank();
+@@ -62,6 +67,8 @@ extern "C" int gui_init() {
+   usleep(TW_DELAY_TOUCH_INIT_MS);
+ #endif
+   ev_init();
++  // Some touch controllers need to resume after DRM initializes the panel.
++  TWFunc::check_and_run_script("/system/bin/postscreenunblank.sh", "unblank");
+ 
+   const bool fastboot =
+       android::base::GetProperty(TW_FASTBOOT_MODE_PROP, "0") == "1";

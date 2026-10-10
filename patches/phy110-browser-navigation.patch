@@ -1,0 +1,260 @@
+diff --git a/aeraui/features/browser/aera_worker.cpp b/aeraui/features/browser/aera_worker.cpp
+index ee80dbaf..bb0000e4 100644
+--- a/aeraui/features/browser/aera_worker.cpp
++++ b/aeraui/features/browser/aera_worker.cpp
+@@ -24,12 +24,18 @@
+ #include <vector>
+ 
+ using namespace aeraui::web;
++static bool gPhy110Diagnostic = false;
+ struct Session;
+ static WPEInputMethodContext *CreateInputMethodContext(WPEDisplay *, WPEView *);
+ struct AERADisplay { WPEDisplay parent; Session *session = nullptr; };
+ struct AERADisplayClass { WPEDisplayClass parent; };
+ G_DEFINE_TYPE(AERADisplay, aera_display, WPE_TYPE_DISPLAY)
+-static void aera_display_init(AERADisplay *display) { display->session = nullptr; }
++static void aera_display_init(AERADisplay *display) {
++  display->session = nullptr;
++  wpe_display_set_available_input_devices(WPE_DISPLAY(display),
++      static_cast<WPEAvailableInputDevices>(WPE_AVAILABLE_INPUT_DEVICE_TOUCHSCREEN |
++                                           WPE_AVAILABLE_INPUT_DEVICE_KEYBOARD));
++}
+ static gpointer GetEGLDisplay(WPEDisplay *, GError **error) {
+   if (!epoxy_has_egl_extension(nullptr, "EGL_MESA_platform_surfaceless")) {
+     g_set_error_literal(error, WPE_EGL_ERROR, WPE_EGL_ERROR_NOT_AVAILABLE,
+@@ -121,6 +127,7 @@ G_DEFINE_TYPE(AERAInputMethodContext, aera_input_method_context,
+ static void SendKeyboardFocus(WPEInputMethodContext *context, bool focused) {
+   auto *input = reinterpret_cast<AERAInputMethodContext *>(context);
+   if (!input->session) return;
++  if (gPhy110Diagnostic) fprintf(stderr, "PHY110_DIAG keyboard=%s time=%lld\n", focused ? "show" : "hide", (long long)g_get_monotonic_time());
+   Message message;
+   message.kind = focused ? Kind::kKeyboardShow : Kind::kKeyboardHide;
+   if (focused)
+@@ -429,6 +436,7 @@ static gboolean Input(gint fd, GIOCondition condition, gpointer data) {
+       } else Publish(s);
+       break;
+     case Kind::kTouchDown: case Kind::kTouchMove: case Kind::kTouchUp: {
++      if (gPhy110Diagnostic && m.kind != Kind::kTouchMove) fprintf(stderr, "PHY110_DIAG touch=%s time=%lld\n", m.kind == Kind::kTouchDown ? "down" : "up", (long long)g_get_monotonic_time());
+       const auto kind = m.kind == Kind::kTouchDown ? WPE_EVENT_TOUCH_DOWN :
+                         m.kind == Kind::kTouchUp ? WPE_EVENT_TOUCH_UP : WPE_EVENT_TOUCH_MOVE;
+       auto *event = wpe_event_touch_new(kind, s->view, WPE_INPUT_SOURCE_TOUCHSCREEN,
+@@ -462,6 +470,14 @@ int main(int argc, char **argv) {
+       getsockopt(4, SOL_SOCKET, SO_TYPE, &socket_type, &type_size) || socket_type != SOCK_SEQPACKET) {
+     fprintf(stderr, "Invalid browser bridge: size=%lld type=%d errno=%d\n", (long long)frame.st_size, socket_type, errno); return 78;
+   }
++  struct stat diagnostic{};
++  gPhy110Diagnostic = !lstat("/etc/phy110-browser-diagnostics", &diagnostic) &&
++      S_ISREG(diagnostic.st_mode) && diagnostic.st_uid == 0 &&
++      !(diagnostic.st_mode & 0022) && diagnostic.st_size == 8;
++  if (gPhy110Diagnostic) {
++    g_setenv("GST_DEBUG", "2,webkitmediaplayer:4,webkitmediasrc:4", TRUE);
++    g_setenv("GST_DEBUG_NO_COLOR", "1", TRUE);
++  }
+   Session s;
+   s.shared = static_cast<uint8_t *>(mmap(nullptr, kSharedBytes, PROT_READ | PROT_WRITE, MAP_SHARED, 3, 0));
+   if (s.shared == MAP_FAILED) { perror("Map browser bridge"); return 78; }
+@@ -562,17 +578,33 @@ int main(int argc, char **argv) {
+       "settings", settings, "web-context", context, "network-session", network,
+       "user-content-manager", content, nullptr));
+   g_signal_connect(network, "download-started", G_CALLBACK(DownloadStarted), &s);
++  g_signal_connect(s.web, "resource-load-started", G_CALLBACK(+[](WebKitWebView *, WebKitWebResource *resource, WebKitURIRequest *, gpointer) {
++    g_signal_connect(resource, "failed", G_CALLBACK(+[](WebKitWebResource *, GError *error, gpointer) {
++      if (gPhy110Diagnostic) fprintf(stderr, "PHY110_DIAG resource-failed domain=%s code=%d message=%s\n", g_quark_to_string(error->domain), error->code, error->message);
++    }), nullptr);
++  }), nullptr);
++
+   g_signal_connect(s.web, "permission-request", G_CALLBACK(+[](WebKitWebView *, WebKitPermissionRequest *r, gpointer) -> gboolean {
+     webkit_permission_request_deny(r); return TRUE;
+   }), nullptr);
+   g_signal_connect(s.web, "run-file-chooser", G_CALLBACK(+[](WebKitWebView *, WebKitFileChooserRequest *r, gpointer) -> gboolean {
+     webkit_file_chooser_request_cancel(r); return TRUE;
+   }), nullptr);
+-  g_signal_connect(s.web, "decide-policy", G_CALLBACK(+[](WebKitWebView *, WebKitPolicyDecision *d, WebKitPolicyDecisionType t, gpointer) -> gboolean {
+-    if (t == WEBKIT_POLICY_DECISION_TYPE_NEW_WINDOW_ACTION) { webkit_policy_decision_ignore(d); return TRUE; }
+-    if (t != WEBKIT_POLICY_DECISION_TYPE_NAVIGATION_ACTION) return FALSE;
++  g_signal_connect(s.web, "decide-policy", G_CALLBACK(+[](WebKitWebView *view, WebKitPolicyDecision *d, WebKitPolicyDecisionType t, gpointer) -> gboolean {
++    if (t != WEBKIT_POLICY_DECISION_TYPE_NAVIGATION_ACTION &&
++        t != WEBKIT_POLICY_DECISION_TYPE_NEW_WINDOW_ACTION) return FALSE;
+     auto *action = webkit_navigation_policy_decision_get_navigation_action(WEBKIT_NAVIGATION_POLICY_DECISION(d));
+     const char *uri = webkit_uri_request_get_uri(webkit_navigation_action_get_request(action));
++    if (t == WEBKIT_POLICY_DECISION_TYPE_NEW_WINDOW_ACTION) {
++      // AERA has one view: user-activated links open in that view. Keep
++      // automatic popups and non-browser schemes blocked by the same jail.
++      const std::string address = uri ? Address(uri) : std::string();
++      const bool user_gesture = webkit_navigation_action_is_user_gesture(action);
++      webkit_policy_decision_ignore(d);
++      if (user_gesture && !address.empty())
++        webkit_web_view_load_uri(view, address.c_str());
++      return TRUE;
++    }
+     if (uri && !Address(uri).empty()) return FALSE;
+     webkit_policy_decision_ignore(d); return TRUE;
+   }), nullptr);
+diff --git a/aeraui/features/browser/runtime.cpp b/aeraui/features/browser/runtime.cpp
+index 326a2ce0..72a41388 100644
+--- a/aeraui/features/browser/runtime.cpp
++++ b/aeraui/features/browser/runtime.cpp
+@@ -354,6 +354,59 @@ void PreparePluginRuntime(Preparation &state, const char *id,
+   state.error.clear();
+ }
+ 
++// This asset is supplied by the PHY110 image. Apply it only to the exact
++// signed engine release that rejects user-activated new-window links. The
++// installed payload remains untouched; extraction and both payload hashes
++// must pass before this root-owned image component can replace its worker.
++static bool CopyVerifiedImageAsset(int root, const char *asset, const char *destination,
++    const char *expected_hash, size_t limit, mode_t mode) {
++  FD source(open(asset, O_RDONLY | O_NOFOLLOW | O_CLOEXEC));
++  if (source.value < 0) return errno == ENOENT;
++  struct stat info{};
++  if (fstat(source.value, &info) || !S_ISREG(info.st_mode) || info.st_uid ||
++      (info.st_mode & 0022) || info.st_size <= 0 || static_cast<uint64_t>(info.st_size) > limit) return false;
++  std::vector<unsigned char> bytes(static_cast<size_t>(info.st_size));
++  size_t position = 0;
++  while (position < bytes.size()) {
++    ssize_t count = read(source.value, bytes.data() + position, bytes.size() - position);
++    if (count < 0 && errno == EINTR) continue;
++    if (count <= 0) return false;
++    position += static_cast<size_t>(count);
++  }
++  Hash hash; hash.Add(bytes.data(), bytes.size());
++  if (!hash.Matches(expected_hash)) return false;
++  if (!PathSafe(destination)) return false;
++  FD directory(Parent(root, destination));
++  if (directory.value < 0) return false;
++  const std::string leaf = std::string(destination).substr(std::string(destination).find_last_of('/') + 1);
++  const std::string temporary = leaf + ".phy110-new";
++  FD output(openat(directory.value, temporary.c_str(), O_WRONLY | O_CREAT |
++                   O_EXCL | O_NOFOLLOW | O_CLOEXEC, mode));
++  if (output.value < 0) return false;
++  position = 0;
++  while (position < bytes.size()) {
++    ssize_t count = write(output.value, bytes.data() + position, bytes.size() - position);
++    if (count < 0 && errno == EINTR) continue;
++    if (count <= 0) return false;
++    position += static_cast<size_t>(count);
++  }
++  return !fchmod(output.value, mode) &&
++      !renameat(directory.value, temporary.c_str(), directory.value, leaf.c_str());
++}
++static bool ApplyPhy110BrowserCompatibility(int root, const RuntimeSpec &spec,
++    const char *asset = "/system/etc/aera-browser/phy110-worker") {
++  if (spec.compressed_hash !=
++      "4e3941bd2bcbcc53e4d1bdc7641e7d7c7b16b848b8ba21bb934119118b37f197") return true;
++  return CopyVerifiedImageAsset(root, asset, "usr/bin/aera-browser-worker",
++      "3e5e3134b67513bfa6104641e653e41b3dbab68c2c921617183c2fa51d13faea", 128 * 1024, 0755) &&
++      CopyVerifiedImageAsset(root, "/system/etc/aera-browser/phy110-diagnostics",
++      "etc/phy110-browser-diagnostics",
++      "e056a35db086947e2f5969d747f0a7517bff00c7ffff1f9e7b47b72bfac9d948", 128, 0444) &&
++      CopyVerifiedImageAsset(root, "/twres/fonts/wqy-microhei.ttf",
++      "usr/share/fonts/aera/PHY110-CJK.ttf",
++      "272435f569f3e7ffa7cea299d0b175346738b5922eccaedb168eadb63f8123da", 8 * 1024 * 1024, 0644);
++}
++
+ void PrepareRuntime(Preparation &state, const char *payload, const char *parent) {
+   // RAII publishes completion even on a normal early return. No worker touches LVGL.
+   struct Completion { Preparation &s; ~Completion() { s.done.store(true, std::memory_order_release); } } done{state};
+@@ -422,6 +475,11 @@ void PrepareRuntime(Preparation &state, const char *payload, const char *parent)
+   }
+   // Publish only the complete verified tree. Ownership is still recovery root;
+   // only the fixed userspace jail may execute programs from it.
++  if (!ApplyPhy110BrowserCompatibility(root.value, spec)) {
++    RemoveRuntime(temporary);
++    state.error = "PHY110 browser compatibility component failed verification.";
++    return;
++  }
+   state.directory = temporary; state.verified = true; state.error.clear();
+ }
+ 
+diff --git a/aeraui/features/browser/worker.cpp b/aeraui/features/browser/worker.cpp
+index ee80dbaf..bb0000e4 100644
+--- a/aeraui/features/browser/worker.cpp
++++ b/aeraui/features/browser/worker.cpp
+@@ -24,12 +24,18 @@
+ #include <vector>
+ 
+ using namespace aeraui::web;
++static bool gPhy110Diagnostic = false;
+ struct Session;
+ static WPEInputMethodContext *CreateInputMethodContext(WPEDisplay *, WPEView *);
+ struct AERADisplay { WPEDisplay parent; Session *session = nullptr; };
+ struct AERADisplayClass { WPEDisplayClass parent; };
+ G_DEFINE_TYPE(AERADisplay, aera_display, WPE_TYPE_DISPLAY)
+-static void aera_display_init(AERADisplay *display) { display->session = nullptr; }
++static void aera_display_init(AERADisplay *display) {
++  display->session = nullptr;
++  wpe_display_set_available_input_devices(WPE_DISPLAY(display),
++      static_cast<WPEAvailableInputDevices>(WPE_AVAILABLE_INPUT_DEVICE_TOUCHSCREEN |
++                                           WPE_AVAILABLE_INPUT_DEVICE_KEYBOARD));
++}
+ static gpointer GetEGLDisplay(WPEDisplay *, GError **error) {
+   if (!epoxy_has_egl_extension(nullptr, "EGL_MESA_platform_surfaceless")) {
+     g_set_error_literal(error, WPE_EGL_ERROR, WPE_EGL_ERROR_NOT_AVAILABLE,
+@@ -121,6 +127,7 @@ G_DEFINE_TYPE(AERAInputMethodContext, aera_input_method_context,
+ static void SendKeyboardFocus(WPEInputMethodContext *context, bool focused) {
+   auto *input = reinterpret_cast<AERAInputMethodContext *>(context);
+   if (!input->session) return;
++  if (gPhy110Diagnostic) fprintf(stderr, "PHY110_DIAG keyboard=%s time=%lld\n", focused ? "show" : "hide", (long long)g_get_monotonic_time());
+   Message message;
+   message.kind = focused ? Kind::kKeyboardShow : Kind::kKeyboardHide;
+   if (focused)
+@@ -429,6 +436,7 @@ static gboolean Input(gint fd, GIOCondition condition, gpointer data) {
+       } else Publish(s);
+       break;
+     case Kind::kTouchDown: case Kind::kTouchMove: case Kind::kTouchUp: {
++      if (gPhy110Diagnostic && m.kind != Kind::kTouchMove) fprintf(stderr, "PHY110_DIAG touch=%s time=%lld\n", m.kind == Kind::kTouchDown ? "down" : "up", (long long)g_get_monotonic_time());
+       const auto kind = m.kind == Kind::kTouchDown ? WPE_EVENT_TOUCH_DOWN :
+                         m.kind == Kind::kTouchUp ? WPE_EVENT_TOUCH_UP : WPE_EVENT_TOUCH_MOVE;
+       auto *event = wpe_event_touch_new(kind, s->view, WPE_INPUT_SOURCE_TOUCHSCREEN,
+@@ -462,6 +470,14 @@ int main(int argc, char **argv) {
+       getsockopt(4, SOL_SOCKET, SO_TYPE, &socket_type, &type_size) || socket_type != SOCK_SEQPACKET) {
+     fprintf(stderr, "Invalid browser bridge: size=%lld type=%d errno=%d\n", (long long)frame.st_size, socket_type, errno); return 78;
+   }
++  struct stat diagnostic{};
++  gPhy110Diagnostic = !lstat("/etc/phy110-browser-diagnostics", &diagnostic) &&
++      S_ISREG(diagnostic.st_mode) && diagnostic.st_uid == 0 &&
++      !(diagnostic.st_mode & 0022) && diagnostic.st_size == 8;
++  if (gPhy110Diagnostic) {
++    g_setenv("GST_DEBUG", "2,webkitmediaplayer:4,webkitmediasrc:4", TRUE);
++    g_setenv("GST_DEBUG_NO_COLOR", "1", TRUE);
++  }
+   Session s;
+   s.shared = static_cast<uint8_t *>(mmap(nullptr, kSharedBytes, PROT_READ | PROT_WRITE, MAP_SHARED, 3, 0));
+   if (s.shared == MAP_FAILED) { perror("Map browser bridge"); return 78; }
+@@ -562,17 +578,33 @@ int main(int argc, char **argv) {
+       "settings", settings, "web-context", context, "network-session", network,
+       "user-content-manager", content, nullptr));
+   g_signal_connect(network, "download-started", G_CALLBACK(DownloadStarted), &s);
++  g_signal_connect(s.web, "resource-load-started", G_CALLBACK(+[](WebKitWebView *, WebKitWebResource *resource, WebKitURIRequest *, gpointer) {
++    g_signal_connect(resource, "failed", G_CALLBACK(+[](WebKitWebResource *, GError *error, gpointer) {
++      if (gPhy110Diagnostic) fprintf(stderr, "PHY110_DIAG resource-failed domain=%s code=%d message=%s\n", g_quark_to_string(error->domain), error->code, error->message);
++    }), nullptr);
++  }), nullptr);
++
+   g_signal_connect(s.web, "permission-request", G_CALLBACK(+[](WebKitWebView *, WebKitPermissionRequest *r, gpointer) -> gboolean {
+     webkit_permission_request_deny(r); return TRUE;
+   }), nullptr);
+   g_signal_connect(s.web, "run-file-chooser", G_CALLBACK(+[](WebKitWebView *, WebKitFileChooserRequest *r, gpointer) -> gboolean {
+     webkit_file_chooser_request_cancel(r); return TRUE;
+   }), nullptr);
+-  g_signal_connect(s.web, "decide-policy", G_CALLBACK(+[](WebKitWebView *, WebKitPolicyDecision *d, WebKitPolicyDecisionType t, gpointer) -> gboolean {
+-    if (t == WEBKIT_POLICY_DECISION_TYPE_NEW_WINDOW_ACTION) { webkit_policy_decision_ignore(d); return TRUE; }
+-    if (t != WEBKIT_POLICY_DECISION_TYPE_NAVIGATION_ACTION) return FALSE;
++  g_signal_connect(s.web, "decide-policy", G_CALLBACK(+[](WebKitWebView *view, WebKitPolicyDecision *d, WebKitPolicyDecisionType t, gpointer) -> gboolean {
++    if (t != WEBKIT_POLICY_DECISION_TYPE_NAVIGATION_ACTION &&
++        t != WEBKIT_POLICY_DECISION_TYPE_NEW_WINDOW_ACTION) return FALSE;
+     auto *action = webkit_navigation_policy_decision_get_navigation_action(WEBKIT_NAVIGATION_POLICY_DECISION(d));
+     const char *uri = webkit_uri_request_get_uri(webkit_navigation_action_get_request(action));
++    if (t == WEBKIT_POLICY_DECISION_TYPE_NEW_WINDOW_ACTION) {
++      // AERA has one view: user-activated links open in that view. Keep
++      // automatic popups and non-browser schemes blocked by the same jail.
++      const std::string address = uri ? Address(uri) : std::string();
++      const bool user_gesture = webkit_navigation_action_is_user_gesture(action);
++      webkit_policy_decision_ignore(d);
++      if (user_gesture && !address.empty())
++        webkit_web_view_load_uri(view, address.c_str());
++      return TRUE;
++    }
+     if (uri && !Address(uri).empty()) return FALSE;
+     webkit_policy_decision_ignore(d); return TRUE;
+   }), nullptr);

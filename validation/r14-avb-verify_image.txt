@@ -1,0 +1,3 @@
+Verifying image recovery.img using embedded public key
+vbmeta: Successfully verified footer and NONE vbmeta struct in recovery.img
+recovery: Successfully verified sha256 hash of recovery.img for image of 78057472 bytes

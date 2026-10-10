@@ -1,0 +1,55 @@
+{
+  "architecture": "aarch64-alpine-linux-musl",
+  "api_source": "https://wpewebkit.org/releases/wpewebkit-2.52.6.tar.xz",
+  "api_source_sha256": "b2bafef2751625b7fdf530f230ff0eeba3590c3a989d931b2a55c858e",
+  "packages": {
+    "gcc-15.2.0-r9.apk": {
+      "size": 52502287,
+      "sha256": "1be6e39499086f7be784d478029d4b709b141e8a8a225c2de9f9e448ba352f9e"
+    },
+    "glib-dev-2.90.0-r0.apk": {
+      "size": 1889509,
+      "sha256": "b0180794f7a8acc1fc0fc7662659ef6c19bf6d629ada705e25a7f8f8637fe2a0"
+    },
+    "libepoxy-dev-1.5.10-r1.apk": {
+      "size": 171273,
+      "sha256": "bf5fa78a4e3dad90ce248e90842fe570ef937325ff8ee5ed63cb33dd6d8de9ea"
+    },
+    "libffi-dev-3.8.0-r0.apk": {
+      "size": 97263,
+      "sha256": "0aeb5416294baeabb26a2d5a7af18e60bda3c28b25808c8f565e6a5fdc884717"
+    },
+    "libsoup3-dev-3.6.6-r0.apk": {
+      "size": 136845,
+      "sha256": "31e21cf664db0bdd8dcf6e041e9c4b42bb1a73cfbe87d67b1065a8aecdb6bad3"
+    },
+    "libstdc++-15.2.0-r9.apk": {
+      "size": 908720,
+      "sha256": "36e8a2cee1ee14df5180c1f5737f0ffb59004ef92dd4f0bedff425968c4855ae"
+    },
+    "libstdc++-dev-15.2.0-r9.apk": {
+      "size": 4132438,
+      "sha256": "7566e13cba5ae5d7c80d3962f91783556d1f50022e7157f287e8c0cd2c30b217"
+    },
+    "libwpe-dev-1.16.3-r0.apk": {
+      "size": 48371,
+      "sha256": "d748df5c71990ab266c4eed88464b20a1509b4d0832528b51d402872d568925e"
+    },
+    "linux-headers-7.2.1-r0.apk": {
+      "size": 1981326,
+      "sha256": "d4db4bdb66a54ef86500bb8ea834e3769ff5502f22d1ab40b360edc1566a0e92"
+    },
+    "musl-1.2.6-r5.apk": {
+      "size": 417718,
+      "sha256": "d59b8eecf8bd212162171bd816861c19319a5616e33380ae68fa9fcb7d2f4d1b"
+    },
+    "musl-dev-1.2.6-r5.apk": {
+      "size": 2539425,
+      "sha256": "e2a898e0971b1017744e7be65e72eab930a81a32c3cda40d62c7cd7bf10983a9"
+    },
+    "pcre2-dev-10.49-r0.apk": {
+      "size": 17170,
+      "sha256": "43fb835f4b8364a94bf6a0b0fbcfd42a99f7b82c6b249a3d59443d2bc9c53c0a"
+    }
+  }
+}

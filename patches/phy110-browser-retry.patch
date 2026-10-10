@@ -1,0 +1,193 @@
+diff --git a/aeraui/features/browser/web_scene.cpp b/aeraui/features/browser/web_scene.cpp
+index 65070526..f69a38d8 100644
+--- a/aeraui/features/browser/web_scene.cpp
++++ b/aeraui/features/browser/web_scene.cpp
+@@ -341,7 +341,11 @@ void OpenAddressBar(WebScene *s) {
+ 
+ void ShowKeyboard(WebScene *s, bool web_keyboard, uint32_t purpose = 0,
+                   lv_obj_t *target = nullptr) {
+-  ResetBrowserTouches(s);
++  // Page focus may change between touch-down and touch-up. The keyboard is
++  // only an overlay; preserve the page's captured contact through show/hide
++  // notifications so WebKit receives its matching release. Address editing
++  // switches to recovery UI and still resets page contact ownership.
++  if (!web_keyboard) ResetBrowserTouches(s);
+   s->web_keyboard = web_keyboard;
+   lv_keyboard_set_mode(s->keyboard,
+       web_keyboard && (purpose == 2 || purpose == 9)
+@@ -580,7 +584,22 @@ void ShowBrowserSettings(WebScene *s) {
+ 
+ void Prepare(WebScene *s) {
+   HideKeyboard(s);
+-  if (s->started) return;
++  if (s->session.Connected() || (s->started && !s->finished)) return;
++  if (s->started) {
++    s->process.Stop();
++    s->session.Close();
++    if (s->worker.joinable()) s->worker.join();
++    web::RemoveRuntime(s->state.directory);
++    s->state.directory.clear();
++    s->state.verified = false;
++    s->state.error.clear();
++    s->state.done.store(false);
++    s->state.cancel.store(false);
++    s->state.progress.store(0);
++    s->finished = false;
++    s->showing_web = false;
++    ResetBrowserTouches(s);
++  }
+   if (!web::RuntimeInstalled()) {
+     i18n::BindLabel(s->title, "Browser package unavailable");
+     i18n::BindLabel(s->detail, "This image does not contain the expected browser payload.");
+@@ -600,7 +619,8 @@ bool BrowserHandlePointer(int slot, int x, int y, bool pressed) {
+   auto *s = gWebScene;
+   if (!s || slot < 0 || slot > 1 || !s->showing_web ||
+       !s->session.Connected() || s->manager_open || s->settings_open ||
+-      (s->keyboard && !lv_obj_has_flag(s->keyboard, LV_OBJ_FLAG_HIDDEN)))
++      (s->keyboard && !lv_obj_has_flag(s->keyboard, LV_OBJ_FLAG_HIDDEN) &&
++       !s->web_keyboard))
+     return false;
+   // Quick Settings is a child overlay of the active browser screen. It must
+   // exclusively own every new tap/drag until its closing animation is gone.
+@@ -608,7 +628,15 @@ bool BrowserHandlePointer(int slot, int x, int y, bool pressed) {
+     ResetBrowserTouches(s);
+     return false;
+   }
+-  const bool inside = x >= s->view_left && y >= s->view_top &&
++  // A webpage's keyboard overlays only its own bounds. Suggestions and other
++  // page controls above it must still receive a complete down/up sequence.
++  lv_area_t keyboard_bounds{};
++  const bool keyboard_visible = s->keyboard &&
++      !lv_obj_has_flag(s->keyboard, LV_OBJ_FLAG_HIDDEN);
++  if (keyboard_visible) lv_obj_get_coords(s->keyboard, &keyboard_bounds);
++  const bool over_keyboard = keyboard_visible && x >= keyboard_bounds.x1 &&
++      x <= keyboard_bounds.x2 && y >= keyboard_bounds.y1 && y <= keyboard_bounds.y2;
++  const bool inside = !over_keyboard && x >= s->view_left && y >= s->view_top &&
+       x < s->view_left + s->view_width &&
+       y < s->view_top + s->view_height;
+   const bool was_pressed = s->touch_pressed[slot];
+@@ -935,7 +963,7 @@ void BuildWebScene(lv_obj_t *screen, ActionCallback callback, void *context,
+   if (!s->timer) s->timer = lv_timer_create([](lv_timer_t *timer) {
+     auto *s = static_cast<WebScene *>(lv_timer_get_user_data(timer));
+     const bool visible = s->screen != nullptr;
+-    if (!s->process.Running() && s->session.Connected())
++    if (s->auto_launch && !s->process.Running() && s->session.Connected())
+       s->session.Close();
+     lv_timer_set_period(timer, s->session.Connected() ? 16 : 50);
+     if (s->session.Connected()) {
+@@ -1027,6 +1055,7 @@ void BuildWebScene(lv_obj_t *screen, ActionCallback callback, void *context,
+       i18n::BindLabel(s->title, "Browser stopped");
+       i18n::BindLabel(s->detail,
+                         "The persistent WebKit session closed unexpectedly.");
++      lv_obj_remove_state(s->prepare, LV_STATE_DISABLED);
+     }
+     if (!s->started || s->finished) return;
+     if (visible)
+@@ -1038,6 +1067,7 @@ void BuildWebScene(lv_obj_t *screen, ActionCallback callback, void *context,
+       if (visible) {
+         i18n::BindLabel(s->title, "Preparation failed");
+         i18n::BindLabel(s->detail, s->state.error.c_str());
++        lv_obj_remove_state(s->prepare, LV_STATE_DISABLED);
+       }
+       return;
+     }
+@@ -1057,6 +1087,7 @@ void BuildWebScene(lv_obj_t *screen, ActionCallback callback, void *context,
+         i18n::BindLabel(s->title, "Browser start failed");
+         i18n::BindLabel(s->detail,
+             error.empty() ? s->session.Status().c_str() : error.c_str());
++        lv_obj_remove_state(s->prepare, LV_STATE_DISABLED);
+       }
+       return;
+     }
+diff --git a/aeraui/tests/ui_check.cpp b/aeraui/tests/ui_check.cpp
+index 5296b577..53b875c2 100644
+--- a/aeraui/tests/ui_check.cpp
++++ b/aeraui/tests/ui_check.cpp
+@@ -429,6 +429,67 @@ int main(int argc,char **argv) {
+     assert(png_image_write_to_file(&image,path,0,frame.data(),0,nullptr));
+   };
+   auto *screen=lv_screen_active();
++  if (!strcmp(argv[1], "--browser-keyboard")) {
++    int channels[2]; assert(socketpair(AF_UNIX, SOCK_SEQPACKET | SOCK_CLOEXEC, 0, channels)==0);
++    int pixels=memfd_create("browser-keyboard-test",MFD_CLOEXEC|MFD_ALLOW_SEALING);
++    assert(pixels>=0 && ftruncate(pixels,web::kSharedBytes)==0);
++    assert(fcntl(pixels,F_ADD_SEALS,F_SEAL_SHRINK|F_SEAL_GROW)==0);
++    auto *page=lv_obj_create(nullptr); BuildWebScene(page,RecordAction,nullptr,pixels,channels[0],false);
++    lv_screen_load(page);
++    web::Message message; message.kind=web::Kind::kFrame; message.sequence=1;
++    message.x=web::kWidth; message.y=web::kHeight; message.value=web::kFrameBytes;
++    assert(send(channels[1],&message,sizeof(message),0)==sizeof(message)); Tick();
++    assert(recv(channels[1],&message,sizeof(message),MSG_DONTWAIT)==sizeof(message));
++    assert(message.kind==web::Kind::kAck);
++    message=web::Message{}; message.kind=web::Kind::kKeyboardShow;
++    assert(send(channels[1],&message,sizeof(message),0)==sizeof(message)); Tick();
++    auto *keyboard=FindType(page,&lv_keyboard_class); assert(keyboard && lv_obj_is_visible(keyboard));
++    assert(BrowserHandlePointer(0,720,600,true)); assert(BrowserHandlePointer(0,720,600,false));
++    for (auto kind : {web::Kind::kTouchDown,web::Kind::kTouchMove,web::Kind::kTouchUp}) {
++      assert(recv(channels[1],&message,sizeof(message),MSG_DONTWAIT)==sizeof(message));
++      assert(message.kind==kind);
++    }
++    // A repeated focus notification must not discard an in-flight contact.
++    assert(BrowserHandlePointer(0,720,600,true));
++    for (auto kind : {web::Kind::kTouchDown,web::Kind::kTouchMove}) {
++      assert(recv(channels[1],&message,sizeof(message),MSG_DONTWAIT)==sizeof(message));
++      assert(message.kind==kind);
++    }
++    message=web::Message{}; message.kind=web::Kind::kKeyboardShow;
++    assert(send(channels[1],&message,sizeof(message),0)==sizeof(message)); Tick();
++    assert(BrowserHandlePointer(0,720,600,false));
++    assert(recv(channels[1],&message,sizeof(message),MSG_DONTWAIT)==sizeof(message));
++    assert(message.kind==web::Kind::kTouchUp);
++    // Initial focus and a blur/refocus pair during a contact also need the
++    // same release, including a tap that causes the keyboard to appear.
++    for (bool refocus : {false,true}) {
++      message=web::Message{}; message.kind=web::Kind::kKeyboardHide;
++      assert(send(channels[1],&message,sizeof(message),0)==sizeof(message)); Tick();
++      assert(BrowserHandlePointer(0,720,600,true));
++      for (auto kind : {web::Kind::kTouchDown,web::Kind::kTouchMove}) {
++        assert(recv(channels[1],&message,sizeof(message),MSG_DONTWAIT)==sizeof(message));
++        assert(message.kind==kind);
++      }
++      message=web::Message{}; message.kind=web::Kind::kKeyboardShow;
++      assert(send(channels[1],&message,sizeof(message),0)==sizeof(message)); Tick();
++      if (refocus) {
++        message.kind=web::Kind::kKeyboardHide;
++        assert(send(channels[1],&message,sizeof(message),0)==sizeof(message)); Tick();
++        message.kind=web::Kind::kKeyboardShow;
++        assert(send(channels[1],&message,sizeof(message),0)==sizeof(message)); Tick();
++      }
++      assert(BrowserHandlePointer(0,720,600,false));
++      assert(recv(channels[1],&message,sizeof(message),MSG_DONTWAIT)==sizeof(message));
++      assert(message.kind==web::Kind::kTouchUp);
++    }
++    lv_area_t bounds{}; lv_obj_get_coords(keyboard,&bounds);
++    assert(!BrowserHandlePointer(0,(bounds.x1+bounds.x2)/2,(bounds.y1+bounds.y2)/2,true));
++    assert(!BrowserHandlePointer(0,720,600,true)); assert(!BrowserHandlePointer(0,720,600,false));
++    assert(recv(channels[1],&message,sizeof(message),MSG_DONTWAIT)<0);
++    close(channels[1]); lv_screen_load(screen); lv_obj_delete(page);
++    puts("PASS: page contacts survive initial/repeated keyboard focus and blur/refocus; keyboard contacts stay outside page");
++    lv_deinit(); std::filesystem::remove_all(backup_root); return 0;
++  }
+   if (!strcmp(argv[1], "--settings")) {
+     auto *prefs = lv_obj_create(nullptr);
+     BuildToolScene(prefs, Action::kPreferences, RecordAction, nullptr);
+@@ -634,6 +695,19 @@ int main(int argc,char **argv) {
+   web_navigation = lv_obj_get_parent(Find(web, "Menu"));
+   assert(!lv_obj_has_flag(web_keyboard, LV_OBJ_FLAG_HIDDEN));
+   assert(lv_obj_has_flag(web_navigation, LV_OBJ_FLAG_HIDDEN));
++  // A visible page keyboard must not swallow a suggestion tap above it.
++  assert(BrowserHandlePointer(0, 720, 600, true));
++  assert(BrowserHandlePointer(0, 720, 600, false));
++  for (auto kind : {web::Kind::kTouchDown, web::Kind::kTouchMove, web::Kind::kTouchUp}) {
++    assert(recv(browser_channels[1], &browser_ack, sizeof(browser_ack), MSG_DONTWAIT) == sizeof(browser_ack));
++    assert(browser_ack.kind == kind);
++  }
++  lv_area_t keyboard_bounds{}; lv_obj_get_coords(web_keyboard, &keyboard_bounds);
++  assert(!BrowserHandlePointer(0, (keyboard_bounds.x1 + keyboard_bounds.x2) / 2,
++      (keyboard_bounds.y1 + keyboard_bounds.y2) / 2, true));
++  assert(!BrowserHandlePointer(0, 720, 600, true)); // keyboard owns the whole contact
++  assert(!BrowserHandlePointer(0, 720, 600, false));
++  assert(recv(browser_channels[1], &browser_ack, sizeof(browser_ack), MSG_DONTWAIT) < 0);
+   keyboard_message = web::Message{}; keyboard_message.kind = web::Kind::kKeyboardHide;
+   assert(send(browser_channels[1], &keyboard_message, sizeof(keyboard_message), 0) == sizeof(keyboard_message));
+   Tick();

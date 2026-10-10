@@ -1,0 +1,1 @@
+Verification is summarized in validation/r14-summary.json. Raw ADB logs, backups, network credentials and serial-specific host helpers are excluded. Never execute wipe/restore/flash as a generic audit.

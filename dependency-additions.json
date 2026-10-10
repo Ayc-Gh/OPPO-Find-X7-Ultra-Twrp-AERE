@@ -1,0 +1,319 @@
+{
+  "added": [
+    {
+      "name": "android.hidl.allocator@1.0.so",
+      "source": "PHY110 vendor-support.tar:vendor/lib64/android.hidl.allocator@1.0.so",
+      "sha256": "8d3fa5af910300be1459ca2ddaf7f9f5e0842d37bc1999d1999823398373f50d",
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    {
+      "name": "libcld80211.so",
+      "source": "PHY110 vendor-support.tar:vendor/lib64/libcld80211.so",
+      "sha256": "08f2c8e20eb52335822dc37355efd4f9f09245b3f35d54943da3efcaccbd10b4",
+      "needed": [
+        "libcutils.so",
+        "libnl.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    {
+      "name": "libdebuggerd_client.so",
+      "source": "AERA compiled platform:system/lib64/libdebuggerd_client.so",
+      "sha256": "e22df0ce76bae760df6af5037d2b100c90e5fd57132f794e98caf6225b9ed758",
+      "needed": [
+        "libbase.so",
+        "libcutils.so",
+        "libprocinfo.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    {
+      "name": "libfs_mgr_binder.so",
+      "source": "AERA compiled platform:system/lib64/libfs_mgr_binder.so",
+      "sha256": "79c4515a5057a47e5d61c199e22c0ea8c54061264aa3298eb5a2964fa03707b9",
+      "needed": [
+        "libbinder.so",
+        "libutils.so",
+        "libbase.so",
+        "libcrypto.so",
+        "libcrypto_utils.so",
+        "libcutils.so",
+        "libext4_utils.so",
+        "libfec.so",
+        "liblog.so",
+        "liblp.so",
+        "libselinux.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    {
+      "name": "libperipheral_client.so",
+      "source": "PHY110 vendor-support.tar:vendor/lib64/libperipheral_client.so",
+      "sha256": "52435aa07f95ac71c66017c4dd9016b1ea55e0add4f1aebf092cec884bcf395c",
+      "needed": [
+        "libcutils.so",
+        "libutils.so",
+        "liblog.so",
+        "libbinder.so",
+        "libmdmdetect.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    {
+      "name": "libprocinfo.so",
+      "source": "AERA compiled platform:system/lib64/libprocinfo.so",
+      "sha256": "90f586c0d15ddcd90f2a119992cf26d6e0a637805d2b7cb09da61b75cdee45ba",
+      "needed": [
+        "libbase.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    {
+      "name": "libqcci_legacy.so",
+      "source": "PHY110 vendor-support.tar:vendor/lib64/libqcci_legacy.so",
+      "sha256": "659308656b5ccfebf96a8b229aaf46f19af635a540083ec88a4d70c24f6ed5f6",
+      "needed": [
+        "libcutils.so",
+        "libdiag.so",
+        "libidl.so",
+        "libqmi_client_qmux.so",
+        "libqmi_legacy.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    {
+      "name": "libsnapshot.so",
+      "source": "AERA compiled platform:system/lib64/libsnapshot.so",
+      "sha256": "a60e38743004610aee9c27f77d8b0fba10e34f074ea71f135bbd181a1510c8e8",
+      "needed": [
+        "android.hardware.boot@1.0.so",
+        "android.hardware.boot@1.1.so",
+        "android.hardware.boot-V1-ndk.so",
+        "libboot_control_client.so",
+        "libbase.so",
+        "libchrome.so",
+        "libcutils.so",
+        "liblog.so",
+        "libfs_mgr_binder.so",
+        "liblp.so",
+        "libprotobuf-cpp-lite.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    {
+      "name": "android.hardware.graphics.common@1.2.so",
+      "source": "prebuilts/vndk/v34/arm64/arch-arm64-armv8-a/shared/vndk-sp/android.hardware.graphics.common@1.2.so",
+      "sha256": "c736ff900a16a486cd4721080f12e0c85928a8d913cf01025ac2d01016e56161",
+      "needed": [
+        "android.hardware.graphics.common@1.0.so",
+        "android.hardware.graphics.common@1.1.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    {
+      "name": "android.hardware.graphics.mapper@4.0.so",
+      "source": "prebuilts/vndk/v34/arm64/arch-arm64-armv8-a/shared/vndk-sp/android.hardware.graphics.mapper@4.0.so",
+      "sha256": "e66da5863358415b1a8c5cdffc1e2ed6e98a32f4860fd033ea944369952d154c",
+      "needed": [
+        "android.hardware.graphics.common@1.0.so",
+        "android.hardware.graphics.common@1.1.so",
+        "android.hardware.graphics.common@1.2.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    {
+      "name": "android.hidl.memory@1.0.so",
+      "source": "prebuilts/vndk/v34/arm64/arch-arm64-armv8-a/shared/vndk-sp/android.hidl.memory@1.0.so",
+      "sha256": "06372e8633f476e08e266bfc36a7e8992c6f1e469befe9e93dc3da2c0167c381",
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    {
+      "name": "libclang_rt.ubsan_standalone-aarch64-android.so",
+      "source": "prebuilts/vndk/v34/arm64/arch-arm64-armv8-a/shared/vndk-core/libclang_rt.ubsan_standalone-aarch64-android.so",
+      "sha256": "ab35bd02d7997efd1bae19ee277ed5f8b261b9e1dfb500f8fc5ce9672664fd9d",
+      "needed": [
+        "libc.so",
+        "libdl.so",
+        "liblog.so"
+      ]
+    },
+    {
+      "name": "libgralloctypes.so",
+      "source": "prebuilts/vndk/v34/arm64/arch-arm64-armv8-a/shared/vndk-sp/libgralloctypes.so",
+      "sha256": "6d4abaaf1bfdec0ff4b2c2d4382d7584b9de21c9b84fdad84774e131aa6520f7",
+      "needed": [
+        "android.hardware.graphics.common-V4-ndk.so",
+        "android.hardware.graphics.mapper@4.0.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    {
+      "name": "libhidlmemory.so",
+      "source": "prebuilts/vndk/v34/arm64/arch-arm64-armv8-a/shared/vndk-sp/libhidlmemory.so",
+      "sha256": "b72bfdbc3a851ffddb4e181ad42b0daa7555ccfe1bf8acc9ab8a05b2c9d20340",
+      "needed": [
+        "libbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libhidlbase.so",
+        "android.hidl.memory@1.0.so",
+        "android.hidl.memory.token@1.0.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    {
+      "name": "libpower.so",
+      "source": "prebuilts/vndk/v34/arm64/arch-arm64-armv8-a/shared/vndk-core/libpower.so",
+      "sha256": "9552408939ad894f7e687e12663d8f5e87f5efca3fa870b6e1079934691991d9",
+      "needed": [
+        "libbase.so",
+        "libbinder_ndk.so",
+        "libcutils.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "android.system.suspend-V1-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    {
+      "name": "android.hardware.graphics.common@1.0.so",
+      "source": "prebuilts/vndk/v34/arm64/arch-arm64-armv8-a/shared/vndk-sp/android.hardware.graphics.common@1.0.so",
+      "sha256": "2afd2fd549ef81471071e65cbf2099c46d41620ba0fd12aaeab7418fb123fe56",
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    {
+      "name": "android.hardware.graphics.common@1.1.so",
+      "source": "prebuilts/vndk/v34/arm64/arch-arm64-armv8-a/shared/vndk-sp/android.hardware.graphics.common@1.1.so",
+      "sha256": "e6cdd105cd7bd3288a9a1c7dcfe36ffad209ca00f352a8e985e4d5019f4dde46",
+      "needed": [
+        "android.hardware.graphics.common@1.0.so",
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    {
+      "name": "android.hardware.graphics.common-V4-ndk.so",
+      "source": "prebuilts/vndk/v34/arm64/arch-arm64-armv8-a/shared/vndk-sp/android.hardware.graphics.common-V4-ndk.so",
+      "sha256": "88f2e1c821254168cac99b100b81dd01f35e561b02cfb412d5cc054274368da3",
+      "needed": [
+        "libbinder_ndk.so",
+        "android.hardware.common-V2-ndk.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    },
+    {
+      "name": "android.hidl.memory.token@1.0.so",
+      "source": "prebuilts/vndk/v34/arm64/arch-arm64-armv8-a/shared/vndk-sp/android.hidl.memory.token@1.0.so",
+      "sha256": "5221ea16d9d19edabd2e1b304cad29163bab96c397ed40a37841f88dec16c512",
+      "needed": [
+        "libhidlbase.so",
+        "liblog.so",
+        "libutils.so",
+        "libcutils.so",
+        "libc++.so",
+        "libc.so",
+        "libm.so",
+        "libdl.so"
+      ]
+    }
+  ],
+  "unresolved": [],
+  "retired": [
+    {
+      "name": "libjc_keymint3.nxp.so",
+      "sha256": "cbb30f4e6b438ec55071a3abd77df6a4b2c3d250e6762c745ea44f03e280a4b5",
+      "reason": "Absent from captured PHY110 vendor; no DT_NEEDED or literal dlopen references in recovery ELF inputs"
+    },
+    {
+      "name": "libcxx.dylib.so",
+      "sha256": "0e4d680cab173d51d734867fa45f9df8fcd4c9e373ad43a0b5145445881a7574",
+      "reason": "Absent from captured PHY110 vendor; no DT_NEEDED or literal dlopen references in recovery ELF inputs"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+Footer version:           1.0
+Image size:               104857600 bytes
+Original image size:      78057472 bytes
+VBMeta offset:            78057472
+VBMeta size:              768 bytes
+--
+Minimum libavb version:   1.0
+Header Block:             256 bytes
+Authentication Block:     0 bytes
+Auxiliary Block:          512 bytes
+Algorithm:                NONE
+Rollback Index:           0
+Flags:                    0
+Rollback Index Location:  0
+Release String:           'avbtool 1.3.0'
+Descriptors:
+    Hash descriptor:
+      Image Size:            78057472 bytes
+      Hash Algorithm:        sha256
+      Partition Name:        recovery
+      Salt:                  6529100f37f645d20314b5b692a9bbfe5a9a61f1943685b97622a7edd1f25b11
+      Digest:                0381e8468d53497a37148aa2de0d2a39eaba670b0371efedad23cd7ab4505ade
+      Flags:                 0
+    Prop: com.android.build.recovery.fingerprint -> 'OPPO/twrp_phy110/phy110:16/BP2A.250605.031.A2/eng.builde:eng/test-keys'
+    Prop: com.android.build.boot.os_version -> '16'
+    Prop: com.android.build.boot.security_patch -> '2026-08-01'

@@ -1,0 +1,27 @@
+{
+  "lib/modules/msm_kgsl.ko": {
+    "source": "PHY110 vendor_dlkm_b modules/msm_kgsl.ko",
+    "sha256": "34af62053d612c357bc13837d4ab17bc126a3d88626ddd5b4619cd9dee7d5f8d",
+    "size": 3300176
+  },
+  "vendor/firmware/gen70900_aqe.fw": {
+    "source": "PHY110 vendor_b gen70900_aqe.fw",
+    "sha256": "25237c161d727b8ea92b4beb837a31651b44ea78bfc34d95672af8f346a45825",
+    "size": 33176
+  },
+  "vendor/firmware/gen70900_sqe.fw": {
+    "source": "PHY110 vendor_b gen70900_sqe.fw",
+    "sha256": "f756bafe5f69a87161c7c53385386374a791861a574c244e845baba677993842",
+    "size": 85364
+  },
+  "vendor/firmware/gen70900_zap.mbn": {
+    "source": "PHY110 vendor_b gen70900_zap.mbn",
+    "sha256": "8b636ad7660633572707522cbed6185877d7ac50407a9882d18573fbc7ee09a9",
+    "size": 12088
+  },
+  "vendor/firmware/gmu_gen70900.bin": {
+    "source": "PHY110 vendor_b gmu_gen70900.bin",
+    "sha256": "9685f62c42543befcaee68d25355e16bf55cdb0d573bddcc9f6633f59eec3f72",
+    "size": 78588
+  }
+}
