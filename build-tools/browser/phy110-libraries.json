@@ -1,0 +1,19 @@
+{
+  "openh264": {
+    "commit": "1a0073f0322c8b74cbcb75ca1bb1c3d19d75538d",
+    "archive_url": "https://codeload.github.com/cisco/openh264/tar.gz/1a0073f0322c8b74cbcb75ca1bb1c3d19d75538d",
+    "archive_sha256": "3e021e6046dcd79f70fa7842896a85cb2205575ea6170db023c4318fafcb0040",
+    "library_sha256": "0f0964e325847c924dfdc2950201c3992f0f1762f811c37182c4e9db6b19c5f3",
+    "soname": "libopenh264.so.8",
+    "needed": [
+      "libstdc++.so.6",
+      "libgcc_s.so.1",
+      "libc.musl-aarch64.so.1"
+    ]
+  },
+  "turnip": {
+    "version": "26.2.2",
+    "archive_sha256": "eeb29ca7e56cfaa8e8a79538dcf834e3b18e501c31bef5145e959ea437cc4216",
+    "library_sha256": "55a11d072e7ffe4e6dfd80377d6e8c2cc95dc45a00aaca4a8282605da3b1470e"
+  }
+}

@@ -1,0 +1,895 @@
+diff --git a/aera_rpc/aera_engine.cpp b/aera_rpc/aera_engine.cpp
+index 905c7c5..b9dee63 100644
+--- a/aera_rpc/aera_engine.cpp
++++ b/aera_rpc/aera_engine.cpp
+@@ -4,6 +4,7 @@
+ #include "aera_engine.hpp"
+ 
+ #include <algorithm>
++#include <cctype>
+ #include <fstream>
+ #include <string>
+ #include <unistd.h>
+@@ -329,6 +330,22 @@ int Mirror(const Request &request, EventSink &events) {
+ int Execute(const Request &request, EventSink &events) {
+   const std::string &op = request.operation;
+   if (op == "status") return Status(events);
++  if (op == "getvar" || op == "setvar") {
++    const std::string name = Text(request.arguments, "name");
++    if (name.empty() || name.size() > 200 ||
++        !std::all_of(name.begin(), name.end(), [](unsigned char c) {
++          return std::isalnum(c) || c == '_' || c == '.';
++        })) return Fail(events, "invalid_variable", "Invalid variable name", 2);
++    if (op == "setvar" &&
++        DataManager::SetValue(name, Text(request.arguments, "value")) != 0)
++      return Fail(events, "set_failed", "Variable is read-only or unavailable");
++    std::string value;
++    if (DataManager::GetValue(name, value) != 0)
++      return Fail(events, "unknown_variable", "Variable is unavailable", 2);
++    events.Log(Flag(request.arguments, "raw") ? value + "\n"
++                                            : name + " = " + value + "\n");
++    return 0;
++  }
+   if (op == "storages") {
+     events.Data("storages", Volumes(aeraui::RecoveryVolumes("storage"), false));
+     return 0;
+diff --git a/aeraui/features/browser/aera_worker.cpp b/aeraui/features/browser/aera_worker.cpp
+index ee80dba..bb0000e 100644
+--- a/aeraui/features/browser/aera_worker.cpp
++++ b/aeraui/features/browser/aera_worker.cpp
+@@ -24,12 +24,18 @@
+ #include <vector>
+ 
+ using namespace aeraui::web;
++static bool gPhy110Diagnostic = false;
+ struct Session;
+ static WPEInputMethodContext *CreateInputMethodContext(WPEDisplay *, WPEView *);
+ struct AERADisplay { WPEDisplay parent; Session *session = nullptr; };
+ struct AERADisplayClass { WPEDisplayClass parent; };
+ G_DEFINE_TYPE(AERADisplay, aera_display, WPE_TYPE_DISPLAY)
+-static void aera_display_init(AERADisplay *display) { display->session = nullptr; }
++static void aera_display_init(AERADisplay *display) {
++  display->session = nullptr;
++  wpe_display_set_available_input_devices(WPE_DISPLAY(display),
++      static_cast<WPEAvailableInputDevices>(WPE_AVAILABLE_INPUT_DEVICE_TOUCHSCREEN |
++                                           WPE_AVAILABLE_INPUT_DEVICE_KEYBOARD));
++}
+ static gpointer GetEGLDisplay(WPEDisplay *, GError **error) {
+   if (!epoxy_has_egl_extension(nullptr, "EGL_MESA_platform_surfaceless")) {
+     g_set_error_literal(error, WPE_EGL_ERROR, WPE_EGL_ERROR_NOT_AVAILABLE,
+@@ -121,6 +127,7 @@ G_DEFINE_TYPE(AERAInputMethodContext, aera_input_method_context,
+ static void SendKeyboardFocus(WPEInputMethodContext *context, bool focused) {
+   auto *input = reinterpret_cast<AERAInputMethodContext *>(context);
+   if (!input->session) return;
++  if (gPhy110Diagnostic) fprintf(stderr, "PHY110_DIAG keyboard=%s time=%lld\n", focused ? "show" : "hide", (long long)g_get_monotonic_time());
+   Message message;
+   message.kind = focused ? Kind::kKeyboardShow : Kind::kKeyboardHide;
+   if (focused)
+@@ -429,6 +436,7 @@ static gboolean Input(gint fd, GIOCondition condition, gpointer data) {
+       } else Publish(s);
+       break;
+     case Kind::kTouchDown: case Kind::kTouchMove: case Kind::kTouchUp: {
++      if (gPhy110Diagnostic && m.kind != Kind::kTouchMove) fprintf(stderr, "PHY110_DIAG touch=%s time=%lld\n", m.kind == Kind::kTouchDown ? "down" : "up", (long long)g_get_monotonic_time());
+       const auto kind = m.kind == Kind::kTouchDown ? WPE_EVENT_TOUCH_DOWN :
+                         m.kind == Kind::kTouchUp ? WPE_EVENT_TOUCH_UP : WPE_EVENT_TOUCH_MOVE;
+       auto *event = wpe_event_touch_new(kind, s->view, WPE_INPUT_SOURCE_TOUCHSCREEN,
+@@ -462,6 +470,14 @@ int main(int argc, char **argv) {
+       getsockopt(4, SOL_SOCKET, SO_TYPE, &socket_type, &type_size) || socket_type != SOCK_SEQPACKET) {
+     fprintf(stderr, "Invalid browser bridge: size=%lld type=%d errno=%d\n", (long long)frame.st_size, socket_type, errno); return 78;
+   }
++  struct stat diagnostic{};
++  gPhy110Diagnostic = !lstat("/etc/phy110-browser-diagnostics", &diagnostic) &&
++      S_ISREG(diagnostic.st_mode) && diagnostic.st_uid == 0 &&
++      !(diagnostic.st_mode & 0022) && diagnostic.st_size == 8;
++  if (gPhy110Diagnostic) {
++    g_setenv("GST_DEBUG", "2,webkitmediaplayer:4,webkitmediasrc:4", TRUE);
++    g_setenv("GST_DEBUG_NO_COLOR", "1", TRUE);
++  }
+   Session s;
+   s.shared = static_cast<uint8_t *>(mmap(nullptr, kSharedBytes, PROT_READ | PROT_WRITE, MAP_SHARED, 3, 0));
+   if (s.shared == MAP_FAILED) { perror("Map browser bridge"); return 78; }
+@@ -562,17 +578,33 @@ int main(int argc, char **argv) {
+       "settings", settings, "web-context", context, "network-session", network,
+       "user-content-manager", content, nullptr));
+   g_signal_connect(network, "download-started", G_CALLBACK(DownloadStarted), &s);
++  g_signal_connect(s.web, "resource-load-started", G_CALLBACK(+[](WebKitWebView *, WebKitWebResource *resource, WebKitURIRequest *, gpointer) {
++    g_signal_connect(resource, "failed", G_CALLBACK(+[](WebKitWebResource *, GError *error, gpointer) {
++      if (gPhy110Diagnostic) fprintf(stderr, "PHY110_DIAG resource-failed domain=%s code=%d message=%s\n", g_quark_to_string(error->domain), error->code, error->message);
++    }), nullptr);
++  }), nullptr);
++
+   g_signal_connect(s.web, "permission-request", G_CALLBACK(+[](WebKitWebView *, WebKitPermissionRequest *r, gpointer) -> gboolean {
+     webkit_permission_request_deny(r); return TRUE;
+   }), nullptr);
+   g_signal_connect(s.web, "run-file-chooser", G_CALLBACK(+[](WebKitWebView *, WebKitFileChooserRequest *r, gpointer) -> gboolean {
+     webkit_file_chooser_request_cancel(r); return TRUE;
+   }), nullptr);
+-  g_signal_connect(s.web, "decide-policy", G_CALLBACK(+[](WebKitWebView *, WebKitPolicyDecision *d, WebKitPolicyDecisionType t, gpointer) -> gboolean {
+-    if (t == WEBKIT_POLICY_DECISION_TYPE_NEW_WINDOW_ACTION) { webkit_policy_decision_ignore(d); return TRUE; }
+-    if (t != WEBKIT_POLICY_DECISION_TYPE_NAVIGATION_ACTION) return FALSE;
++  g_signal_connect(s.web, "decide-policy", G_CALLBACK(+[](WebKitWebView *view, WebKitPolicyDecision *d, WebKitPolicyDecisionType t, gpointer) -> gboolean {
++    if (t != WEBKIT_POLICY_DECISION_TYPE_NAVIGATION_ACTION &&
++        t != WEBKIT_POLICY_DECISION_TYPE_NEW_WINDOW_ACTION) return FALSE;
+     auto *action = webkit_navigation_policy_decision_get_navigation_action(WEBKIT_NAVIGATION_POLICY_DECISION(d));
+     const char *uri = webkit_uri_request_get_uri(webkit_navigation_action_get_request(action));
++    if (t == WEBKIT_POLICY_DECISION_TYPE_NEW_WINDOW_ACTION) {
++      // AERA has one view: user-activated links open in that view. Keep
++      // automatic popups and non-browser schemes blocked by the same jail.
++      const std::string address = uri ? Address(uri) : std::string();
++      const bool user_gesture = webkit_navigation_action_is_user_gesture(action);
++      webkit_policy_decision_ignore(d);
++      if (user_gesture && !address.empty())
++        webkit_web_view_load_uri(view, address.c_str());
++      return TRUE;
++    }
+     if (uri && !Address(uri).empty()) return FALSE;
+     webkit_policy_decision_ignore(d); return TRUE;
+   }), nullptr);
+diff --git a/aeraui/features/browser/jail_main.cpp b/aeraui/features/browser/jail_main.cpp
+index 127946c..ab1e03b 100644
+--- a/aeraui/features/browser/jail_main.cpp
++++ b/aeraui/features/browser/jail_main.cpp
+@@ -315,6 +315,10 @@ int main(int argc, char **argv) {
+     fprintf(stderr, "Usage (root recovery only): aera-browser-jail MODE RUNTIME [COMMAND [ARGUMENT]]\n");
+     return 78;
+   }
++  // Read the immutable device guard before entering the property-free jail.
++  char phy110[PROP_VALUE_MAX]{};
++  __system_property_get("ro.recovery.phy110.supported", phy110);
++  const bool is_phy110 = !strcmp(phy110, "1");
+   const bool retroarch = !strcmp(argv[1], "--retroarch");
+   const bool doom = !strcmp(argv[1], "--doom");
+   const bool telegram = !strcmp(argv[1], "--telegram");
+@@ -409,6 +413,32 @@ int main(int argc, char **argv) {
+         recorder ? "aera-recorder" : "aera-browser"), "private hostname");
+   Check(minijail_enter_chroot(jail, root.c_str()), "private filesystem");
+   Check(minijail_bind(jail, root.c_str(), "/", 0), "read-only runtime");
++  if (browser && is_phy110) {
++    // The device compatibility library belongs to the trusted Recovery image,
++    // so preparing or reinstalling a downloaded engine cannot remove the fix.
++    const char *turnip = "/system/etc/aera-browser/phy110-turnip.so";
++    const int library = open(turnip, O_RDONLY | O_NOFOLLOW | O_CLOEXEC);
++    struct stat trusted{};
++    if (library < 0 || fstat(library, &trusted) ||
++        !S_ISREG(trusted.st_mode) || trusted.st_uid || trusted.st_gid ||
++        (trusted.st_mode & 0022) || trusted.st_size < 1024 * 1024)
++      Die("trusted PHY110 Turnip library");
++    close(library);
++    Check(minijail_bind(jail, turnip, "/usr/lib/libvulkan_freedreno.so", 0),
++          "read-only PHY110 Turnip library");
++    // Keep the SONAME-8 codec in the trusted image, independent of engine
++    // preparation and reinstall. It remains read-only inside the browser jail.
++    const char *codec = "/system/etc/aera-browser/phy110-openh264.so";
++    const int decoder = open(codec, O_RDONLY | O_NOFOLLOW | O_CLOEXEC);
++    struct stat codec_stat{};
++    if (decoder < 0 || fstat(decoder, &codec_stat) ||
++        !S_ISREG(codec_stat.st_mode) || codec_stat.st_uid || codec_stat.st_gid ||
++        (codec_stat.st_mode & 0022) || codec_stat.st_size < 512 * 1024)
++      Die("trusted PHY110 OpenH264 library");
++    close(decoder);
++    Check(minijail_bind(jail, codec, "/usr/lib/libopenh264.so.8", 0),
++          "read-only PHY110 OpenH264 library");
++  }
+   const unsigned long flags = MS_NOSUID | MS_NODEV | MS_NOEXEC;
+   const char *proc_options =
+       SupportsProcSubsetPid() ? "hidepid=2,subset=pid" : "hidepid=2";
+diff --git a/aeraui/features/browser/runtime.cpp b/aeraui/features/browser/runtime.cpp
+index 326a2ce..72a4138 100644
+--- a/aeraui/features/browser/runtime.cpp
++++ b/aeraui/features/browser/runtime.cpp
+@@ -354,6 +354,59 @@ void PreparePluginRuntime(Preparation &state, const char *id,
+   state.error.clear();
+ }
+ 
++// This asset is supplied by the PHY110 image. Apply it only to the exact
++// signed engine release that rejects user-activated new-window links. The
++// installed payload remains untouched; extraction and both payload hashes
++// must pass before this root-owned image component can replace its worker.
++static bool CopyVerifiedImageAsset(int root, const char *asset, const char *destination,
++    const char *expected_hash, size_t limit, mode_t mode) {
++  FD source(open(asset, O_RDONLY | O_NOFOLLOW | O_CLOEXEC));
++  if (source.value < 0) return errno == ENOENT;
++  struct stat info{};
++  if (fstat(source.value, &info) || !S_ISREG(info.st_mode) || info.st_uid ||
++      (info.st_mode & 0022) || info.st_size <= 0 || static_cast<uint64_t>(info.st_size) > limit) return false;
++  std::vector<unsigned char> bytes(static_cast<size_t>(info.st_size));
++  size_t position = 0;
++  while (position < bytes.size()) {
++    ssize_t count = read(source.value, bytes.data() + position, bytes.size() - position);
++    if (count < 0 && errno == EINTR) continue;
++    if (count <= 0) return false;
++    position += static_cast<size_t>(count);
++  }
++  Hash hash; hash.Add(bytes.data(), bytes.size());
++  if (!hash.Matches(expected_hash)) return false;
++  if (!PathSafe(destination)) return false;
++  FD directory(Parent(root, destination));
++  if (directory.value < 0) return false;
++  const std::string leaf = std::string(destination).substr(std::string(destination).find_last_of('/') + 1);
++  const std::string temporary = leaf + ".phy110-new";
++  FD output(openat(directory.value, temporary.c_str(), O_WRONLY | O_CREAT |
++                   O_EXCL | O_NOFOLLOW | O_CLOEXEC, mode));
++  if (output.value < 0) return false;
++  position = 0;
++  while (position < bytes.size()) {
++    ssize_t count = write(output.value, bytes.data() + position, bytes.size() - position);
++    if (count < 0 && errno == EINTR) continue;
++    if (count <= 0) return false;
++    position += static_cast<size_t>(count);
++  }
++  return !fchmod(output.value, mode) &&
++      !renameat(directory.value, temporary.c_str(), directory.value, leaf.c_str());
++}
++static bool ApplyPhy110BrowserCompatibility(int root, const RuntimeSpec &spec,
++    const char *asset = "/system/etc/aera-browser/phy110-worker") {
++  if (spec.compressed_hash !=
++      "4e3941bd2bcbcc53e4d1bdc7641e7d7c7b16b848b8ba21bb934119118b37f197") return true;
++  return CopyVerifiedImageAsset(root, asset, "usr/bin/aera-browser-worker",
++      "3e5e3134b67513bfa6104641e653e41b3dbab68c2c921617183c2fa51d13faea", 128 * 1024, 0755) &&
++      CopyVerifiedImageAsset(root, "/system/etc/aera-browser/phy110-diagnostics",
++      "etc/phy110-browser-diagnostics",
++      "e056a35db086947e2f5969d747f0a7517bff00c7ffff1f9e7b47b72bfac9d948", 128, 0444) &&
++      CopyVerifiedImageAsset(root, "/twres/fonts/wqy-microhei.ttf",
++      "usr/share/fonts/aera/PHY110-CJK.ttf",
++      "272435f569f3e7ffa7cea299d0b175346738b5922eccaedb168eadb63f8123da", 8 * 1024 * 1024, 0644);
++}
++
+ void PrepareRuntime(Preparation &state, const char *payload, const char *parent) {
+   // RAII publishes completion even on a normal early return. No worker touches LVGL.
+   struct Completion { Preparation &s; ~Completion() { s.done.store(true, std::memory_order_release); } } done{state};
+@@ -422,6 +475,11 @@ void PrepareRuntime(Preparation &state, const char *payload, const char *parent)
+   }
+   // Publish only the complete verified tree. Ownership is still recovery root;
+   // only the fixed userspace jail may execute programs from it.
++  if (!ApplyPhy110BrowserCompatibility(root.value, spec)) {
++    RemoveRuntime(temporary);
++    state.error = "PHY110 browser compatibility component failed verification.";
++    return;
++  }
+   state.directory = temporary; state.verified = true; state.error.clear();
+ }
+ 
+diff --git a/aeraui/features/browser/web_scene.cpp b/aeraui/features/browser/web_scene.cpp
+index 6507052..eb78d8a 100644
+--- a/aeraui/features/browser/web_scene.cpp
++++ b/aeraui/features/browser/web_scene.cpp
+@@ -54,6 +54,7 @@ struct WebScene {
+   bool frame_waiting_for_refresh = false;
+   bool touch_pressed[2]{};
+   bool touch_ignored[2]{};
++  int page_touch_x = -1, page_touch_y = -1;
+   bool pinch_active = false;
+   double pinch_start_distance = 0.0;
+   unsigned pinch_start_zoom = 100;
+@@ -341,7 +342,11 @@ void OpenAddressBar(WebScene *s) {
+ 
+ void ShowKeyboard(WebScene *s, bool web_keyboard, uint32_t purpose = 0,
+                   lv_obj_t *target = nullptr) {
+-  ResetBrowserTouches(s);
++  // Page focus may change between touch-down and touch-up. The keyboard is
++  // only an overlay; preserve the page's captured contact through show/hide
++  // notifications so WebKit receives its matching release. Address editing
++  // switches to recovery UI and still resets page contact ownership.
++  if (!web_keyboard) ResetBrowserTouches(s);
+   s->web_keyboard = web_keyboard;
+   lv_keyboard_set_mode(s->keyboard,
+       web_keyboard && (purpose == 2 || purpose == 9)
+@@ -580,7 +585,22 @@ void ShowBrowserSettings(WebScene *s) {
+ 
+ void Prepare(WebScene *s) {
+   HideKeyboard(s);
+-  if (s->started) return;
++  if (s->session.Connected() || (s->started && !s->finished)) return;
++  if (s->started) {
++    s->process.Stop();
++    s->session.Close();
++    if (s->worker.joinable()) s->worker.join();
++    web::RemoveRuntime(s->state.directory);
++    s->state.directory.clear();
++    s->state.verified = false;
++    s->state.error.clear();
++    s->state.done.store(false);
++    s->state.cancel.store(false);
++    s->state.progress.store(0);
++    s->finished = false;
++    s->showing_web = false;
++    ResetBrowserTouches(s);
++  }
+   if (!web::RuntimeInstalled()) {
+     i18n::BindLabel(s->title, "Browser package unavailable");
+     i18n::BindLabel(s->detail, "This image does not contain the expected browser payload.");
+@@ -600,7 +620,8 @@ bool BrowserHandlePointer(int slot, int x, int y, bool pressed) {
+   auto *s = gWebScene;
+   if (!s || slot < 0 || slot > 1 || !s->showing_web ||
+       !s->session.Connected() || s->manager_open || s->settings_open ||
+-      (s->keyboard && !lv_obj_has_flag(s->keyboard, LV_OBJ_FLAG_HIDDEN)))
++      (s->keyboard && !lv_obj_has_flag(s->keyboard, LV_OBJ_FLAG_HIDDEN) &&
++       !s->web_keyboard))
+     return false;
+   // Quick Settings is a child overlay of the active browser screen. It must
+   // exclusively own every new tap/drag until its closing animation is gone.
+@@ -608,7 +629,15 @@ bool BrowserHandlePointer(int slot, int x, int y, bool pressed) {
+     ResetBrowserTouches(s);
+     return false;
+   }
+-  const bool inside = x >= s->view_left && y >= s->view_top &&
++  // A webpage's keyboard overlays only its own bounds. Suggestions and other
++  // page controls above it must still receive a complete down/up sequence.
++  lv_area_t keyboard_bounds{};
++  const bool keyboard_visible = s->keyboard &&
++      !lv_obj_has_flag(s->keyboard, LV_OBJ_FLAG_HIDDEN);
++  if (keyboard_visible) lv_obj_get_coords(s->keyboard, &keyboard_bounds);
++  const bool over_keyboard = keyboard_visible && x >= keyboard_bounds.x1 &&
++      x <= keyboard_bounds.x2 && y >= keyboard_bounds.y1 && y <= keyboard_bounds.y2;
++  const bool inside = !over_keyboard && x >= s->view_left && y >= s->view_top &&
+       x < s->view_left + s->view_width &&
+       y < s->view_top + s->view_height;
+   const bool was_pressed = s->touch_pressed[slot];
+@@ -635,6 +664,8 @@ bool BrowserHandlePointer(int slot, int x, int y, bool pressed) {
+           (y - s->view_top) * web::kViewHeight / s->view_height,
+           0, web::kViewHeight - 1);
+       s->session.Send(web::Kind::kTouchDown, browser_x, browser_y, 0);
++      s->page_touch_x = browser_x;
++      s->page_touch_y = browser_y;
+     }
+   } else if (!s->touch_pressed[slot]) {
+     return false;
+@@ -682,8 +713,15 @@ bool BrowserHandlePointer(int slot, int x, int y, bool pressed) {
+     const int browser_y = std::clamp(
+         (y - s->view_top) * web::kViewHeight / s->view_height,
+         0, web::kViewHeight - 1);
+-    s->session.Send(pressed ? web::Kind::kTouchMove : web::Kind::kTouchUp,
+-                    browser_x, browser_y, 0);
++    // A stationary sample is not a movement. In particular, do not emit a
++    // move immediately after down: sites may cancel touchmove to suppress
++    // scrolling, which also cancels WebKit's compatibility click gesture.
++    if (!pressed || browser_x != s->page_touch_x || browser_y != s->page_touch_y) {
++      s->session.Send(pressed ? web::Kind::kTouchMove : web::Kind::kTouchUp,
++                      browser_x, browser_y, 0);
++      s->page_touch_x = browser_x;
++      s->page_touch_y = browser_y;
++    }
+   }
+   if (!pressed) s->touch_pressed[slot] = false;
+   return true;
+@@ -935,7 +973,7 @@ void BuildWebScene(lv_obj_t *screen, ActionCallback callback, void *context,
+   if (!s->timer) s->timer = lv_timer_create([](lv_timer_t *timer) {
+     auto *s = static_cast<WebScene *>(lv_timer_get_user_data(timer));
+     const bool visible = s->screen != nullptr;
+-    if (!s->process.Running() && s->session.Connected())
++    if (s->auto_launch && !s->process.Running() && s->session.Connected())
+       s->session.Close();
+     lv_timer_set_period(timer, s->session.Connected() ? 16 : 50);
+     if (s->session.Connected()) {
+@@ -1027,6 +1065,7 @@ void BuildWebScene(lv_obj_t *screen, ActionCallback callback, void *context,
+       i18n::BindLabel(s->title, "Browser stopped");
+       i18n::BindLabel(s->detail,
+                         "The persistent WebKit session closed unexpectedly.");
++      lv_obj_remove_state(s->prepare, LV_STATE_DISABLED);
+     }
+     if (!s->started || s->finished) return;
+     if (visible)
+@@ -1038,6 +1077,7 @@ void BuildWebScene(lv_obj_t *screen, ActionCallback callback, void *context,
+       if (visible) {
+         i18n::BindLabel(s->title, "Preparation failed");
+         i18n::BindLabel(s->detail, s->state.error.c_str());
++        lv_obj_remove_state(s->prepare, LV_STATE_DISABLED);
+       }
+       return;
+     }
+@@ -1057,6 +1097,7 @@ void BuildWebScene(lv_obj_t *screen, ActionCallback callback, void *context,
+         i18n::BindLabel(s->title, "Browser start failed");
+         i18n::BindLabel(s->detail,
+             error.empty() ? s->session.Status().c_str() : error.c_str());
++        lv_obj_remove_state(s->prepare, LV_STATE_DISABLED);
+       }
+       return;
+     }
+diff --git a/aeraui/features/browser/worker.cpp b/aeraui/features/browser/worker.cpp
+index ee80dba..bb0000e 100644
+--- a/aeraui/features/browser/worker.cpp
++++ b/aeraui/features/browser/worker.cpp
+@@ -24,12 +24,18 @@
+ #include <vector>
+ 
+ using namespace aeraui::web;
++static bool gPhy110Diagnostic = false;
+ struct Session;
+ static WPEInputMethodContext *CreateInputMethodContext(WPEDisplay *, WPEView *);
+ struct AERADisplay { WPEDisplay parent; Session *session = nullptr; };
+ struct AERADisplayClass { WPEDisplayClass parent; };
+ G_DEFINE_TYPE(AERADisplay, aera_display, WPE_TYPE_DISPLAY)
+-static void aera_display_init(AERADisplay *display) { display->session = nullptr; }
++static void aera_display_init(AERADisplay *display) {
++  display->session = nullptr;
++  wpe_display_set_available_input_devices(WPE_DISPLAY(display),
++      static_cast<WPEAvailableInputDevices>(WPE_AVAILABLE_INPUT_DEVICE_TOUCHSCREEN |
++                                           WPE_AVAILABLE_INPUT_DEVICE_KEYBOARD));
++}
+ static gpointer GetEGLDisplay(WPEDisplay *, GError **error) {
+   if (!epoxy_has_egl_extension(nullptr, "EGL_MESA_platform_surfaceless")) {
+     g_set_error_literal(error, WPE_EGL_ERROR, WPE_EGL_ERROR_NOT_AVAILABLE,
+@@ -121,6 +127,7 @@ G_DEFINE_TYPE(AERAInputMethodContext, aera_input_method_context,
+ static void SendKeyboardFocus(WPEInputMethodContext *context, bool focused) {
+   auto *input = reinterpret_cast<AERAInputMethodContext *>(context);
+   if (!input->session) return;
++  if (gPhy110Diagnostic) fprintf(stderr, "PHY110_DIAG keyboard=%s time=%lld\n", focused ? "show" : "hide", (long long)g_get_monotonic_time());
+   Message message;
+   message.kind = focused ? Kind::kKeyboardShow : Kind::kKeyboardHide;
+   if (focused)
+@@ -429,6 +436,7 @@ static gboolean Input(gint fd, GIOCondition condition, gpointer data) {
+       } else Publish(s);
+       break;
+     case Kind::kTouchDown: case Kind::kTouchMove: case Kind::kTouchUp: {
++      if (gPhy110Diagnostic && m.kind != Kind::kTouchMove) fprintf(stderr, "PHY110_DIAG touch=%s time=%lld\n", m.kind == Kind::kTouchDown ? "down" : "up", (long long)g_get_monotonic_time());
+       const auto kind = m.kind == Kind::kTouchDown ? WPE_EVENT_TOUCH_DOWN :
+                         m.kind == Kind::kTouchUp ? WPE_EVENT_TOUCH_UP : WPE_EVENT_TOUCH_MOVE;
+       auto *event = wpe_event_touch_new(kind, s->view, WPE_INPUT_SOURCE_TOUCHSCREEN,
+@@ -462,6 +470,14 @@ int main(int argc, char **argv) {
+       getsockopt(4, SOL_SOCKET, SO_TYPE, &socket_type, &type_size) || socket_type != SOCK_SEQPACKET) {
+     fprintf(stderr, "Invalid browser bridge: size=%lld type=%d errno=%d\n", (long long)frame.st_size, socket_type, errno); return 78;
+   }
++  struct stat diagnostic{};
++  gPhy110Diagnostic = !lstat("/etc/phy110-browser-diagnostics", &diagnostic) &&
++      S_ISREG(diagnostic.st_mode) && diagnostic.st_uid == 0 &&
++      !(diagnostic.st_mode & 0022) && diagnostic.st_size == 8;
++  if (gPhy110Diagnostic) {
++    g_setenv("GST_DEBUG", "2,webkitmediaplayer:4,webkitmediasrc:4", TRUE);
++    g_setenv("GST_DEBUG_NO_COLOR", "1", TRUE);
++  }
+   Session s;
+   s.shared = static_cast<uint8_t *>(mmap(nullptr, kSharedBytes, PROT_READ | PROT_WRITE, MAP_SHARED, 3, 0));
+   if (s.shared == MAP_FAILED) { perror("Map browser bridge"); return 78; }
+@@ -562,17 +578,33 @@ int main(int argc, char **argv) {
+       "settings", settings, "web-context", context, "network-session", network,
+       "user-content-manager", content, nullptr));
+   g_signal_connect(network, "download-started", G_CALLBACK(DownloadStarted), &s);
++  g_signal_connect(s.web, "resource-load-started", G_CALLBACK(+[](WebKitWebView *, WebKitWebResource *resource, WebKitURIRequest *, gpointer) {
++    g_signal_connect(resource, "failed", G_CALLBACK(+[](WebKitWebResource *, GError *error, gpointer) {
++      if (gPhy110Diagnostic) fprintf(stderr, "PHY110_DIAG resource-failed domain=%s code=%d message=%s\n", g_quark_to_string(error->domain), error->code, error->message);
++    }), nullptr);
++  }), nullptr);
++
+   g_signal_connect(s.web, "permission-request", G_CALLBACK(+[](WebKitWebView *, WebKitPermissionRequest *r, gpointer) -> gboolean {
+     webkit_permission_request_deny(r); return TRUE;
+   }), nullptr);
+   g_signal_connect(s.web, "run-file-chooser", G_CALLBACK(+[](WebKitWebView *, WebKitFileChooserRequest *r, gpointer) -> gboolean {
+     webkit_file_chooser_request_cancel(r); return TRUE;
+   }), nullptr);
+-  g_signal_connect(s.web, "decide-policy", G_CALLBACK(+[](WebKitWebView *, WebKitPolicyDecision *d, WebKitPolicyDecisionType t, gpointer) -> gboolean {
+-    if (t == WEBKIT_POLICY_DECISION_TYPE_NEW_WINDOW_ACTION) { webkit_policy_decision_ignore(d); return TRUE; }
+-    if (t != WEBKIT_POLICY_DECISION_TYPE_NAVIGATION_ACTION) return FALSE;
++  g_signal_connect(s.web, "decide-policy", G_CALLBACK(+[](WebKitWebView *view, WebKitPolicyDecision *d, WebKitPolicyDecisionType t, gpointer) -> gboolean {
++    if (t != WEBKIT_POLICY_DECISION_TYPE_NAVIGATION_ACTION &&
++        t != WEBKIT_POLICY_DECISION_TYPE_NEW_WINDOW_ACTION) return FALSE;
+     auto *action = webkit_navigation_policy_decision_get_navigation_action(WEBKIT_NAVIGATION_POLICY_DECISION(d));
+     const char *uri = webkit_uri_request_get_uri(webkit_navigation_action_get_request(action));
++    if (t == WEBKIT_POLICY_DECISION_TYPE_NEW_WINDOW_ACTION) {
++      // AERA has one view: user-activated links open in that view. Keep
++      // automatic popups and non-browser schemes blocked by the same jail.
++      const std::string address = uri ? Address(uri) : std::string();
++      const bool user_gesture = webkit_navigation_action_is_user_gesture(action);
++      webkit_policy_decision_ignore(d);
++      if (user_gesture && !address.empty())
++        webkit_web_view_load_uri(view, address.c_str());
++      return TRUE;
++    }
+     if (uri && !Address(uri).empty()) return FALSE;
+     webkit_policy_decision_ignore(d); return TRUE;
+   }), nullptr);
+diff --git a/aeraui/platform/aera_backend.cpp b/aeraui/platform/aera_backend.cpp
+index 5e2d8df..aa54590 100644
+--- a/aeraui/platform/aera_backend.cpp
++++ b/aeraui/platform/aera_backend.cpp
+@@ -20,6 +20,7 @@
+ #include <vector>
+ #include <sys/mount.h>
+ #include <sys/stat.h>
++#include <sys/statvfs.h>
+ #include <unistd.h>
+ 
+ #include <cutils/properties.h>
+@@ -321,7 +322,14 @@ std::vector<Volume> RecoveryVolumes(const std::string &kind) {
+     if (part.Mount_Point == "DALVIK") name = "Dalvik / ART cache";
+     if (part.Mount_Point == "INTERNAL") name = "Internal storage";
+     if (name.empty() || name.find('{') != std::string::npos) name = part.Mount_Point;
+-    result.push_back({name, part.Mount_Point, part.PartitionSize, part.selected != 0});
++    uint64_t bytes = part.PartitionSize;
++    if (kind == "storage") {
++      struct statvfs space{};
++      if (PartitionManager.Is_Mounted_By_Path(part.Mount_Point) > 0 &&
++          statvfs(part.Mount_Point.c_str(), &space) == 0)
++        bytes = static_cast<uint64_t>(space.f_blocks) * space.f_frsize;
++    }
++    result.push_back({name, part.Mount_Point, bytes, part.selected != 0});
+   }
+   return result;
+ }
+diff --git a/aeraui/platform/aera_ui_host.cpp b/aeraui/platform/aera_ui_host.cpp
+index 1ee7e54..e736c90 100644
+--- a/aeraui/platform/aera_ui_host.cpp
++++ b/aeraui/platform/aera_ui_host.cpp
+@@ -53,6 +53,11 @@ extern "C" int aeraui_is_active() { return 1; }
+ 
+ extern "C" int gui_init() {
+   gr_init();
++  // Reset the bootloader display handoff before starting PHY110 scanout.
++  if (android::base::GetProperty("ro.recovery.phy110.supported", "0") == "1") {
++    gr_fb_blank(true);
++    gr_fb_blank(false);
++  }
+   TWFunc::Set_Brightness(DataManager::GetStrValue("tw_brightness"));
+ #ifdef TW_SCREEN_BLANK_ON_BOOT
+   aeraScreenTimer.Blank();
+@@ -62,6 +67,8 @@ extern "C" int gui_init() {
+   usleep(TW_DELAY_TOUCH_INIT_MS);
+ #endif
+   ev_init();
++  // Some touch controllers need to resume after DRM initializes the panel.
++  TWFunc::check_and_run_script("/system/bin/postscreenunblank.sh", "unblank");
+ 
+   const bool fastboot =
+       android::base::GetProperty(TW_FASTBOOT_MODE_PROP, "0") == "1";
+diff --git a/aeraui/tests/ui_check.cpp b/aeraui/tests/ui_check.cpp
+index 5296b57..bbb6962 100644
+--- a/aeraui/tests/ui_check.cpp
++++ b/aeraui/tests/ui_check.cpp
+@@ -429,6 +429,80 @@ int main(int argc,char **argv) {
+     assert(png_image_write_to_file(&image,path,0,frame.data(),0,nullptr));
+   };
+   auto *screen=lv_screen_active();
++  if (!strcmp(argv[1], "--browser-keyboard")) {
++    int channels[2]; assert(socketpair(AF_UNIX, SOCK_SEQPACKET | SOCK_CLOEXEC, 0, channels)==0);
++    int pixels=memfd_create("browser-keyboard-test",MFD_CLOEXEC|MFD_ALLOW_SEALING);
++    assert(pixels>=0 && ftruncate(pixels,web::kSharedBytes)==0);
++    assert(fcntl(pixels,F_ADD_SEALS,F_SEAL_SHRINK|F_SEAL_GROW)==0);
++    auto *page=lv_obj_create(nullptr); BuildWebScene(page,RecordAction,nullptr,pixels,channels[0],false);
++    lv_screen_load(page);
++    web::Message message; message.kind=web::Kind::kFrame; message.sequence=1;
++    message.x=web::kWidth; message.y=web::kHeight; message.value=web::kFrameBytes;
++    assert(send(channels[1],&message,sizeof(message),0)==sizeof(message)); Tick();
++    assert(recv(channels[1],&message,sizeof(message),MSG_DONTWAIT)==sizeof(message));
++    assert(message.kind==web::Kind::kAck);
++    message=web::Message{}; message.kind=web::Kind::kKeyboardShow;
++    assert(send(channels[1],&message,sizeof(message),0)==sizeof(message)); Tick();
++    auto *keyboard=FindType(page,&lv_keyboard_class); assert(keyboard && lv_obj_is_visible(keyboard));
++    assert(BrowserHandlePointer(0,720,600,true)); assert(BrowserHandlePointer(0,720,600,false));
++    for (auto kind : {web::Kind::kTouchDown,web::Kind::kTouchUp}) {
++      assert(recv(channels[1],&message,sizeof(message),MSG_DONTWAIT)==sizeof(message));
++      assert(message.kind==kind);
++    }
++    // Stationary/repeated samples must not turn a tap into a DOM touchmove.
++    assert(BrowserHandlePointer(0,720,600,true));
++    assert(recv(channels[1],&message,sizeof(message),MSG_DONTWAIT)==sizeof(message));
++    assert(message.kind==web::Kind::kTouchDown);
++    assert(BrowserHandlePointer(0,720,600,true));
++    assert(BrowserHandlePointer(0,721,600,true)); // same browser pixel
++    assert(recv(channels[1],&message,sizeof(message),MSG_DONTWAIT)<0);
++    assert(BrowserHandlePointer(0,760,640,true));
++    assert(recv(channels[1],&message,sizeof(message),MSG_DONTWAIT)==sizeof(message));
++    assert(message.kind==web::Kind::kTouchMove);
++    assert(BrowserHandlePointer(0,760,640,false));
++    assert(recv(channels[1],&message,sizeof(message),MSG_DONTWAIT)==sizeof(message));
++    assert(message.kind==web::Kind::kTouchUp);
++    // A repeated focus notification must not discard an in-flight contact.
++    assert(BrowserHandlePointer(0,720,600,true));
++    for (auto kind : {web::Kind::kTouchDown}) {
++      assert(recv(channels[1],&message,sizeof(message),MSG_DONTWAIT)==sizeof(message));
++      assert(message.kind==kind);
++    }
++    message=web::Message{}; message.kind=web::Kind::kKeyboardShow;
++    assert(send(channels[1],&message,sizeof(message),0)==sizeof(message)); Tick();
++    assert(BrowserHandlePointer(0,720,600,false));
++    assert(recv(channels[1],&message,sizeof(message),MSG_DONTWAIT)==sizeof(message));
++    assert(message.kind==web::Kind::kTouchUp);
++    // Initial focus and a blur/refocus pair during a contact also need the
++    // same release, including a tap that causes the keyboard to appear.
++    for (bool refocus : {false,true}) {
++      message=web::Message{}; message.kind=web::Kind::kKeyboardHide;
++      assert(send(channels[1],&message,sizeof(message),0)==sizeof(message)); Tick();
++      assert(BrowserHandlePointer(0,720,600,true));
++      for (auto kind : {web::Kind::kTouchDown}) {
++        assert(recv(channels[1],&message,sizeof(message),MSG_DONTWAIT)==sizeof(message));
++        assert(message.kind==kind);
++      }
++      message=web::Message{}; message.kind=web::Kind::kKeyboardShow;
++      assert(send(channels[1],&message,sizeof(message),0)==sizeof(message)); Tick();
++      if (refocus) {
++        message.kind=web::Kind::kKeyboardHide;
++        assert(send(channels[1],&message,sizeof(message),0)==sizeof(message)); Tick();
++        message.kind=web::Kind::kKeyboardShow;
++        assert(send(channels[1],&message,sizeof(message),0)==sizeof(message)); Tick();
++      }
++      assert(BrowserHandlePointer(0,720,600,false));
++      assert(recv(channels[1],&message,sizeof(message),MSG_DONTWAIT)==sizeof(message));
++      assert(message.kind==web::Kind::kTouchUp);
++    }
++    lv_area_t bounds{}; lv_obj_get_coords(keyboard,&bounds);
++    assert(!BrowserHandlePointer(0,(bounds.x1+bounds.x2)/2,(bounds.y1+bounds.y2)/2,true));
++    assert(!BrowserHandlePointer(0,720,600,true)); assert(!BrowserHandlePointer(0,720,600,false));
++    assert(recv(channels[1],&message,sizeof(message),MSG_DONTWAIT)<0);
++    close(channels[1]); lv_screen_load(screen); lv_obj_delete(page);
++    puts("PASS: page contacts survive initial/repeated keyboard focus and blur/refocus; keyboard contacts stay outside page");
++    lv_deinit(); std::filesystem::remove_all(backup_root); return 0;
++  }
+   if (!strcmp(argv[1], "--settings")) {
+     auto *prefs = lv_obj_create(nullptr);
+     BuildToolScene(prefs, Action::kPreferences, RecordAction, nullptr);
+@@ -634,6 +708,19 @@ int main(int argc,char **argv) {
+   web_navigation = lv_obj_get_parent(Find(web, "Menu"));
+   assert(!lv_obj_has_flag(web_keyboard, LV_OBJ_FLAG_HIDDEN));
+   assert(lv_obj_has_flag(web_navigation, LV_OBJ_FLAG_HIDDEN));
++  // A visible page keyboard must not swallow a suggestion tap above it.
++  assert(BrowserHandlePointer(0, 720, 600, true));
++  assert(BrowserHandlePointer(0, 720, 600, false));
++  for (auto kind : {web::Kind::kTouchDown, web::Kind::kTouchMove, web::Kind::kTouchUp}) {
++    assert(recv(browser_channels[1], &browser_ack, sizeof(browser_ack), MSG_DONTWAIT) == sizeof(browser_ack));
++    assert(browser_ack.kind == kind);
++  }
++  lv_area_t keyboard_bounds{}; lv_obj_get_coords(web_keyboard, &keyboard_bounds);
++  assert(!BrowserHandlePointer(0, (keyboard_bounds.x1 + keyboard_bounds.x2) / 2,
++      (keyboard_bounds.y1 + keyboard_bounds.y2) / 2, true));
++  assert(!BrowserHandlePointer(0, 720, 600, true)); // keyboard owns the whole contact
++  assert(!BrowserHandlePointer(0, 720, 600, false));
++  assert(recv(browser_channels[1], &browser_ack, sizeof(browser_ack), MSG_DONTWAIT) < 0);
+   keyboard_message = web::Message{}; keyboard_message.kind = web::Kind::kKeyboardHide;
+   assert(send(browser_channels[1], &keyboard_message, sizeof(keyboard_message), 0) == sizeof(keyboard_message));
+   Tick();
+diff --git a/orscmd/orscmd.cpp b/orscmd/orscmd.cpp
+index 87d82b0..90f95a8 100644
+--- a/orscmd/orscmd.cpp
++++ b/orscmd/orscmd.cpp
+@@ -24,6 +24,8 @@
+ #include <string.h>
+ #include <fcntl.h>
+ #include <errno.h>
++#include <string>
++#include <vector>
+ #include <inttypes.h>
+ 
+ // for setcap and getcap
+@@ -40,28 +42,10 @@ void print_version(void) {
+ 
+ void print_usage(void) {
+ 	print_version();
+-	printf("Allows command line usage of AERA via openrecoveryscript commands.\n");
+-	printf("Some common commands include:\n");
+-	printf("  install /path/to/update.zip\n");
+-	printf("  backup <SDCRBAEM> [backupname]\n");
+-	printf("  restore <SDCRBAEM> [backupname]\n");
+-	printf("  wipe <partition name>\n");
+-	printf("  format data\n");	
+-	printf("  sideload\n");
+-	printf("  get <variable>\n");
+-	printf("  set <variable> [value]\n");
+-	printf("  decrypt <password> [USER ID]\n");
+-	printf("  remountrw\n");
+-	printf("  fixperms\n");
+-	printf("  set_active [slot]\n");
+-	printf("  mount <path>\n");
+-	printf("  unmount <path>\n");
+-	printf("  listmounts\n");
+-	printf("  print <value>\n");
+-	printf("  mkdir <directory>\n");
+-	printf("  reboot [recovery|poweroff|bootloader|download|fastboot|edl]\n");
+-	printf("  console_message | console_warning | console_error <message to be displayed>\n");
+-	printf("\nSee more documentation at https://twrp.me/faq/openrecoveryscript.html\n");
++	printf("Native AERA compatibility client: get/getval VAR, set VAR VALUE,\n");
++	printf("mount/unmount PATH, listmounts, install ZIP, decrypt PASSWORD [USER],\n");
++	printf("wipe PATH, reboot TARGET, sideload, setcap/getcap.\n");
++	printf("For backup, restore, format and all native operations use aera --help.\n");
+ }
+ 
+ int do_setcap(const char* filename, const char* capabilities)
+@@ -104,8 +88,7 @@ int do_getcap(const char* filename)
+ }
+ 
+ int main(int argc, char **argv) {
+-	int read_fd, write_fd, index;
+-	char command[1024], result[512];
++	
+ 
+ 	if (argc < 2 || strcmp(argv[1], "help") == 0 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "?") == 0 || strcmp(argv[1], "-h") == 0) {
+ 		print_usage();
+@@ -135,36 +118,35 @@ int main(int argc, char **argv) {
+ 		return do_getcap(argv[2]);
+ 	}
+ 
+-	sprintf(command, "%s", argv[1]);
+-	for (index = 2; index < argc; index++) {
+-		sprintf(command, "%s %s", command, argv[index]);
++	// Native AERA owns a different command channel; never wait on the legacy FIFO.
++	std::vector<std::string> args{"/system/bin/aera", "--timeout", "30"};
++	const std::string op = argv[1];
++	if ((op == "get" || op == "getval") && argc == 3) {
++		args.insert(args.end(), {"call", "getvar", "--string", "name", argv[2]});
++		if (op == "getval") args.insert(args.end(), {"--bool", "raw", "true"});
++	} else if (op == "set" && argc == 4) {
++		args.insert(args.end(), {"call", "setvar", "--string", "name", argv[2],
++		                         "--string", "value", argv[3]});
++	} else if (op == "listmounts" && argc == 2) {
++		args.push_back("mount");
++	} else if (op == "install" && argc >= 3) {
++		args.push_back("flash");
++		for (int i = 2; i < argc; ++i) args.push_back(argv[i]);
++	} else if ((op == "mount" || op == "unmount" || op == "wipe" ||
++		        op == "reboot" || op == "sideload") && argc >= 2) {
++		args.push_back(op);
++		for (int i = 2; i < argc; ++i) args.push_back(argv[i]);
++	} else if (op == "decrypt" && (argc == 3 || argc == 4)) {
++		args.insert(args.end(), {"decrypt", argv[2]});
++		if (argc == 4) args.insert(args.end(), {"--user", argv[3]});
++	} else {
++		fprintf(stderr, "Unsupported legacy command or arguments. Use 'aera --help'.\n");
++		return 2;
+ 	}
+-
+-	write_fd = open(ORS_INPUT_FILE, O_WRONLY);
+-	if (write_fd < 0) {
+-		printf("AERA does not appear to be running. Waiting for AERA to start . . .\n");
+-		printf("Press CTRL + C to quit.\n");
+-		while (write_fd < 0)
+-			write_fd = open(ORS_INPUT_FILE, O_WRONLY);
+-	}
+-	if (write(write_fd, command, sizeof(command)) != sizeof(command)) {
+-		printf("Error sending command.\n");
+-		close(write_fd);
+-		return -1;
+-	}
+-	read_fd = open(ORS_OUTPUT_FILE, O_RDONLY);
+-	if (read_fd < 0) {
+-		printf("Unable to open %s for read.\n", ORS_OUTPUT_FILE);
+-		return -1;
+-	}
+-	memset(&result, 0, sizeof(result));
+-	while (read(read_fd, &result, sizeof(result)) > 0) {
+-		result[510] = '\n';
+-		result[511] = '\0';
+-		printf("%s", result);
+-		memset(&result, 0, sizeof(result));
+-	}
+-	close(write_fd);
+-	close(read_fd);
+-	return 0;
++	std::vector<char *> exec_args;
++	for (auto &arg : args) exec_args.push_back(&arg[0]);
++	exec_args.push_back(nullptr);
++	execv(exec_args[0], exec_args.data());
++	fprintf(stderr, "Could not start AERA client: %s\n", strerror(errno));
++	return 1;
+ }
+diff --git a/partition.cpp b/partition.cpp
+index 1247ccb..96d080f 100644
+--- a/partition.cpp
++++ b/partition.cpp
+@@ -1381,11 +1381,7 @@ void TWPartition::Setup_Data_Media() {
+ 		}
+ 	}
+ 	ExcludeAll(Mount_Point + "/media");
+-#ifdef OF_MISCELLANEOUS_ROOT_DIRECTORY
+-	if (TWFunc::Get_Root_Path(Aera_Home) == Mount_Point) {
+-		Storage_Path = OF_MISCELLANEOUS_ROOT_DIRECTORY;
+-	}
+-#endif
++// Recovery's private settings root is independent of emulated media storage.
+ }
+ 
+ void TWPartition::Find_Real_Block_Device(string& Block, bool Display_Error) {
+diff --git a/partitionmanager.cpp b/partitionmanager.cpp
+index debe9b5..1d1f72f 100755
+--- a/partitionmanager.cpp
++++ b/partitionmanager.cpp
+@@ -2532,10 +2532,9 @@ void TWPartitionManager::Post_Decrypt(const string& Block_Device) {
+ 		else
+ 			bind_path = "/data/media";
+ 
+-		if (TWFunc::Get_Root_Path(Aera_Home) != dat->Mount_Point) {
+-			dat->Storage_Path = bind_path;
+-			dat->Symlink_Path = dat->Storage_Path;
+-		} else dat->Symlink_Path = bind_path;
++		// Keep internal storage at the decrypted media root; Aera_Home stores settings.
++		dat->Storage_Path = bind_path;
++		dat->Symlink_Path = bind_path;
+ 
+ 		DataManager::SetValue("tw_storage_path", dat->Storage_Path);
+ 		//DataManager::SetValue("tw_settings_path", dat->Symlink_Path);
+diff --git a/wlan.cpp b/wlan.cpp
+index 8a25745..9f06e68 100644
+--- a/wlan.cpp
++++ b/wlan.cpp
+@@ -3,6 +3,7 @@
+ #include <arpa/inet.h>
+ #include <cctype>
+ #include <cstdint>
++#include <chrono>
+ #include <cerrno>
+ #include <cstdio>
+ #include <cstring>
+@@ -468,13 +469,13 @@ bool Wlan::Connect() {
+     gui_print("Connect to network with new config...\n");
+     gui_print(" \n");
+ 
+-    // Wait for association via supplicant events instead of polling STATUS on a
+-    // fixed 1s cadence: each iteration blocks up to 1.5s for a relevant event,
+-    // then confirms the SSID via STATUS. Bounded to ~15s worst case but returns
+-    // the instant CTRL-EVENT-CONNECTED lands.
++    // Event bursts can consume a retry counter before association has had time
++    // to finish. Bound elapsed time, not the number of queued notifications.
+     bool completed = false;
+-
+-    for (int tries = 0; tries < 12 && !completed; ++tries) {
++    const auto association_deadline = std::chrono::steady_clock::now() +
++        std::chrono::seconds(30);
++    for (int tries = 0; !completed &&
++         std::chrono::steady_clock::now() < association_deadline; ++tries) {
+         std::string ev;
+         bool got_event = SuppWaitEvent({"CTRL-EVENT-CONNECTED", "CTRL-EVENT-DISCONNECTED",
+                                         "CTRL-EVENT-ASSOC-REJECT", "CTRL-EVENT-AUTH-REJECT"},
+@@ -487,7 +488,7 @@ bool Wlan::Connect() {
+             std::string ip_addr;
+             ParseSupplicantStatus(status, wpa_state, current_ssid, ip_addr);
+ 
+-            gui_print("Connection state: %s (%d/12)\n", wpa_state.c_str(), tries);
++            gui_print("Connection state: %s (poll %d)\n", wpa_state.c_str(), tries);
+ 
+             if (wpa_state == "COMPLETED" && current_ssid == ssid) {
+                 completed = true;
+@@ -497,6 +498,8 @@ bool Wlan::Connect() {
+ 
+         if (!got_event)
+             usleep(500 * 1000);
++        else
++            usleep(100 * 1000);
+     }
+ 
+     if (!completed) {
+@@ -808,8 +811,9 @@ bool Wlan::ConnectSaved() {
+     const int max_tries = 10;
+     bool completed = false;
+     bool saw_transition = false;
+-
+-    while (tries < max_tries) {
++    const auto association_deadline = std::chrono::steady_clock::now() +
++        std::chrono::seconds(30);
++    while (std::chrono::steady_clock::now() < association_deadline) {
+         std::string ev;
+         bool got_event = SuppWaitEvent({"CTRL-EVENT-CONNECTED", "CTRL-EVENT-DISCONNECTED",
+                                         "CTRL-EVENT-ASSOC-REJECT", "CTRL-EVENT-AUTH-REJECT"},
+@@ -824,7 +828,7 @@ bool Wlan::ConnectSaved() {
+             std::string ip_addr;
+             ParseSupplicantStatus(status, wpa_state, current_ssid, ip_addr);
+ 
+-            gui_print("Saved connection state: %s (%d/%d)\n", wpa_state.c_str(), tries, max_tries);
++            gui_print("Saved connection state: %s (poll %d)\n", wpa_state.c_str(), tries);
+ 
+             if (wpa_state != "COMPLETED")
+                 saw_transition = true;
+@@ -836,6 +840,8 @@ bool Wlan::ConnectSaved() {
+         }
+ 
+         tries++;
++        if (got_event)
++            usleep(100 * 1000);
+     }
+ 
+     if (!completed) {
+@@ -985,6 +991,10 @@ bool Wlan::InfoLocked()
+         DataManager::SetValue("tw_wlan_connected", 1);
+         DataManager::SetValue("wlan_connected_name", ssid);
+         DataManager::SetValue("wlan_info_text", "Connected: " + ssid + "  IP: " + ip_addr);
++        // A late successful association supersedes an earlier operation error.
++        const std::string phase = DataManager::GetStrValue("wlan_state");
++        if (phase == "error" || phase == "enabled" || phase == "disconnected")
++            DataManager::SetValue("wlan_state", "connected");
+ 
+         return true;
+     }
+@@ -1000,6 +1010,8 @@ bool Wlan::InfoLocked()
+ 
+     DataManager::SetValue("tw_wlan_connected", 0);
+     DataManager::SetValue("wlan_connected_name", "");
++    if (DataManager::GetStrValue("wlan_state") == "connected")
++        DataManager::SetValue("wlan_state", IsEnabled() ? "enabled" : "disabled");
+ 
+     return true;
+ }

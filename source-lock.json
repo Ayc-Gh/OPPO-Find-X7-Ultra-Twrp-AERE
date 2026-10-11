@@ -2,23 +2,23 @@
   "base_device_tree_commit": "81061909b76fc6dac1a1ae5c3ddb04b1d4a3e027",
   "aera_manifest_commit": "250b38eed4b7bb663a945deb3c4f12e4ff2339dd",
   "aera_core_commit": "3a58f55c0c978f13346c02d3b3276123ca8436a9",
-  "status": "Known remaining browser issues accepted for publication; r14 core/worker RAM tested, packaged r14 image not cold-boot tested.",
-  "image_sha256": "e2b4183e2912677cf75c6cdc7a0316a9166ca1e3dfc75d7d3207e96ce051493a",
+  "status": "r18 flashed and full readback verified; cold boot, Data, Wi-Fi and trusted codec mapping passed; user confirmed YouTube normal; Bilibili CDN 403 and occasional browser exit remain",
+  "image_sha256": "22387b39ff2367ade14d9e25af59e207fcd84f7796ce3b546633b45178b9033c",
   "build_product": "twrp_phy110-bp2a-eng",
   "resolved_manifest_sha256": "86d0b822f6ce74c5a9c396bb83741168c01ad7395b39162360dc413502b79fef",
   "host_patches": [
     "soong-memory-limit.patch",
     "blueprint-concurrency-limit.patch"
   ],
-  "revision": "r14-alpha",
-  "method": "r13 base preserved; retain page touch ownership through keyboard focus changes; updated hash-pinned browser worker with optional root-owned diagnostics disabled in release; audio remains an experimental RAM-only result",
+  "revision": "r18-alpha",
+  "method": "r17 preserved; trusted read-only SONAME-8 OpenH264 override pinned to official commit 1a0073f; existing GPU/WLAN/touch/audio/core retained",
+  "release_kind": "unofficial-alpha-prerelease",
   "core_patches": [
-    "phy110-browser-navigation.patch",
-    "phy110-browser-retry.patch",
-    "phy110-storage-cli.patch",
-    "phy110-ui-touch-init.patch"
+    "phy110-r18-adaptation.patch"
   ],
-  "recovery_binary_sha256": "655b64ce57cb3293323667f452c6aec674afb648eb9245523f500567d9fd2e08",
+  "recovery_binary_sha256": "73cfdbcc4e733a61b5830df7b643bd1d01667ebe7031988046a719d027061def",
   "browser_worker_sha256": "3e5e3134b67513bfa6104641e653e41b3dbab68c2c921617183c2fa51d13faea",
-  "release_kind": "unofficial-alpha-prerelease"
+  "browser_jail_sha256": "752fc3c820719dd073587a23e6191c17374289bce597f1638ec4ddab715c76a7",
+  "openh264_commit": "1a0073f0322c8b74cbcb75ca1bb1c3d19d75538d",
+  "openh264_sha256": "0f0964e325847c924dfdc2950201c3992f0f1762f811c37182c4e9db6b19c5f3"
 }

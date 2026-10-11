@@ -1,0 +1,22 @@
+{
+  "loaded_codec_sha256": "0f0964e325847c924dfdc2950201c3992f0f1762f811c37182c4e9db6b19c5f3",
+  "loaded_gpu_sha256": "55a11d072e7ffe4e6dfd80377d6e8c2cc95dc45a00aaca4a8282605da3b1470e",
+  "readonly_codec_mount": true,
+  "isolation": [
+    "Uid:\t99090\t99090\t99090\t99090",
+    "Gid:\t99090\t99090\t99090\t99090",
+    "CapEff:\t0000000000000000",
+    "NoNewPrivs:\t1",
+    "Seccomp:\t2"
+  ],
+  "actual_webprocess_codec": [
+    {
+      "pid": 1847,
+      "sha256": "0f0964e325847c924dfdc2950201c3992f0f1762f811c37182c4e9db6b19c5f3"
+    }
+  ],
+  "crash_buffer_empty": true,
+  "gpu_faultcount": "0",
+  "data_unlocked": true,
+  "production_worker_sha256": "3e5e3134b67513bfa6104641e653e41b3dbab68c2c921617183c2fa51d13faea"
+}

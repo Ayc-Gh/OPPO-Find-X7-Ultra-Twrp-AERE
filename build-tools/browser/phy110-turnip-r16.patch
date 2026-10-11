@@ -1,0 +1,26 @@
+--- a/src/freedreno/vulkan/tu_cmd_buffer.cc
++++ b/src/freedreno/vulkan/tu_cmd_buffer.cc
+@@ -2113,7 +2113,10 @@
+ {
+    const struct tu_physical_device *phys_dev = dev->physical_device;
+ 
+-   if (CHIP == A7XX) {
++   // PHY110 KGSL rejects userspace writes to RB_CCU_CNTL (0x8e07).
++   // Keep the kernel-established static configuration on this backend.
++   // This library is mounted only by the PHY110 trusted Recovery launcher.
++   if (CHIP == A7XX && strcmp(dev->instance->knl->name, "kgsl") != 0) {
+       /* On A7XX, RB_CCU_CNTL was broken into two registers, RB_CCU_CNTL which has
+        * static properties that can be set once, this requires a WFI to take effect.
+        * While the newly introduced register RB_CCU_CACHE_CNTL has properties that may
+@@ -2141,6 +2144,11 @@
+       auto magic_reg = phys_dev->info->magic_raw[i];
+       if (!magic_reg.reg)
+          break;
++
++      // KGSL also rejects the companion CCU ECO register on PHY110.
++      if (CHIP == A7XX && !strcmp(dev->instance->knl->name, "kgsl") &&
++          magic_reg.reg == REG_A7XX_RB_CCU_DBG_ECO_CNTL)
++         continue;
+ 
+       uint32_t value = magic_reg.value;
+       switch(magic_reg.reg) {

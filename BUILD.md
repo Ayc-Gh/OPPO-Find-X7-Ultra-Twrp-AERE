@@ -1,17 +1,13 @@
-# 构建说明
+# r18 构建说明
 
-1. 使用 Linux/WSL，按 `build-record/resolved-manifest.xml` 锁定 AERA Android 16 源码。
-2. 将本仓库放入 `device/oppo/phy110`，应用 `patches/` 内四个核心补丁；`build-tools/build-aera.sh` 包含应用顺序和构建入口。不要把此设备树用于其他型号。
-3. 资源受限主机可应用 `build-record/` 中的 Soong 内存和 Blueprint 并发限制补丁。
-4. 产品：`twrp_phy110-bp2a-eng`。完整构建使用 `m adbd recoveryimage`。本轮 r14 只增量重编 Recovery 与浏览器 worker，再从 r13 重打包，并重新生成 unsigned AVB hash footer；不是重新完成全量构建。
-5. `tests/` 保留设备初始化测试。镜像检查结果在 `validation/`。r14 核心/worker 实机 RAM 测试与整镜像冷启动是不同验证范围，详见 README。
+使用 build-record/resolved-manifest.xml 中的固定 AERA Android 16 源码及 source-lock.json 中的核心提交。将本设备树置于 device/oppo/phy110，**仅应用 patches/phy110-r18-adaptation.patch**。它包含此前四项补丁及 r15–r18 变更，不要再叠加历史补丁。
 
-浏览器兼容 worker 的当前源码随核心补丁提供，预编译文件位于 `recovery/root/system/etc/aera-browser/phy110-worker`，其摘要受 Recovery 校验。它只覆盖指定摘要的原始签名引擎在 RAM 中的准备结果，不更改用户安装的签名插件，也不会覆盖未知的新引擎版本。中文字体复用 AERA 自带文件。
+产品 twrp_phy110-bp2a-eng；build-tools/build-aera.sh 是完整构建入口。预编译兼容 worker 位于 recovery/root/system/etc/aera-browser/phy110-worker，核心校验其摘要。本次实际采用 r17 镜像增量打包，只重编 aera-browser-jail 并增加 OpenH264，重新生成 unsigned AVB hash footer；没有重新执行全量构建。
 
-`build-tools/browser/` 提供这次 worker 编译/链接参考命令及工具包摘要。API 头文件来自 WPE WebKit 2.52.6，交叉头文件环境曾有模板替换与命名空间链接步骤；目前未整理成完全自动化的 worker 环境准备程序，不能保证单独执行参考命令即可从空目录重建 worker。完整设备构建可使用已校验的 worker 预编译文件。
+OpenH264 固定源码、压缩包摘要、SONAME 和动态依赖见 build-tools/browser/phy110-libraries.json；许可证见该目录 licenses。prepare_openh264_r18.py 和 build_openh264_r18.py 是实际构建参考，默认 /aera/work-browser，依赖已准备的 Alpine aarch64 musl sysroot、GCC 15.2 C++ 头文件和 Android Clang r547379。它们不是从空白环境自动安装依赖的脚本。使用发布树自带摘要一致的库，或在同环境重建后更新校验信息。
 
-诊断开关只由 Recovery 内的 root 文件启用；发布镜像不包含该开关，默认关闭详细浏览器诊断。不要公开原始诊断日志。
+Mesa Turnip 26.2.2 的设备补丁和 Meson 参考配置同在 build-tools/browser；该配置脚本的宿主路径需要按自身环境调整。最终两个 GPU 静态寄存器跳过补丁以 phy110-turnip-r16.patch 为准。原下载引擎保持完整，启动器只读绑定可信设备库，浏览器继续 UID 99090、无 capabilities、NoNewPrivs 和 seccomp。
 
-音频原型不安装到发布镜像。不要卸载/解绑正在运行的 TFA 扬声器驱动：此设备此前在热解绑测试中发生过冻结。
+音频启动器及当前槽只读依赖准备已放入 Recovery；必须依赖匹配的原机 vendor/system/system_ext/ODM/DSP/固件。不卸载或解绑活跃 TFA 驱动，不重启活跃 ADSP。实验源码见 experimental/audio，实际启动脚本见 recovery/root/system/bin/aera-audio-bootstrap。
 
-GPU 来源摘要见 `gpu-additions.json`。镜像为测试密钥配置、unsigned AVB hash footer；`security/` 仅包含公开验证材料，没有私有签名密钥。完整重建可能因工具、时间戳与生成字段产生不同镜像摘要。
+诊断 harness、诊断 worker 和详细日志开关不打包。镜像及新增库校验见 validation。现有测试和构建记录保留，历史版本记录不代表 r18 已完成全部功能实测。

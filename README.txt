@@ -1,1 +1,1 @@
-See README.md for r14 Alpha status, known issues and exact verification scope.
+See README.md for r18 Alpha and validation limits.

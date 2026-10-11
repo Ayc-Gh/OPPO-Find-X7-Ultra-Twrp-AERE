@@ -9,3 +9,7 @@
 音频原型参考 AERA Waffle 音频桥（https://github.com/AERA-Recovery/android_device_oneplus_waffle-AERA），保留源文件版权标记。PHY110 原型通过 PAL 客户端调用原厂 HAL，未分发原厂音频分区。
 
 字体复用 AERA 原带 WenQuanYi Micro Hei，遵循其原有许可。AERA 核心及浏览器插件中的其他第三方文件继续受各自原许可证约束。
+
+OpenH264 新增库编译自 Cisco 固定官方提交，保留其 BSD 2-Clause LICENSE 于 build-tools/browser/licenses/OpenH264-LICENSE。上游源码下载 URL 和压缩包摘要见 phy110-libraries.json；此处库为本项目编译版本。Mesa Turnip 的许可和设备修改单独保留，不更改厂商文件许可。
+
+OpenH264 新增库编译自 Cisco 固定官方提交，保留其 BSD 2-Clause LICENSE 于 build-tools/browser/licenses/OpenH264-LICENSE。上游源码下载 URL 和压缩包摘要见 phy110-libraries.json；此处库为本项目编译版本。Mesa Turnip 的许可和设备修改单独保留，不更改厂商文件许可。

@@ -1,0 +1,3 @@
+Verifying image C:\Users\ay200\Documents\Codex\2026-10-10\aera-recovery-aera-recovery\work\r18-verification\recovery.img using embedded public key
+vbmeta: Successfully verified footer and NONE vbmeta struct in C:\Users\ay200\Documents\Codex\2026-10-10\aera-recovery-aera-recovery\work\r18-verification\recovery.img
+recovery: Successfully verified sha256 hash of C:\Users\ay200\Documents\Codex\2026-10-10\aera-recovery-aera-recovery\work\r18-verification\recovery.img for image of 81956864 bytes

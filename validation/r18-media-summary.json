@@ -1,0 +1,29 @@
+[
+  {
+    "case": "r18-public-BV1o9pb6MEBX-comparison",
+    "prefetch_errors": 1,
+    "progressing_samples": 72,
+    "maximum_progressing_timestamp": 15.003427,
+    "http403_messages": 62,
+    "webprocess_termination_messages": 0,
+    "harness_result": "frames=2335 errors=0 checksum=12522989459701704088"
+  },
+  {
+    "case": "r18-public-BV1o9pb6MEBX-openh264-fixed-play",
+    "prefetch_errors": 0,
+    "progressing_samples": 34,
+    "maximum_progressing_timestamp": 5.031471,
+    "http403_messages": 67,
+    "webprocess_termination_messages": 0,
+    "harness_result": "frames=2439 errors=0 checksum=7717820603429121851"
+  },
+  {
+    "case": "r18-public-BV1o9pb6MEBX-openh264-long",
+    "prefetch_errors": 0,
+    "progressing_samples": 32,
+    "maximum_progressing_timestamp": 5.019772,
+    "http403_messages": 119,
+    "webprocess_termination_messages": 0,
+    "harness_result": "frames=6256 errors=0 checksum=6270753662058137639"
+  }
+]

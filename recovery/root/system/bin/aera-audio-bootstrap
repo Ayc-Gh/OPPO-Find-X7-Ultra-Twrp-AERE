@@ -1,0 +1,126 @@
+#!/system/bin/sh
+# On-demand PHY110 stock audio initialization, using only the current slot.
+# Never remove/rebind a live codec, or restart an initialized audio DSP.
+set -eu
+umask 077
+BASE=/system/etc/phy110-audio
+HOST=/system/bin/aera-stock-audio-host
+LOCK=/tmp/phy110-audio-init.lock
+LOG=/tmp/phy110-audio-bootstrap.log
+test "$(id -u)" = 0
+test "$(getprop ro.product.model)" = PHY110
+slot=$(getprop ro.boot.slot_suffix)
+case "$slot" in _a|_b) ;; *) exit 64;; esac
+host_alive() {
+ test -r /tmp/phy110-audio-host.pid || return 1
+ host_pid=$(cat /tmp/phy110-audio-host.pid)
+ case "$host_pid" in ''|*[!0-9]*) return 1;; esac
+ case "$(readlink "/proc/$host_pid/exe" 2>/dev/null || true)" in
+  "$HOST"|"$HOST (deleted)"|/tmp/phy110-audio-host|'/tmp/phy110-audio-host (deleted)') return 0;;
+ esac
+ return 1
+}
+host_ready() {
+ host_alive || return 1
+ test -r /tmp/phy110-audio-ready && test "$(cat /tmp/phy110-audio-ready)" = "$host_pid"
+}
+host_ready && exit 0
+# A live host without its readiness marker must be diagnosed, never duplicated.
+host_alive && exit 75
+pidof aera-stock-audio-host >/dev/null 2>&1 && exit 75
+# Serialize concurrent browser/media startup without touching existing drivers.
+if ! mkdir -m 0700 "$LOCK" 2>/dev/null; then
+ for n in $(seq 1 100); do host_ready && exit 0; sleep 0.2; done
+ exit 75
+fi
+exec >>"$LOG" 2>&1
+trap 'rmdir "$LOCK" 2>/dev/null || true' EXIT
+test ! -e /tmp/phy110-audio-init.failed
+echo "Initializing stock audio for slot $slot"
+failed() { echo "Audio initialization stopped: $1"; touch /tmp/phy110-audio-init.failed; exit 70; }
+mount_stock() {
+ name=$1; target=$2
+ mkdir -p "$target"
+ if ! grep -q " $target " /proc/mounts; then
+  mount -t erofs -o ro "/dev/block/mapper/$name$slot" "$target" || failed "stock partition $name"
+ fi
+}
+mount_stock vendor_dlkm /tmp/phy110-audio-source
+mount_stock vendor /tmp/phy110-audio-vendor
+mount_stock system /tmp/phy110-audio-system
+mount_stock odm /tmp/phy110-audio-odm
+mount_stock system_ext /tmp/phy110-audio-system_ext
+mkdir -p /tmp/phy110-vndk34
+if ! grep -q ' /tmp/phy110-vndk34 ' /proc/mounts; then
+ unzip -p /tmp/phy110-audio-system_ext/apex/com.android.vndk.v34.apex apex_payload.img > /tmp/phy110-vndk34.img || failed vndk-extraction
+ mount -o loop,ro /tmp/phy110-vndk34.img /tmp/phy110-vndk34 || failed vndk-mount
+fi
+export LD_LIBRARY_PATH=/tmp/phy110-audio-vendor/lib64:/tmp/phy110-audio-system/system/lib64:/tmp/phy110-vndk34/lib64:/system/lib64
+first=1
+if grep -q '^oplus_audio_tfa98xx_v6 ' /proc/modules; then
+ # Service restart after a recovery UI reload: do not change codec state.
+ grep -q pineapple-mtp-snd-card /proc/asound/cards || failed partial-live-codec
+ test "$(sha256sum /vendor/firmware/tfa98xx.cnt | cut -d' ' -f1)" = "$(sha256sum /tmp/phy110-audio-odm/firmware/tfa98xx.cnt | cut -d' ' -f1)" || failed live-config-mismatch
+ first=0
+else
+ sh "$BASE/configs.sh" || failed stock-configuration
+fi
+mkdir -p /firmware /vendor/dsp /vendor/lib/rfsa/adsp
+grep -q ' /firmware ' /proc/mounts || mount -t vfat -o ro "/dev/block/by-name/modem$slot" /firmware || failed firmware-mount
+grep -q ' /vendor/dsp ' /proc/mounts || mount -t ext4 -o ro,noload "/dev/block/by-name/dsp$slot" /vendor/dsp || failed dsp-mount
+test -e /dsp || ln -s /vendor/dsp /dsp
+if ! grep -q ' /vendor/lib/rfsa/adsp ' /proc/mounts; then
+ mount -o bind /tmp/phy110-audio-vendor/lib/rfsa/adsp /vendor/lib/rfsa/adsp || failed rfsa-bind
+ mount -o remount,bind,ro /vendor/lib/rfsa/adsp || failed rfsa-readonly
+fi
+modules=/tmp/phy110-audio-source/lib/modules
+if test "$first" = 1; then
+ for m in frpc-adsprpc audpkt_ion_dlkm audio_pkt_dlkm; do
+  key=$(echo "$m" | tr - _)
+  grep -q "^$key " /proc/modules || insmod "$modules/$m.ko" || failed "$m"
+ done
+fi
+daemon_alive() {
+ file=$1; expected=$2
+ test -f "$file" || return 1
+ pid=$(cat "$file")
+ case "$pid" in ''|*[!0-9]*) return 1;; esac
+ test -r "/proc/$pid/cmdline" && tr '\000' ' ' < "/proc/$pid/cmdline" | grep -q "$expected"
+}
+if ! daemon_alive /tmp/phy110-audioadsprpcd.pid /tmp/phy110-audio-vendor/bin/audioadsprpcd; then
+ DSP_LIBRARY_PATH='/tmp/phy110-audio-odm/lib/rfsa/adsp;/vendor/lib/rfsa/adsp;/vendor/dsp;/vendor/firmware_mnt/image' \
+ setsid /system/bin/linker64 /tmp/phy110-audio-vendor/bin/audioadsprpcd audiopd </dev/null >/tmp/phy110-audioadsprpcd.log 2>&1 &
+ echo $! > /tmp/phy110-audioadsprpcd.pid
+fi
+if ! daemon_alive /tmp/phy110-pdmapper.pid /tmp/phy110-audio-vendor/bin/pd-mapper; then
+ setsid /system/bin/linker64 /tmp/phy110-audio-vendor/bin/pd-mapper </dev/null >/tmp/phy110-pdmapper.log 2>&1 &
+ echo $! > /tmp/phy110-pdmapper.pid
+fi
+if test "$first" = 1; then
+ awk -f "$BASE/modules.awk" "$modules/modules.dep" > /tmp/phy110-audio-module-plan || failed module-plan
+ while IFS= read -r mod; do
+  key=$(echo "${mod%.ko}" | tr - _)
+  grep -q "^$key " /proc/modules || insmod "$modules/$mod" || failed "$mod"
+ done < /tmp/phy110-audio-module-plan
+ set --
+ for p in /sys/class/remoteproc/remoteproc*; do
+  case "$(cat "$p/name")" in *remoteproc-adsp) set -- "$@" "$p";; esac
+ done
+ test "$#" = 1 || failed ambiguous-adsp
+ # Initial registration only; no PAL host or stream exists at this point.
+ echo stop > "$1/state" || failed initial-adsp-stop
+ echo start > "$1/state" || failed initial-adsp-start
+ for n in $(seq 1 50); do grep -q pineapple-mtp-snd-card /proc/asound/cards && break; sleep 0.2; done
+fi
+grep -q pineapple-mtp-snd-card /proc/asound/cards || failed missing-card
+setsid "$HOST" --phy110-stock-audio </dev/null >/tmp/phy110-audio-host.log 2>&1 &
+echo $! > /tmp/phy110-audio-host.pid
+for n in $(seq 1 100); do
+ if host_alive && grep -q 'PHY110 audio HAL open=0 device=ready' /tmp/phy110-audio-host.log; then
+  echo "$host_pid" > /tmp/phy110-audio-ready
+  echo 'Stock audio backend ready'; exit 0
+ fi
+ kill -0 "$(cat /tmp/phy110-audio-host.pid)" 2>/dev/null || failed host-exited
+ sleep 0.2
+done
+failed host-timeout

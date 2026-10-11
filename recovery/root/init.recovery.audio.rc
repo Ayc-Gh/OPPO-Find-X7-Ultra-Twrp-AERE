@@ -1,0 +1,11 @@
+# PHY110 audio: initialize once after decryption, modules and the display stack.
+# Restarting this user-space bridge reuses the existing sound card and DSP.
+service phy110-browser-audio /system/bin/aera-audio-bridge --browser-audio
+    user root
+    group root
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
+
+on property:crypto.ready=1 && property:twrp.modules.loaded=true && property:sys.aera.gpu.ready=true && property:ro.recovery.phy110.supported=1
+    start phy110-browser-audio

@@ -29,7 +29,7 @@ if staged.is_dir() and not staged.is_symlink():
 PY
 find device/oppo/phy110 -type f \( -name '*.sh' -o -name 'override-spl.sh' \) -exec chmod 755 {} +
 git -C bootable/recovery checkout --detach 3a58f55c0c978f13346c02d3b3276123ca8436a9
-for patch_name in phy110-ui-touch-init.patch phy110-storage-cli.patch phy110-browser-retry.patch phy110-browser-navigation.patch; do
+for patch_name in phy110-r18-adaptation.patch; do
   core_patch="/aera/device/oppo/phy110/patches/$patch_name"
   if [ -f "$core_patch" ] && ! git -C bootable/recovery apply --reverse --check "$core_patch" 2>/dev/null; then
     git -C bootable/recovery apply --check "$core_patch"
